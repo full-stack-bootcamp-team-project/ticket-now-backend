@@ -38,6 +38,56 @@
     opacity: 0.7;
 }
 
+/* ========== FOOTER BASE ========== */
+.footer {
+    width: 100%;
+    background-color: var(--1-GRAY-50);
+    color: var(--1-GRAY-0);
+    padding: 40px 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    font-family: "Inter-Regular", Helvetica, Arial, sans-serif;
+}
+
+/* 로고 영역 */
+.footer-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.footer-logo {
+    height: 35px;
+    width: auto;
+}
+
+/* 회사 정보 텍스트 */
+.footer-info {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-copy {
+    color: var(--1-GRAY-400);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.footer-company {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.footer-detail {
+    color: var(--1-GRAY-300);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
 /* ========== MAIN MENU BAR ========== */
 .menu-bar {
     position: relative;
