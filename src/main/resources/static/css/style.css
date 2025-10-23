@@ -1,316 +1,156 @@
+/* ========== HEADER BASE ========== */
 .element-header {
     position: relative;
-    width: 1920px;
-    height: 135px;
-}
-
-.element-header .menutop {
-    position: absolute;
     width: 100%;
-    height: 25.19%;
-    top: 0;
-    left: 0;
+    height: 135px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--1-GRAY-200);
     display: flex;
-    background-color: var(--1-GRAY-900);
+    flex-direction: column;
+    font-family: "Inter-Regular", Helvetica, Arial, sans-serif;
 }
 
-.element-header .menutop-r {
-    margin-top: 9px;
-    width: 113px;
-    margin-left: 1777px;
+/* ========== TOP MENU (로그인, 마이페이지) ========== */
+.menu-top {
+    width: 100%;
+    height: 25%;
+    background-color: var(--1-GRAY-900);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.menu-top-nav {
     display: flex;
     gap: 20px;
 }
 
-.element-header .menutop-r-txt {
-    width: 35px;
-    height: 15px;
-    display: flex;
-}
-
-.element-header .text-wrapper {
-    width: 35px;
+.menu-top-nav a {
     color: var(--1-GRAY-500);
     font-size: 12px;
-    letter-spacing: 0.48px;
-    flex: 1;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    line-height: normal;
+    text-decoration: none;
+    transition: opacity 0.2s;
 }
 
-.element-header .div-wrapper {
-    width: 58px;
-    height: 15px;
-    display: flex;
+.menu-top-nav a:hover {
+    opacity: 0.7;
 }
 
-.element-header .div {
-    width: 58px;
-    color: var(--1-GRAY-500);
-    font-size: 12px;
-    letter-spacing: 0.48px;
-    flex: 1;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.element-header .menubar {
-    position: absolute;
+/* ========== MAIN MENU BAR ========== */
+.menu-bar {
+    position: relative;
     width: 100%;
-    height: 74.81%;
-    top: 25.19%;
-    left: 0;
+    height: 75%;
     background-color: var(--1-GRAY-0);
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-color: var(--1-GRAY-200);
-}
-
-.element-header .frame {
-    position: absolute;
-    top: 30px;
-    left: 40px;
-    width: 163px;
-    height: 40px;
-    background-color: var(--1-GRAY-0);
-}
-
-.element-header .navbar {
-    position: absolute;
-    width: 14.27%;
-    height: 25.74%;
-    top: 39.60%;
-    left: 11.61%;
-}
-
-.element-header .text-wrapper-2 {
-    width: 18.98%;
-    left: 16.06%;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    font-size: 18px;
-    letter-spacing: 0.72px;
-    line-height: 26px;
-    white-space: nowrap;
-}
-
-.element-header .text-wrapper-3 {
-    width: 12.41%;
-    left: 0;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    font-size: 18px;
-    letter-spacing: 0.72px;
-    line-height: 26px;
-    white-space: nowrap;
-}
-
-.element-header .text-wrapper-4 {
-    width: 18.98%;
-    left: 38.69%;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    font-size: 18px;
-    letter-spacing: 0.72px;
-    line-height: 26px;
-    white-space: nowrap;
-}
-
-.element-header .text-wrapper-5 {
-    width: 12.41%;
-    left: 61.31%;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    font-size: 18px;
-    letter-spacing: 0.72px;
-    line-height: 26px;
-    white-space: nowrap;
-}
-
-.element-header .text-wrapper-6 {
-    width: 18.98%;
-    left: 77.37%;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    font-size: 18px;
-    letter-spacing: 0.72px;
-    line-height: 26px;
-    white-space: nowrap;
-}
-
-.element-header .search {
-    position: absolute;
-    width: 24.84%;
-    height: 25.74%;
-    top: 39.60%;
-    left: 73.07%;
-}
-
-.element-header .rectangle {
-    position: absolute;
-    width: 99.79%;
-    height: 7.69%;
-    top: 92.31%;
-    left: 0;
-    background-color: var(--1-GRAY-900);
-}
-
-.element-header .search-icon {
-    width: 4.19%;
-    height: 75.33%;
-    left: 95.81%;
-    position: absolute;
-    top: 0;
-}
-
-.element-header .search-select {
-    left: 10px;
-    width: 85px;
-    height: 22px;
-    position: absolute;
-    top: 0;
-}
-
-.element-header .select-txt {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 69px;
-    height: 22px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
-.element-header .text-wrapper-7 {
-    width: 69px;
+/* ========== LOGO ========== */
+.menu-bar .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.menu-bar .logo img {
+    height: 40px;
+    width: auto;
+}
+
+/* ========== NAVIGATION LINKS ========== */
+.nav-bar {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-bar a {
     color: var(--1-GRAY-900);
     font-size: 18px;
-    letter-spacing: 0.72px;
-    flex: 1;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    line-height: normal;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.element-header .polygon {
-    position: absolute;
-    width: 11.76%;
-    height: 45.45%;
-    top: 38.64%;
-    left: 89.02%;
+.nav-bar a:hover {
+    color: var(--1-MAIN);
 }
-/* Original CSS code should be injected here */
 
-.element-header .search-icon-button {
-    position: absolute;
-    width: 4.19%;
-    height: 75.33%;
-    left: 95.81%;
-    top: 0;
+/* ========== SEARCH BAR ========== */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-icon-button {
     background: none;
     border: none;
-    padding: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.element-header .search-icon-button:hover {
-    opacity: 0.7;
-}
-
-.element-header .search-icon-button:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
-}
-
-.element-header .search-select-dropdown {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    font-size: 18px;
-    border: none;
-    background: transparent;
-}
-
-.element-header .search-select-dropdown:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
-}
-
-.element-header .menutop-r a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+    padding: 5px;
     transition: opacity 0.2s;
 }
 
-.element-header .menutop-r a:hover {
+.search-icon-button:hover {
     opacity: 0.7;
 }
 
-.element-header .menutop-r a:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
+.search-icon {
+    width: 22px;
+    height: 22px;
 }
 
-.element-header .navbar a {
-    text-decoration: none;
-    display: block;
-    transition: color 0.2s;
-}
-
-.element-header .navbar a:hover {
-    color: var(--1-MAIN);
-}
-
-.element-header .navbar a:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
-}
-
-.element-header .frame {
-    display: block;
-    text-decoration: none;
-    transition: opacity 0.2s;
-}
-
-.element-header .frame:hover {
-    opacity: 0.8;
-}
-
-.element-header .frame:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
-}
-
-.element-header .select-txt {
+.search-select select {
+    height: 30px;
+    padding: 5px 10px;
+    border: 1px solid var(--1-GRAY-300);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--1-GRAY-900);
+    background-color: #fff;
     cursor: pointer;
-    user-select: none;
+}
+
+.search-select select:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1200px) {
+    .nav-bar {
+        gap: 20px;
+    }
+    .nav-bar a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .element-header {
+        height: auto;
+    }
+    .menu-top {
+        justify-content: center;
+        height: auto;
+        padding: 8px;
+    }
+    .menu-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 20px;
+    }
+    .search-bar {
+        width: 100%;
+        justify-content: flex-end;
+    }
 }
