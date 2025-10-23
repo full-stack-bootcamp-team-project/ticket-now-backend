@@ -51,6 +51,12 @@
     box-sizing: border-box;
 }
 
+.menu-left{
+    display: flex;
+    align-items: center;
+    gap:20px;
+}
+
 /* ========== LOGO ========== */
 .menu-bar .logo {
     display: flex;
@@ -83,9 +89,17 @@
 
 /* ========== SEARCH BAR ========== */
 .search-bar {
+    width: 476px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
+    border-bottom: 2px solid var(--1-GRAY-900);
+}
+
+.search-input{
+    width: 100%;
+    border:none;
 }
 
 .search-icon-button {
@@ -95,7 +109,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
+    padding: 4px;
     transition: opacity 0.2s;
 }
 
@@ -110,10 +124,9 @@
 
 .search-select select {
     height: 30px;
-    padding: 5px 10px;
-    border: 1px solid var(--1-GRAY-300);
-    border-radius: 4px;
+    border: none;
     font-size: 14px;
+    line-height: 22px;
     color: var(--1-GRAY-900);
     background-color: #fff;
     cursor: pointer;

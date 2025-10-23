@@ -8,18 +8,17 @@
             </nav>
         </div>
         <div class="menu-bar">
-            <a href="#" class="logo"><img class="logo-icon" src="/img/logo.png"/></a>
-            <nav class="nav-bar">
-                <a href="#">전체</a>
-                <a href="#">콘서트</a>
-                <a href="#">뮤지컬</a>
-                <a href="#">연극</a>
-                <a href="#">클래식</a>
-            </nav>
+            <div class="menu-left">
+                <a href="#" class="logo"><img class="logo-icon" src="/img/logo.png"/></a>
+                <nav class="nav-bar">
+                    <a href="#">전체</a>
+                    <a href="#">콘서트</a>
+                    <a href="#">뮤지컬</a>
+                    <a href="#">연극</a>
+                    <a href="#">클래식</a>
+                </nav>
+            </div>
             <div class="search-bar">
-                <button type="button" class="search-icon-button">
-                    <img class="search-icon" src="/img/search-icon.png"/>
-                </button>
                 <div class="search-select">
                     <select id="search-type" class="search-select-bar">
                         <option value="all">통합검색</option>
@@ -28,6 +27,10 @@
                         <option value="cast">출연자</option>
                     </select>
                 </div>
+                <input type="search" id="site-search" class="search-input"></input>
+                <button type="button" class="search-icon-button">
+                    <img class="search-icon" src="/img/search-icon.png"/>
+                </button>
             </div>
         </div>
     </header>
