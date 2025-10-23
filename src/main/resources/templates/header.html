@@ -1,0 +1,44 @@
+
+<div th:fragment="header">
+    <header class="element-header">
+        <div class="menutop">
+            <nav class="menutop-r" aria-label="사용자 메뉴">
+                <a href="#" class="menutop-r-txt">
+                    <span class="text-wrapper">로그인</span>
+                </a>
+                <a href="#" class="div-wrapper">
+                    <span class="div">마이페이지</span>
+                </a>
+            </nav>
+        </div>
+        <div class="menubar">
+            <a href="#" class="frame" aria-label="홈으로 이동"></a>
+            <nav class="navbar" aria-label="주요 메뉴">
+                <a href="#" class="text-wrapper-2">콘서트</a>
+                <a href="#" class="text-wrapper-3">전체</a>
+                <a href="#" class="text-wrapper-4">뮤지컬</a>
+                <a href="#" class="text-wrapper-5">연극</a>
+                <a href="#" class="text-wrapper-6">클래식</a>
+            </nav>
+            <div class="search" role="search">
+                <div class="rectangle"></div>
+                <button type="button" class="search-icon-button" aria-label="검색">
+                    <img class="search-icon" src="img/search-icon.svg" alt="" />
+                </button>
+                <div class="search-select">
+                    <label for="search-type" class="select-txt">
+                        <span class="text-wrapper-7">통합검색</span>
+                    </label>
+                    <select id="search-type" class="search-select-dropdown" aria-label="검색 유형 선택">
+                        <option value="all">통합검색</option>
+                        <option value="concert">콘서트</option>
+                        <option value="musical">뮤지컬</option>
+                        <option value="theater">연극</option>
+                        <option value="classic">클래식</option>
+                    </select>
+                    <img class="polygon" src="img/polygon-1.svg" alt="" aria-hidden="true" />
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
