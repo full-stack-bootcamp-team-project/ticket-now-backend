@@ -32,6 +32,7 @@ HEADER BASE
 .menu-top-nav a {
     color: var(--1-GRAY-500);
     font-size: 12px;
+    line-height: 26px;
     text-decoration: none;
     transition: opacity 0.2s;
 }
@@ -99,14 +100,39 @@ HEADER BASE
 }
 
 /* search select */
+.search-select {
+    position: relative;
+}
 .search-select select {
+    min-width:80px;
     height: 30px;
     border: none;
     font-size: 14px;
     line-height: 22px;
     color: var(--1-GRAY-900);
-    background-color: #fff;
+    background-color: var(--1-GRAY-0);
     cursor: pointer;
+}
+
+.search-select:after{
+    content:'';
+    width: 12px;
+    height: 12px;
+    background: url("../images/select-arrow.png") no-repeat center / 100%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+
+.search-select select option{
+    min-width:240px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: var(--1-GRAY-700);
+    padding: 10px 16px;
 }
 
 /* search input */
