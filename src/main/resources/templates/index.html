@@ -11,87 +11,12 @@
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-<div th:replace="~{header :: header}"></div>
-<input type="date">
-<pre>
-    1
-    1
-    1
-    1
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-
-    1
-    11
-
-    1
-    11
-    1
-    1
-    1
-
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-    1
-    11
-    1
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-    1
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-
-    1
-    1
-    1
-    1
-    1
-
-    1
-    11
-
-    1
-    1
-    1
-
-
-    1
-    1
-    1
-    1
-    1
-
-</pre>
-<div th:replace="~{footer :: footer}"></div>
+<th:block th:replace="~{header}"></th:block>
+<div class="body">
+    <div class="content-area">
+        여기에다 넣어요!
+    </div>
+</div>
+<th:block th:replace="~{footer}"></th:block>
 </body>
 </html>
