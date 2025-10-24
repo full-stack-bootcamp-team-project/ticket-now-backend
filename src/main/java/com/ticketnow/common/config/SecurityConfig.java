@@ -1,4 +1,4 @@
 package com.ticketnow.common.config;
 
-public class EmailConfig {
+public class SecurityConfig {
 }
