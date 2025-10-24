@@ -1,5 +1,6 @@
 package com.ticketnow.common.util;
 
+import com.ticketnow.user.model.dto.User;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -47,14 +48,6 @@ public class SessionUtil {
      */
     public static boolean isLoginUser(HttpSession session) {
         return session.getAttribute(LOGIN_USER) != null;
-    }
-
-    /**
-     * 관리자 여부 확인
-     */
-    public static boolean isAdmin(HttpSession session) {
-        User user = getLoginUser(session);
-        return user != null && "ADMIN".equals(user.getRole());
     }
 
     /**
