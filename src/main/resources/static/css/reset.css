@@ -329,8 +329,15 @@ button,
 input,
 select,
 textarea {
-    outline: 0 !important;
+    outline: 0;
     color: #222;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
 }
 
 
