@@ -18,12 +18,33 @@
         </div>
         <div class="search-bar">
             <div class="search-select">
-                <select id="search-type" class="search-select-bar">
-                    <option value="all">통합검색</option>
-                    <option value="category">카테고리</option>
-                    <option value="title">제목</option>
-                    <option value="cast">출연자</option>
-                </select>
+                <button type="button" class="select-button">통합검색</button>
+                <ul class="search-select-list">
+                    <li>
+                        <button type="button">
+                            <!--all-->
+                            통합검색
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <!--category-->
+                            카테고리
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <!--title-->
+                            제목
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <!--cast-->
+                            출연자
+                        </button>
+                    </li>
+                </ul>
             </div>
             <input type="search" id="site-search" class="search-input"></input>
             <button type="button" class="search-icon-button">

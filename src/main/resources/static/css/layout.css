@@ -19,17 +19,17 @@ HEADER BASE
 /* ========== TOP MENU (로그인, 마이페이지) ========== */
 .menu-top {
     width: 100%;
-    height: 25%;
+    height: 34px;
     background-color: var(--1-GRAY-900);
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 26px;
     box-sizing: border-box;
 }
 .menu-top-nav {
     display: flex;
-    gap: 20px;
+    gap: 12px;
 }
 .menu-top-nav a {
     color: var(--1-GRAY-500);
@@ -37,6 +37,7 @@ HEADER BASE
     line-height: 26px;
     text-decoration: none;
     transition: opacity 0.2s;
+    padding: 0 4px;
 }
 .menu-top-nav a:hover {
     opacity: 0.7;
@@ -51,13 +52,13 @@ HEADER BASE
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 30px;
     box-sizing: border-box;
 }
 .menu-left{
     display: flex;
     align-items: center;
-    gap:40px;
+    gap:30px;
 }
 
 /* ========== LOGO ========== */
@@ -75,19 +76,23 @@ HEADER BASE
 /* ========== NAVIGATION LINKS ========== */
 .nav-bar {
     display: flex;
-    gap: 40px;
+    gap: 20px;
 }
 
 .nav-bar a {
-    color: var(--1-GRAY-900);
     font-size: 18px;
-    letter-spacing: 0.5px;
+    line-height: 26px;
+    color: var(--1-GRAY-900);
     word-break: keep-all;
-    text-decoration: none;
+    padding: 0 10px;
     transition: color 0.2s;
 }
 
 .nav-bar a:hover {
+    color: var(--1-MAIN);
+}
+.nav-bar a.select {
+    font-weight: 600;
     color: var(--1-MAIN);
 }
 
@@ -105,18 +110,21 @@ HEADER BASE
 .search-select {
     position: relative;
 }
-.search-select select {
-    min-width:80px;
+.select-button {
+    min-width:85px;
     height: 30px;
-    border: none;
+    background-color: var(--1-GRAY-0);
+    box-sizing: border-box;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     font-size: 14px;
     line-height: 22px;
     color: var(--1-GRAY-900);
-    background-color: var(--1-GRAY-0);
-    cursor: pointer;
+    text-align: left;
 }
-
-.search-select:after{
+.select-button:after{
     content:'';
     width: 12px;
     height: 12px;
@@ -126,20 +134,53 @@ HEADER BASE
     right: 0;
     transform: translateY(-50%);
 }
+/* select open */
+.select-button:after{
+    transform: rotate(-180deg) translateY(60%);
+}
 
-
-.search-select select option{
-    min-width:240px;
+.search-select-list {
+    /*display: none;*/
+    position: absolute;
+    width: 100%;
+    top: 36px;
+    left: 0;
+    border: 1px solid var(--1-GRAY-700);
+    box-sizing: border-box;
+    padding: 8px 0;
+}
+.search-select-list li button{
+    width: 100%;
+    height: 36px;
+    padding: 10px 16px;
+    background-color: var(--1-GRAY-0);
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
+    text-align: left;
     color: var(--1-GRAY-700);
-    padding: 10px 16px;
+    transition: color 0.2s;
 }
+
+.search-select-list li button:hover,
+.search-select-list li button:active {
+    font-weight: 600;
+    color: var(--1-MAIN);
+}
+
 
 /* search input */
 .search-input{
     width: 100%;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 400;
+    color: var(--1-GRAY-900);
     border:none;
 }
 
@@ -169,8 +210,9 @@ FOOTER BASE
 */
 .footer {
     width: 100%;
+    height: 200px;
     background-color: var(--1-GRAY-0);
-    padding: 27px 10px;
+    padding: 27px 30px;
     border-top: 1px solid var(--1-GRAY-200);
     box-sizing: border-box;
     display: flex;

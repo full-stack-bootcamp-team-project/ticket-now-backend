@@ -215,6 +215,7 @@ textarea {
 button,
 input {
     line-height: normal;
+    border:none;
 }
 
 /**
@@ -370,4 +371,8 @@ textarea {
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
+}
+
+a {
+    text-decoration: none;
 }
