@@ -36,6 +36,9 @@ input{
 .default-input input::placeholder {
     color: var(--1-GRAY-500);
 }
+.default-input:has(input:focus) {
+    border: 1px solid var(--1-GRAY-600);
+}
 
 /* input all area */
 .default-input-wrap {
