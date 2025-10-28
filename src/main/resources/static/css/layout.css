@@ -68,6 +68,9 @@ HEADER BASE
     align-items: center;
     text-decoration: none;
 }
+.menu-bar .logo:hover {
+    opacity: 0.8;
+}
 
 .menu-bar .logo img {
     height: 40px;
@@ -125,6 +128,11 @@ HEADER BASE
     color: var(--1-GRAY-900);
     text-align: left;
 }
+.select-button:hover{
+    opacity: 0.7;
+}
+
+/* select off */
 .select-button:after{
     content:'';
     width: 12px;
@@ -135,6 +143,7 @@ HEADER BASE
     right: 0;
     transform: translateY(-50%);
 }
+
 /* select open */
 .select-button:after{
     transform: rotate(-180deg) translateY(60%);
