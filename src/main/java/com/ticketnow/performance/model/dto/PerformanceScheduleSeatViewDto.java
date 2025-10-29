@@ -1,4 +1,4 @@
-package com.ticketnow.reservation.model.dto;
+package com.ticketnow.performance.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reservation {
-
-
+public class PerformanceScheduleSeatViewDto {
     private String performanceScheduleId;
     private String seatId;
-    private String setNumber;
-    private String userId;
-    private String reservationDate;
-    private boolean status;
+    private String seatNumber;
 }
