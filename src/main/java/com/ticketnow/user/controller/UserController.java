@@ -51,7 +51,6 @@ public class UserController {
         userService.userUpdatePassword(userId, newPassword);
     }
 
-
     // 개인정보 조회 기능
     @GetMapping("/myPage")
     public User userGetInfo(@RequestParam String userId) {

@@ -30,7 +30,6 @@
         OR c.castMemberName LIKE CONCAT('%', #{search}, '%')
     </select>
 
-    <!-- 검색 시 searchType 을 비교해야 하지 않나요...??? -->
     <!-- 키워드 검색 -->
     <select id="searchKeywordPerformance" resultType="Performance">
         SELECT performanceImagePath,
@@ -86,18 +85,13 @@
         WHERE pcm.performanceId = #{performanceId}
     </select>
 
-    <!-- 출연자 정보 조회  view 활용-->
-<!--    <select >-->
-<!--        SELECT-->
-<!--            c.cast_id,-->
-<!--            c.cast_name,-->
-<!--            pc.cast_role,-->
-<!--            c.cast_image,-->
-<!--            pc.performance_id-->
-<!--        FROM performance_cast pc-->
-<!--                 INNER JOIN cast_info c ON pc.cast_id = c.cast_id-->
-<!--        WHERE pc.performance_id = #{performanceId}-->
-<!--    </select>-->
-
-
+    <select id="getSeatByPerformanceScheduleId" resultType="PerformanceScheduleSeatViewDto">
+        SELECT
+            performanceScheduleId,
+            seatId,
+            seatNumber,
+            isReserved
+        FROM PerformanceScheduleSeatViewDto
+        WHERE performanceScheduleId = #{performanceScheduleId}
+    </select>
 </mapper>
