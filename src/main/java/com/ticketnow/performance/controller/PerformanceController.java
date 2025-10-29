@@ -2,6 +2,7 @@ package com.ticketnow.performance.controller;
 
 import com.ticketnow.performance.model.dto.Performance;
 import com.ticketnow.performance.model.dto.PerformanceDetailViewDto;
+import com.ticketnow.performance.model.dto.PerformanceScheduleSeatViewDto;
 import com.ticketnow.performance.model.service.PerformanceServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,11 @@ public class PerformanceController {
     @GetMapping("/detail")
     public PerformanceDetailViewDto getPerformanceDetail(@RequestParam String performanceId) {
         return performanceService.getPerformanceDetail(performanceId);
+    }
+
+    // 공연 회차별 좌석
+    @GetMapping("/seat")
+    public List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(@RequestParam String performanceScheduleId){
+        return performanceService.getSeatByPerformanceScheduleId(performanceScheduleId);
     }
 }
