@@ -2,15 +2,17 @@ package com.ticketnow.reservation.model.service;
 
 import com.ticketnow.reservation.model.dto.Reservation;
 import com.ticketnow.reservation.model.mapper.ReservationMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ReservationServiceImpl implements ReservationService{
-    @Autowired
-    ReservationMapper reservationMapper;
+
+   private final ReservationMapper reservationMapper;
 
     @Override
     public void insertReservation(String performanceScheduleId, String userId, String seatId, String seatNumber) {
