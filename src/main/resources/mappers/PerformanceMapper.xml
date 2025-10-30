@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ticketnow.performance.model.mapper.PerformanceMapper">
@@ -85,7 +85,8 @@
         WHERE pcm.performanceId = #{performanceId}
     </select>
 
-    <select id="getSeatByPerformanceScheduleId" resultType="PerformanceScheduleSeatViewDto">
+    <!-- 좌석 조회 -->
+    <select id="" resultType="PerformanceScheduleSeatViewDto">
         SELECT
             performanceScheduleId,
             seatId,
