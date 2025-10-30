@@ -23,8 +23,8 @@ public class UserController {
 
     // 로그인 기능
     @PostMapping("/login")
-    public void userLogin(@RequestParam String userId, @RequestParam String userPw) {
-        userService.userLogin(userId, userPw);
+    public String userLogin(@RequestParam String userEmail, @RequestParam String userPw) {
+      return   userService.userLogin(userEmail, userPw);
     }
 
     // 로그아웃 기능
@@ -39,10 +39,10 @@ public class UserController {
         return userService.userFindId(userName, userSSN);
     }
 
-    // 비밀번호 찾기 기능
+    //로그인 비밀번호 찾기 기능
     @PostMapping("/login/findPassword")
-    public boolean userFindPassword(@RequestParam String userId, @RequestParam String userPhone) {
-        return userService.userFindPassword(userId, userPhone);
+    public boolean userFindPassword(@RequestParam String userEmail, @RequestParam String userPhone) {
+        return userService.userFindPassword(userEmail, userPhone);
     }
 
     // 로그인 페이지 비밀번호 변경 기능
@@ -57,7 +57,7 @@ public class UserController {
         return userService.userGetInfo(userId);
     }
 
-    // 현재 비밀번호 확인 기능
+    // 마이페이지 현재 비밀번호 확인 기능
     @PostMapping("/myPage/confirmPassword")
     public void userConfirmPassword(@RequestParam String userId, @RequestParam String currentPassword) {
         userService.userConfirmPassword(userId, currentPassword);

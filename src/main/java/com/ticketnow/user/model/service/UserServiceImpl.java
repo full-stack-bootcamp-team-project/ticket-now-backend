@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void userLogin(String userId, String userPw) {
-        userMapper.userLogin(userId, userPw);
+    public String userLogin(String userEmail, String userPw) {
+        return  userMapper.userLogin(userEmail, userPw);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userFindPassword(String userId, String userPhone) {
-        return userMapper.userFindPassword(userId, userPhone);
+    public boolean userFindPassword(String userEmail, String userPhone) {
+        return userMapper.userFindPassword(userEmail, userPhone);
     }
 
     @Override
