@@ -12,11 +12,11 @@
     </insert>
 
     <!-- 로그인 - 사용자 정보 조회 -->
-    <select id="checkLogin" resultType="User">
-        SELECT userName
+    <select id="userLogin" resultType="User">
+        SELECT *
         FROM user
         WHERE userEmail = #{userEmail}
-          AND userpw = #{userpw}
+          AND userpw = #{userPw}
     </select>
 
     <!-- 아이디 찾기 -->

@@ -9,7 +9,7 @@ public interface UserMapper {
     void userSignup(User user);
 
     // 유저 로그인
-    String userLogin(String userEmail, String userPw);
+    User userLogin(String userEmail, String userPw);
 
     // 유저 아이디 찾기
     String userFindId(String userName, String userSSN);
