@@ -25,9 +25,9 @@
         FROM performance p
         JOIN performancecastmember pc ON p.performanceId = pc.performanceId
         JOIN castmember c ON pc.castMemberId = c.castMemberId
-        WHERE p.performanceCategory LIKE CONCAT('%', #{search}, '%')
-        OR p.performanceTitle LIKE CONCAT('%', #{search}, '%')
-        OR c.castMemberName LIKE CONCAT('%', #{search}, '%')
+        WHERE p.performanceCategory LIKE CONCAT('%', #{keyword}, '%')
+        OR p.performanceTitle LIKE CONCAT('%', #{keyword}, '%')
+        OR c.castMemberName LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <!-- 키워드 검색 -->
@@ -35,14 +35,14 @@
         SELECT performanceImagePath,
         performanceTitle
         FROM performance
-        WHERE performanceCategory LIKE CONCAT('%', #{search}, '%')
+        WHERE performanceCategory LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <!-- 제목 검색 -->
     <select id="searchTitlePerformance" resultType="Performance">
         SELECT performanceImagePath, performanceTitle
         FROM performance
-        WHERE performanceTItle LIKE CONCAT('%' ,#{search}, '%')
+        WHERE performanceTitle LIKE CONCAT('%' ,#{keyword}, '%')
     </select>
 
     <!-- 출연자 검색 -->
@@ -51,7 +51,7 @@
         FROM performance p
         JOIN performancecastmember pc ON p.performanceId = pc.performanceId
         JOIN castmember c ON pc.castMemberId = c.castMemberId
-        WHERE c.castMemberName LIKE CONCAT('%' ,#{search}, '%')
+        WHERE c.castMemberName LIKE CONCAT('%' ,#{keyword}, '%')
     </select>
 
     <!-- 공연 상세 정보 조회 view 활용 -->
@@ -86,7 +86,7 @@
     </select>
 
     <!-- 좌석 조회 -->
-    <select id="" resultType="PerformanceScheduleSeatViewDto">
+    <select id="getSeatByPerformanceScheduleId" resultType="PerformanceScheduleSeatViewDto">
         SELECT
             performanceScheduleId,
             seatId,
