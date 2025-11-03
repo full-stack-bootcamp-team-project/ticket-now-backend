@@ -2,10 +2,14 @@ package com.ticketnow.user.model.service;
 
 import com.ticketnow.user.model.dto.User;
 import com.ticketnow.user.model.mapper.UserMapper;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Service
@@ -21,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String userLogin(String userEmail, String userPw) {
+    public User userLogin(String userEmail, String userPw) {
         return  userMapper.userLogin(userEmail, userPw);
     }
 

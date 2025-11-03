@@ -36,5 +36,5 @@ public interface PerformanceMapper {
     List<CastMember> getCastMembers(String performanceId);
 
     // 공연 회차별 좌석 조회
-    List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performancecheduleId);
+    List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId);
 }
