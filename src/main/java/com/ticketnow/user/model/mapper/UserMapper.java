@@ -23,12 +23,15 @@ public interface UserMapper {
     // 비밀번호 변경 -> 마이페이지
     void userUpdatePassword(String userId, String currentPassword, String newPassword);
 
+    // Todo
     // 유저 정보 조회 -> 마이페이지
     User userGetInfo(String userId);
 
+    // Todo
     // 유저 정보 수정 -> 마이페이지
     void userConfirmPassword(String userId, String currentPassword);
 
+    // Todo
     // 유저 정보 업데이트
     User userUpdateInfo(User user);
 

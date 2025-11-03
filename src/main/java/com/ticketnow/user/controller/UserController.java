@@ -22,13 +22,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserServiceImpl userService;
-
+    // http://localhost:8080/api/user/signup?
     // 회원가입 기능
     @PostMapping("/signup")
-    public void userSignup(@RequestParam User user) {
+    public void userSignup(@RequestBody User user) {
         userService.userSignup(user);
     }
 
+    // http://localhost:8080/api/user/login?userEmail=minsu@example.com&userPw=pw1234
     // 로그인 기능
     @PostMapping("/login")
     public void userLogin(@RequestParam String userEmail,
@@ -45,12 +46,15 @@ public class UserController {
         SessionUtil.setLoginUser(session, user);
         response.sendRedirect("/");
     }
+
+    // http://localhost:8080/api/user/logout
     // 로그아웃 기능
     @PostMapping("/logout")
-    public void userLogout() {
-
+    public void userLogout(HttpSession session, HttpServletResponse res) {
+        SessionUtil.invalidateLoginUser(session);
     }
 
+    // http://localhost:8080/api/user/login/findId?userName=김민수&userSSN=900101-1234567
     // 아이디 찾기 기능
     @PostMapping("/login/findId")
     public String userFindId(@RequestParam String userName, @RequestParam String userSSN) {

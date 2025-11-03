@@ -20,7 +20,7 @@
     </select>
 
     <!-- 아이디 찾기 -->
-    <select id="findId" resultType="User">
+    <select id="userFindId" resultType="User">
         SELECT userId
         FROM user
         WHERE userName = #{userName}

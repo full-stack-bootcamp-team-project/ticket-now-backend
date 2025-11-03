@@ -17,7 +17,7 @@ public class SessionUtil {
     public static boolean isLoginUser(HttpSession session) {
         return session.getAttribute(LOGIN_USER) != null;
     }
-    public static void invalidate(HttpSession session) {
+    public static void invalidateLoginUser(HttpSession session) {
         session.invalidate();
     }
 }
