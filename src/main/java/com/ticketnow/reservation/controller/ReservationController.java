@@ -42,7 +42,8 @@ public class ReservationController {
         reservationService.deleteReservation(performanceScheduleId, userId, seatId, seatNumber);
     }
 
-    // http://localhost:8080/api/reservation/seat/performanceScheduleId?PS001
+    // 확인
+    // http://localhost:8080/api/reservation/seat?performanceScheduleId=PS001
     // 좌석 예약 상태
     @GetMapping("/seat")
     public List<Reservation> getSeatStatus(@RequestParam String performanceScheduleId) {
