@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String userFindId(String userName, String userSSN) {
+    public List<User> userFindId(String userName, String userSSN) {
         return userMapper.userFindId(userName, userSSN);
     }
 

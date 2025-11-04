@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -57,11 +58,11 @@ public class UserController {
     // http://localhost:8080/api/user/login/findId?userName=김민수&userSSN=900101-1234567
     // 아이디 찾기 기능
     @PostMapping("/login/findId")
-    public String userFindId(@RequestParam String userName, @RequestParam String userSSN) {
+    public List<User> userFindId(@RequestParam String userName, @RequestParam String userSSN) {
         return userService.userFindId(userName, userSSN);
     }
 
-    //
+    // http://localhost:8080/api/user/login/findPassword?userEmail=minsu@example.com&userPhone=010-1234-5678
     // 로그인 비밀번호 찾기 기능
     @PostMapping("/login/findPassword")
     public boolean userFindPassword(@RequestParam String userEmail, @RequestParam String userPhone) {

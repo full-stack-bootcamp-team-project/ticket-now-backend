@@ -2,6 +2,8 @@ package com.ticketnow.user.model.service;
 
 import com.ticketnow.user.model.dto.User;
 
+import java.util.List;
+
 public interface UserService {
     // 회원가입
     void userSignup(User user);
@@ -10,7 +12,7 @@ public interface UserService {
     User userLogin(String userEmail, String userPw);
 
     // 유저 아이디 찾기
-    String userFindId(String userName, String userSSN);
+    List<User> userFindId(String userName, String userSSN);
 
     // 비밀번호 찾기 -> 로그인
     boolean userFindPassword(String userEmail, String userPhone);
