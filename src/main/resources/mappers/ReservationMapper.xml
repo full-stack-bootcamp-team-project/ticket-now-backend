@@ -27,4 +27,11 @@
         AND seatId = #{seatId}
         AND seatNumber = #{seatNumber}
     </delete>
+
+    <select id="getSeatStatus" resultType="Reservation">
+        SELECT seatId, seatNumber
+        FROM reservation
+        WHERE performanceScheduleId = #{performanceScheduleId}
+    </select>
+
 </mapper>
