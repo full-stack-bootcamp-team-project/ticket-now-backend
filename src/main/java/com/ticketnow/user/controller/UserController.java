@@ -61,6 +61,7 @@ public class UserController {
         return userService.userFindId(userName, userSSN);
     }
 
+    //
     // 로그인 비밀번호 찾기 기능
     @PostMapping("/login/findPassword")
     public boolean userFindPassword(@RequestParam String userEmail, @RequestParam String userPhone) {
