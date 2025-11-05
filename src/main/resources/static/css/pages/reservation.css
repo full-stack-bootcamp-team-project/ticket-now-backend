@@ -1,0 +1,83 @@
+.reservation_container {
+    display: flex;
+    margin : 10px;
+    width : 1200px;
+    height : 800px;
+    border : 1px solid black;
+}
+
+
+.set_info {
+    width : 700px;
+    margin: 30px;
+}
+
+.info {
+    display: flex;
+    justify-content: left;
+    width : 700px;
+    color : #9E9E9E;
+    font-size: 20px;
+    margin : 20px 0;
+}
+
+.date-wrap .info span {
+    color : #FF3B30;
+    font-weight: bold;
+    margin : 0 10px 0 0;
+}
+
+.date-wrap {
+    margin: 30px 50px ;
+}
+
+.date-month {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    margin-top: 50px;
+}
+
+.month_move {
+    color: #BDBDBD;
+    border : none;
+    background: none;
+    font-weight: bold;
+}
+
+#monthThis {
+    font-size: 26px;
+    font-family: Inter;
+}
+
+.date-day {
+    margin : 0 auto;
+}
+
+.date-day thead tr th {
+    padding : 30px;
+}
+
+.date-day #month-number tr td {
+    padding : 20px 30px;
+    cursor : pointer;
+}
+
+.sun {
+    color : red;
+}
+
+.choice_date {
+    border : 2px solid black;
+    border-radius: 10px;
+    padding : 30px;
+}
+
+
+
+
+
+
+.performance_info {
+    /*border : 1px solid black;*/
+}
