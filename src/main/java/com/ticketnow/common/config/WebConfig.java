@@ -17,8 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
         // 일반 유저가 로그인 했을 때 접속할 수 있는 api 리스트
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns( // 로그인 유저가 특별히 더 들어갈 수있는 api들
-                        "/reservation"//,       // 예매 페이지
-                     //   "/user/myPage"        // 마이 페이지
+                        "/reservation",       // 예매 페이지
+                        "/user/myPage"        // 마이 페이지
 
                 )
                 .excludePathPatterns( // 누구든지 들어갈 수 있는 api 주소들
