@@ -27,9 +27,4 @@ public class ReservationServiceImpl implements ReservationService{
     public void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber) {
         reservationMapper.deleteReservation(performanceScheduleId, userId, seatId, seatNumber);
     }
-
-    @Override
-    public List<Reservation> getSeatStatus(String performanceScheduleId) {
-        return reservationMapper.getSeatStatus(performanceScheduleId);
-    }
 }
