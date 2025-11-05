@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TicketNow - 마이페이지</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+
+</head>
+<body>
+<th:block th:replace="~{header}"></th:block>
+<div class="body">
+    <div class="content-area">
+        <div class="myPage-container">
+            <div class="tab-button-container">
+                <div class="tab-button active" onclick="openTab('info')">개인정보</div>
+                <div class="tab-button" onclick="openTab('ticket')">예매정보</div>
+                <div class="tab-button" onclick="openTab('grade')">등급</div>
+            </div>
+            <div class="tab-content-container">
+                <div id="info" class="tab-content active">
+                    <div class="info-item">이름 : 홍길동</div>
+                    <div class="info-item">이메일 : example@email.com</div>
+                    <div class="info-item">성별 : 남성</div>
+                    <div class="info-item">닉네임 : 길동이</div>
+                    <div class="info-item">주소 : 서울특별시 강남구 테헤란로 123</div>
+                    <div class="info-item">전화번호 : 010-1234-5678</div>
+                    <div class="info-item">등급 : 일반회원</div>
+
+                    <div class="button-area">
+                        <button class="update-button">개인정보 수정</button>
+                        <button class="update-button">비밀번호 변경</button>
+                    </div>
+                </div>
+                <div id="ticket" class="tab-content">
+                    <h3>예매 내역</h3>
+                    <p>현재 예매 내역이 없습니다.</p>
+                    <!-- 실제로는 th:each로 데이터 출력 가능 -->
+                </div>
+
+                <div id="grade" class="tab-content">
+                    <h3>회원 등급 안내</h3>
+                    <p>현재 회원 등급: 일반회원</p>
+                    <p>다음 등급까지 300포인트 남았습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{footer}"></th:block>
+<script src="/js/myPage.js"></script>
+</body>
+</html>
