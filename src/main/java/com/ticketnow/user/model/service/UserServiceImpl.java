@@ -21,56 +21,67 @@ public class UserServiceImpl implements UserService {
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+    // 회원가입
     @Override
     public void userSignup(User user) {
         userMapper.userSignup(user);
     }
 
+    // 유저 로그인
     @Override
     public User userLogin(String userEmail, String userPw) {
         return  userMapper.userLogin(userEmail, userPw);
     }
 
+    // 유저 아이디 찾기
     @Override
     public User userFindId(String userName, String userSSN) {
         return userMapper.userFindId(userName, userSSN);
     }
 
+    // 비밀번호 찾기 -> 로그인
     @Override
     public boolean userFindPassword(String userEmail, String userPhone) {
         return userMapper.userFindPassword(userEmail, userPhone);
     }
 
+    // 비밀번호 찾기 -> 비밀번호 변경 로그인
     @Override
     public void userUpdatePassword(String userId, String newPassword) {
         userMapper.userUpdatePassword(userId, newPassword);
     }
 
-    @Override
-    public void userUpdatePassword(String userId, String currentPassword, String newPassword) {
-        userMapper.userUpdatePassword(userId, currentPassword, newPassword);
-    }
-
+    // 유저 정보 조회 -> 마이페이지
     @Override
     public User userGetInfo(String userId) {
         return userMapper.userGetInfo(userId);
     }
 
+    // 비밀번호 찾기 -> 마이페이지
     @Override
-    public void userConfirmPassword(String userId, String currentPassword) {
-        userMapper.userConfirmPassword(userId, currentPassword);
+    public boolean userConfirmPassword(String userId, String currentPassword) {
+        return userMapper.userConfirmPassword(userId, currentPassword);
     }
 
+    // 비밀번호 변경 -> 마이페이지
     @Override
-    public User userUpdateInfo(User user) {
-        return userMapper.userUpdateInfo(user);
+    public void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword) {
+        userMapper.userUpdatePasswordMypage(userId, currentPassword, newPassword);
     }
 
+    // 유저 정보 업데이트
+    @Override
+    public void userUpdateInfo(User user) {
+        userMapper.userUpdateInfo(user);
+    }
+
+    // 유저 이메일 중복 확인
     @Override
     public boolean checkEmail(String userId, String userEmail) {
         return userMapper.checkEmail(userId, userEmail);
     }
 
+    // 유저 핸드폰 번호 중복 확인
     @Override
     public boolean checkPhone(String userId, String userPhone) {
         return userMapper.checkPhone(userId, userPhone);

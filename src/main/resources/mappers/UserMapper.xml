@@ -42,32 +42,51 @@
         WHERE userId = #{userId}
     </update>
 
-    <!-- 마이페이지 -> 유저 정보 조회 -->
+    <!-- 유저 정보 조회 -> 마이페이지 -->
     <select id="userGetInfo" resultType="User">
         SELECT *
         FROM user
         WHERE userId = #{userId}
     </select>
 
-    <!-- 마이페이지 -> 유저 정보 수정 -->
-    <update id="userConfirmPassword">
+    <!-- 비밀번호 찾기 -> 마이페이지 -->
+    <select id="userConfirmPassword" resultType="boolean">
+        SELECT count(*) > 0
+        FROM user
+        WHERE userId = #{userId}
+          AND userPw = #{currentPassword}
+    </select>
+
+    <!-- 마이페이지 -> 비밀번호 변경 -->
+    <update id="userUpdatePasswordMypage">
         UPDATE user
         SET userPw = #{newPassword}
         WHERE userId = #{userId}
+          AND userPw = #{currentPassword}
     </update>
 
     <!-- 마이페이지 -> 유저 정보 업데이트 -->
+    <update id="userUpdateInfo">
+        UPDATE user
+        SET userName = #{userName},
+            userNickname = #{userNickname},
+            userPhone = #{userPhone},
+            userEmail = #{userEmail},
+            userAddress = #{userAddress},
+            userGender = #{userGender}
+        WHERE userId = #{userId}
+    </update>
 
     <!-- 이메일 중복 확인 -->
-    <select id="checkEmail" resultType="User">
-        SELECT count(*)
+    <select id="checkEmail" resultType="boolean">
+        SELECT count(*) > 0
         FROM user
         WHERE userEmail = #{userEmail}
     </select>
 
     <!-- 전화번호 중복 확인 -->
-    <select id="checkPhone" resultType="User">
-        SELECT count(*)
+    <select id="checkPhone" resultType="boolean">
+        SELECT count(*) > 0
         FROM user
         WHERE userPhone = #{userPhone}
     </select>
