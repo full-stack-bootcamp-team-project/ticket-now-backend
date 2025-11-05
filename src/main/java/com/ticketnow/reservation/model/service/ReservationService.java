@@ -14,7 +14,4 @@ public interface ReservationService {
 
     // 예매 삭제
     void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);
-
-    // 좌석 예약 상태
-    List<Reservation> getSeatStatus(String performanceScheduleId);
 }
