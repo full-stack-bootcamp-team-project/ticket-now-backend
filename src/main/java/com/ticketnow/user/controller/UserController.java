@@ -58,7 +58,7 @@ public class UserController {
     // http://localhost:8080/api/user/login/findId?userName=김민수&userSSN=900101-1234567
     // 아이디 찾기 기능
     @PostMapping("/login/findId")
-    public List<User> userFindId(@RequestParam String userName, @RequestParam String userSSN) {
+    public User userFindId(@RequestParam String userName, @RequestParam String userSSN) {
         return userService.userFindId(userName, userSSN);
     }
 
@@ -69,24 +69,28 @@ public class UserController {
         return userService.userFindPassword(userEmail, userPhone);
     }
 
+    // http://localhost:8080/api/user/login/updatePassword?userId=U001&newPassword=test1234
     // 로그인 페이지 비밀번호 변경 기능
     @PatchMapping("/login/updatePassword")
     public void userUpdatePassword(@RequestParam String userId, @RequestParam String newPassword) {
         userService.userUpdatePassword(userId, newPassword);
     }
 
+    // http://localhost:8080/api/user/myPage?userId=U001
     // 개인정보 조회 기능
     @GetMapping("/myPage")
     public User userGetInfo(@RequestParam String userId) {
         return userService.userGetInfo(userId);
     }
 
+    // http://localhost:8080/api/user/myPage/confirmPassword?userId=U001&currentPassword=pw1234
     // 마이페이지 현재 비밀번호 확인 기능
     @PostMapping("/myPage/confirmPassword")
     public void userConfirmPassword(@RequestParam String userId, @RequestParam String currentPassword) {
         userService.userConfirmPassword(userId, currentPassword);
     }
 
+    // http://localhost:8080/api/user/myPage/updatePassword
     // 마이페이지 비밀번호 변경 기능
     @PatchMapping("/myPage/updatePassword")
     public void userUpdatePassword(@RequestParam String userId, @RequestParam String currentPassword, @RequestParam String newPassword) {
