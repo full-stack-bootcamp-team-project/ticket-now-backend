@@ -23,7 +23,20 @@ import java.util.Map;
 public class UserController {
 
     private final UserServiceImpl userService;
-    // http://localhost:8080/api/user/signup?
+    // http://localhost:8080/api/user/signup
+    /*
+    {
+      "userId" : "U004",
+      "userName": "박보검",
+      "userNickname": "보검",
+      "userSSN": "930616-1234567",
+      "userPhone": "010-2222-3333",
+      "userEmail": "park@example.com",
+      "userPw" : "qwe1234",
+      "userAddress": "서울 강남구",
+      "userGender": "M"
+    }
+    */
     // 회원가입 기능
     @PostMapping("/signup")
     public void userSignup(@RequestBody User user) {
@@ -86,29 +99,44 @@ public class UserController {
     // http://localhost:8080/api/user/myPage/confirmPassword?userId=U001&currentPassword=pw1234
     // 마이페이지 현재 비밀번호 확인 기능
     @PostMapping("/myPage/confirmPassword")
-    public void userConfirmPassword(@RequestParam String userId, @RequestParam String currentPassword) {
-        userService.userConfirmPassword(userId, currentPassword);
+    public boolean userConfirmPassword(@RequestParam String userId, @RequestParam String currentPassword) {
+        return userService.userConfirmPassword(userId, currentPassword);
     }
 
-    // http://localhost:8080/api/user/myPage/updatePassword
+    // http://localhost:8080/api/user/myPage/updatePassword?userId=U001&currentPassword=pw1234&newPassword=test1234
     // 마이페이지 비밀번호 변경 기능
     @PatchMapping("/myPage/updatePassword")
-    public void userUpdatePassword(@RequestParam String userId, @RequestParam String currentPassword, @RequestParam String newPassword) {
-        userService.userUpdatePassword(userId, currentPassword, newPassword);
+    public void userUpdatePasswordMypage(@RequestParam String userId, @RequestParam String currentPassword, @RequestParam String newPassword) {
+        userService.userUpdatePasswordMypage(userId, currentPassword, newPassword);
     }
 
+    // U001,pw1234,900101-1234567,김민수,밍밍,010-1234-5678,minsu@example.com,서울 강남구,M,bronze,0
+    // http://localhost:8080/api/user/myPage/updateInfo
+    /*
+    {
+      "userId": "U001",
+      "userName": "김민수",
+      "userNickname": "밍밍",
+      "userPhone": "010-1234-5678",
+      "userEmail": "minsu@example.com",
+      "userAddress": "서울 강남구",
+      "userGender": "M"
+    }
+    */
     // 개인정보 변경 기능
     @PutMapping("myPage/updateInfo")
-    public User userUpdateInfo(@RequestBody User user) {
-        return userService.userUpdateInfo(user);
+    public void userUpdateInfo(@RequestBody User user) {
+        userService.userUpdateInfo(user);
     }
 
+    // http://localhost:8080/api/user/checkEmail?userId=U001&userEmail=minsu@example.com
     // 이메일 중복확인 기능
     @PostMapping("/checkEmail")
     public boolean checkEmail(@RequestParam String userId, @RequestParam String userEmail) {
         return userService.checkEmail(userId, userEmail);
     }
 
+    // http://localhost:8080/api/user/checkPhone?userId=U001&userPhone=010-1234-5678
     // 전화번호 중복확인 기능
     @PostMapping("/checkPhone")
     public boolean checkPhone(@RequestParam String userId, @RequestParam String userPhone) {
