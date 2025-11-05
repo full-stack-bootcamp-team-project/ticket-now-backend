@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> userFindId(String userName, String userSSN) {
+    public User userFindId(String userName, String userSSN) {
         return userMapper.userFindId(userName, userSSN);
     }
 

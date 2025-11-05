@@ -38,9 +38,25 @@
     <!-- 비밀번호 변경 -->
     <update id="userUpdatePassword">
         UPDATE user
-        SET userPw = #{userPw}
+        SET userPw = #{newPassword}
         WHERE userId = #{userId}
     </update>
+
+    <!-- 마이페이지 -> 유저 정보 조회 -->
+    <select id="userGetInfo" resultType="User">
+        SELECT *
+        FROM user
+        WHERE userId = #{userId}
+    </select>
+
+    <!-- 마이페이지 -> 유저 정보 수정 -->
+    <update id="userConfirmPassword">
+        UPDATE user
+        SET userPw = #{newPassword}
+        WHERE userId = #{userId}
+    </update>
+
+    <!-- 마이페이지 -> 유저 정보 업데이트 -->
 
     <!-- 이메일 중복 확인 -->
     <select id="checkEmail" resultType="User">
