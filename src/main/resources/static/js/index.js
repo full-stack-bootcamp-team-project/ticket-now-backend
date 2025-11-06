@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = "http://localhost:8080";
 
 (async function(){
     await fetchPerformanceData();
@@ -6,9 +6,10 @@ const API_BASE_URL = "http://localhost:8080/api";
 
 async function fetchPerformanceData() {
 
-    const bestResult = document.getElementById("bestResult");
+    const popularList = document.getElementById("popularList");
+    const recentList = document.getElementById("recentList");
 
-    const res =await fetch(API_BASE_URL + "/performance/all");
+    const res =await fetch(API_BASE_URL + "/api/performance/all");
 
     if(!res.ok){
         throw new Error("서버 응답 오류 : " + res.status)
@@ -19,19 +20,35 @@ async function fetchPerformanceData() {
     console.log(performance);
 
     if(performance.length === 0){
-        bestResult.innerText = "등록된 공연이 없습니다.";
+        popularList.innerText = "등록된 공연이 없습니다.";
     } else {
         performance.forEach(
             b =>{
-                const row = document.createElement("div");
-
-                row.innerHTML = `
-                <div class="performance_info" onclick="gotoPerformanceDetail('${b.performanceId}')">
-                <img src="${b.performanceImagePath}" alt="${b.performanceCategory}" class="performance_image" />
-                <div class="performance_title">${b.performanceTitle}</div>
+                popularList.innerHTML += `
+                <div class="performance-item" onclick="gotoPerformanceDetail('${b.performanceId}')">
+                    <img src="${b.performanceImagePath}" alt="${b.performanceCategory}" class="performance_image" />
+                    <div class="performance-title-area">
+                        <p class="performance-title">${b.performanceTitle}</p>
+                    </div>
                 </div>
-                `;
-                bestResult.appendChild(row)
+            `;
+            }
+        )
+    }
+
+    if(performance.length === 0){
+        recentList.innerText = "등록된 공연이 없습니다.";
+    } else {
+        performance.forEach(
+            b =>{
+                recentList.innerHTML += `
+                <div class="performance-item" onclick="gotoPerformanceDetail('${b.performanceId}')">
+                    <img src="${b.performanceImagePath}" alt="${b.performanceCategory}" class="performance_image" />
+                    <div class="performance-title-area">
+                        <p class="performance-title">${b.performanceTitle}</p>
+                    </div>
+                </div>
+            `;
             }
         )
     }

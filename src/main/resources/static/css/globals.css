@@ -85,6 +85,10 @@ input {
     background-image: url("../images/password-view-off.png");
 }
 
+.password-view-button:hover,
+.password-view-button:active {
+    opacity: 0.7;
+}
 
 /* validation */
 .input-validation {

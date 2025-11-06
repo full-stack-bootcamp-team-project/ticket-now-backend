@@ -30,8 +30,7 @@ public interface UserMapper {
 
     // 비밀번호 변경 -> 마이페이지
     void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword);
-    
-    // Todo
+
     // 유저 정보 업데이트
     void userUpdateInfo(User user);
 
