@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TicketNow - 메인페이지</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="body">
+    <div class="reservation_container">
+        <div class="set_info">
+            <div class="date-wrap">
+                <div class="info">
+                    <span>STEP1</span>날짜 선택
+                </div>
+                <div class="date-month">
+                    <button type="button" class="month_move" id="monthPrev" data-ym="2025-10-01"><</button>
+                    <span id="monthThis">2025.11</span>
+                    <button type="button" class="month_move" id="monthNext" data-ym="2025-12-01">></button>
+                </div>
+                <table class="date-day">
+                    <thead>
+                        <tr>
+                            <th>일</th>
+                            <th>월</th>
+                            <th>화</th>
+                            <th>수</th>
+                            <th>목</th>
+                            <th>금</th>
+                            <th>토</th>
+                        </tr>
+                    </thead>
+                    <tbody id="month-number">
+                        <tr>
+                            <td class="sun"></td>
+                            <td class="mon"></td>
+                            <td class="tue"></td>
+                            <td class="wed"></td>
+                            <td class="thu"></td>
+                            <td class="fri"></td>
+                            <td class="sat">1</td>
+                        </tr>
+                        <tr>
+                            <td class="sun">2</td>
+                            <td class="mon">3</td>
+                            <td class="tue">4</td>
+                            <td class="wed">5</td>
+                            <td class="thu">6</td>
+                            <td class="fri">7</td>
+                            <td class="sat">8</td>
+                        </tr>
+                        <tr>
+                            <td class="sun">9</td>
+                            <td class="mon">10</td>
+                            <td class="tue">11</td>
+                            <td class="wed">12</td>
+                            <td class="thu">13</td>
+                            <td class="fri">14</td>
+                            <td class="sat">15</td>
+                        </tr>
+                        <tr>
+                            <td class="sun">16</td>
+                            <td class="mon">17</td>
+                            <td class="tue">18</td>
+                            <td class="wed">19</td>
+                            <td class="thu">20</td>
+                            <td class="fri">21</td>
+                            <td class="sat">22</td>
+                        </tr>
+                        <tr>
+                            <td class="sun">23</td>
+                            <td class="mon">24</td>
+                            <td class="tue">25</td>
+                            <td class="wed">26</td>
+                            <td class="thu">27</td>
+                            <td class="fri">28</td>
+                            <td class="sat">29</td>
+                        </tr>
+                        <tr>
+                            <td class="sun">30</td>
+                            <td class="mon"></td>
+                            <td class="tue"></td>
+                            <td class="wed"></td>
+                            <td class="thu"></td>
+                            <td class="fri"></td>
+                            <td class="sat"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="info">
+                    <span>STEP12</span>시간 선택
+                </div>
+                <div class="choice_date">
+                    <div>
+                    <span>21:00</span>
+                    </div>
+                    <p><span>출연진</span> 김서연, 박슬기</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="performance_info">
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

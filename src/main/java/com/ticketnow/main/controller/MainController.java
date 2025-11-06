@@ -20,7 +20,7 @@ public class MainController {
 
     // 예매 페이지
     @GetMapping("/reservation")
-    public String reservation(@RequestParam String id){
+    public String reservation(@RequestParam String performanceId){
         return "pages/reservation";
     }
 
