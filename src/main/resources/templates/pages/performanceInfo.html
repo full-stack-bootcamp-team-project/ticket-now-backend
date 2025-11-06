@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TicketNow - 메인페이지</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<th:block th:replace="~{header}"></th:block>
+<div class="body">
+
+    <div class="performance_container">
+        <div class="performance_header">
+            <p class="performance_header_title">공연명</p>
+            <p class="performance_header_ranking">콘서트 > 페스티벌 주간 순위 1위</p>
+        </div>
+        <div class="performance_body">
+            <div class="performance_body_image" id="performanceBodyImage">이미지</div>
+            <div class="performance_body_info">
+                <div class="performance_body_info_detail">
+                    <div class="performance_body_info_detail_category">
+                        <p>카테고리</p>
+                        <p>페스티벌</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>공연명</p>
+                        <p>COUNTDOWN FANTASY 2025-2026</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>장소</p>
+                        <p>서울특별시 종로구 관수동 수표로 96 2F 국일관</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>공연 기간</p>
+                        <p>2025년 12월 30일 ~ 2026년 10월 31일</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>공연 시간</p>
+                        <p>14:00 ~</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>가격</p>
+                        <p>110,000 원</p>
+                    </div>
+                    <div class="performance_body_info_detail_category">
+                        <p>공연 정보</p>
+                        <p>세계 클래식 음악계를 대표하는 이 ‘황금 조합’은 오는 11월 19일과 20일,
+                            양일간 예술의전당 콘서트홀에서 또 한 번 한국 관객을 매료시킬 예정입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:replace="~{footer}"></th:block>
+<script src="/js/performanceInfo.js"></script>
+</body>
+</html>

@@ -14,3 +14,4 @@ style.css (메인 스타일 시트)
 
 /* 4. 페이지별 스타일 */
 @import url("pages/myPage.css");
+@import url("pages/performanceInfo.css");

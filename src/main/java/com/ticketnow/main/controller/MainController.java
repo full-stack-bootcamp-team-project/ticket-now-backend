@@ -62,7 +62,7 @@ public class MainController {
 
     // 공연 상세 페이지
     @GetMapping("/performance/detail")
-    public String performanceDetail(@RequestParam String id){
+    public String performanceDetail(@RequestParam String performanceId){
         return "pages/performanceInfo";
     }
 
