@@ -1,6 +1,7 @@
 package com.ticketnow.common.interceptor;
 
 import com.ticketnow.user.model.dto.User;
+import com.ticketnow.common.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -8,24 +9,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class LoginInterceptor implements HandlerInterceptor {
+public class AlreadyLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         HttpSession session = request.getSession(false);
-        String sessionId = (session != null) ? session.getId() : "no-session";
-        User loginUser = (session != null) ? (User) session.getAttribute("loginUser") : null;
+        User loginUser = (session != null) ? SessionUtil.getLoginUser(session) : null;
 
-        System.out.println("[요청 로그] JSESSIONID=" + sessionId
-                + ", User=" + (loginUser != null ? loginUser.getUserEmail() : "anonymous")
-                + ", URI=" + request.getRequestURI());
-
-        if (loginUser == null) {
-            response.sendRedirect("/user/login");
+        if (loginUser != null) {
+            response.sendRedirect("/");
             return false;
         }
         return true;
     }
-
 }

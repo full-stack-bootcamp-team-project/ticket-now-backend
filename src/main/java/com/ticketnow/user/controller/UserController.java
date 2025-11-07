@@ -5,6 +5,7 @@ import com.ticketnow.user.model.dto.User;
 import com.ticketnow.user.model.service.UserService;
 import com.ticketnow.user.model.service.UserServiceImpl;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,7 @@ public class UserController {
     @PostMapping("/login")
     public void userLogin(@RequestParam String userEmail,
                           @RequestParam String userPw,
+                          HttpServletRequest request,  // ← 추가
                           HttpSession session,
                           HttpServletResponse response) throws IOException {
 
@@ -57,9 +59,12 @@ public class UserController {
             return;
         }
 
+        request.changeSessionId();
+
         SessionUtil.setLoginUser(session, user);
         response.sendRedirect("/");
     }
+
 
     // http://localhost:8080/api/user/logout
     // 로그아웃 기능
