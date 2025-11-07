@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("/login")
     public void userLogin(@RequestParam String userEmail,
                           @RequestParam String userPw,
-                          HttpServletRequest request,  // ← 추가
+                          HttpServletRequest request,
                           HttpSession session,
                           HttpServletResponse response) throws IOException {
 
@@ -60,10 +60,18 @@ public class UserController {
         }
 
         request.changeSessionId();
-
         SessionUtil.setLoginUser(session, user);
-        response.sendRedirect("/");
+
+        // 세션에 저장된 이전 페이지 가져오기
+        String prevPage = (String) session.getAttribute("prevPage");
+        if (prevPage != null) {
+            session.removeAttribute("prevPage"); // 한 번만 사용
+            response.sendRedirect(prevPage);
+        } else {
+            response.sendRedirect("/"); // 없으면 홈
+        }
     }
+
 
 
     // http://localhost:8080/api/user/logout
