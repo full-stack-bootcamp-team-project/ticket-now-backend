@@ -31,6 +31,7 @@ public interface PerformanceMapper {
 
     // 공연 회차 조회
     List<PerformanceSchedule> getPerformanceSchedules(String performanceId);
+
     // 출연진 목록만 조회
     List<CastMember> getCastMembers(String performanceId);
 

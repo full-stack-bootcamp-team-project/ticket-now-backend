@@ -10,45 +10,61 @@
 <th:block th:replace="~{header}"></th:block>
 <div class="body">
 
-    <div class="performance_container">
-        <div class="performance_header">
-            <p class="performance_header_title">공연명</p>
-            <p class="performance_header_ranking">콘서트 > 페스티벌 주간 순위 1위</p>
+    <div class="performance-container">
+        <div class="performance-header">
+            <p class="performance-header-title"
+                id="performanceHeaderTitle">공연명</p>
+            <p class="performance-header-ranking"
+               id="performanceHeaderCategory">콘서트 > 페스티벌 주간 순위 1위</p>
         </div>
-        <div class="performance_body">
-            <div class="performance_body_image" id="performanceBodyImage">이미지</div>
-            <div class="performance_body_info">
-                <div class="performance_body_info_detail">
-                    <div class="performance_body_info_detail_category">
-                        <p>카테고리</p>
-                        <p>페스티벌</p>
+        <div class="performance-info">
+            <div class="performance-image" id="performanceBodyImage">이미지</div>
+            <div class="performance-info-detail">
+                <div>
+                    <div class="performance-info-detail-main">
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">카테고리</p>
+                            <p class="performance-info-detail-content">페스티벌</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">공연명</p>
+                            <p class="performance-info-detail-content">COUNTDOWN FANTASY 2025-2026</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">장소</p>
+                            <p class="performance-info-detail-content">서울특별시 종로구 관수동 수표로 96 2F 국일관</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">공연 기간</p>
+                            <p class="performance-info-detail-content">2025년 12월 30일 ~ 2026년 10월 31일</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">공연 시간</p>
+                            <p class="performance-info-detail-content">14:00 ~</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">가격</p>
+                            <p class="performance-info-detail-content">110,000 원</p>
+                        </div>
+                        <div class="performance-info-detail-title">
+                            <p class="performance-info-detail-content">공연 정보</p>
+                            <p class="performance-info-detail-content">세계 클래식 음악계를 대표하는 이 ‘황금 조합’은 오는 11월 19일과 20일,
+                                양일간 예술의전당 콘서트홀에서 또 한 번 한국 관객을 매료시킬 예정입니다.</p>
+                        </div>
                     </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>공연명</p>
-                        <p>COUNTDOWN FANTASY 2025-2026</p>
+                    <div class="ticket-info">
+                        <p class="ticket-info-title"> * 티켓 부스 오픈 및 공연 시작 : 추후 공개되는 타임테이블에 안내</p>
+                        <p class="ticket-info-content">취소일자에 따라서 아래와 같이 취소수수료가 부과됩니다.</p>
+                        <p class="ticket-info-content">예매 일 기준보다 관람일 기준이 우선 적용됩니다.</p>
+                        <p class="ticket-info-content">단, 예매 당일 밤 12시 이전 취소 시에는 취소수수료가 없으며, 예매 수수료도 환불됩니다.</p>
+                        <p class="ticket-info-content">(취소기한 내에 한함)</p>
                     </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>장소</p>
-                        <p>서울특별시 종로구 관수동 수표로 96 2F 국일관</p>
-                    </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>공연 기간</p>
-                        <p>2025년 12월 30일 ~ 2026년 10월 31일</p>
-                    </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>공연 시간</p>
-                        <p>14:00 ~</p>
-                    </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>가격</p>
-                        <p>110,000 원</p>
-                    </div>
-                    <div class="performance_body_info_detail_category">
-                        <p>공연 정보</p>
-                        <p>세계 클래식 음악계를 대표하는 이 ‘황금 조합’은 오는 11월 19일과 20일,
-                            양일간 예술의전당 콘서트홀에서 또 한 번 한국 관객을 매료시킬 예정입니다.</p>
+                    <div class="performance-info-caster">
+                        <p class="performance-info-caster-data">출연자 정보</p>
+                        <p class="performance-info-caster-data">하단 상세보기 참고</p>
                     </div>
                 </div>
+                <button type="button" id="reservationBtn">예매하기</button>
             </div>
         </div>
     </div>
