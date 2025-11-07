@@ -1,10 +1,7 @@
 package com.ticketnow.performance.model.mapper;
 
-import com.ticketnow.performance.model.dto.Performance;
-import com.ticketnow.performance.model.dto.PerformanceDetailViewDto;
-import com.ticketnow.performance.model.dto.PerformanceScheduleSeatViewDto;
+import com.ticketnow.performance.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-import com.ticketnow.performance.model.dto.CastMember;
 
 import java.util.List;
 
@@ -29,12 +26,16 @@ public interface PerformanceMapper {
     // 출연자 검색
     List<Performance> searchCastPerformance(String searchType, String keyword);
 
-    // 공연 상세 조회
-    PerformanceDetailViewDto getPerformanceDetail(String performanceId);
+    // 기본 공연정보 조회
+    PerformanceDetailResponseDto getPerformanceBasicInfo(String performanceId);
 
+    // 공연 회차 조회
+    List<PerformanceSchedule> getPerformanceSchedules(String performanceId);
     // 출연진 목록만 조회
     List<CastMember> getCastMembers(String performanceId);
 
     // 공연 회차별 좌석 조회
     List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId);
+
+
 }

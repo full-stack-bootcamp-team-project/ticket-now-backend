@@ -1,9 +1,6 @@
 package com.ticketnow.performance.model.service;
 
-import com.ticketnow.performance.model.dto.CastMember;
-import com.ticketnow.performance.model.dto.Performance;
-import com.ticketnow.performance.model.dto.PerformanceDetailViewDto;
-import com.ticketnow.performance.model.dto.PerformanceScheduleSeatViewDto;
+import com.ticketnow.performance.model.dto.*;
 import com.ticketnow.performance.model.mapper.PerformanceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,19 +44,23 @@ public class PerformanceServiceImpl implements PerformanceService{
     }
 
     @Override
-    public PerformanceDetailViewDto getPerformanceDetail(String performanceId) {
+    public PerformanceDetailResponseDto getPerformanceDetail(String performanceId) {
+            // 공연 기본 정보
+        PerformanceDetailResponseDto detail = performanceMapper.getPerformanceBasicInfo(performanceId);
 
-        // 1. 공연 기본 정보 조회 (1개 행)
-        PerformanceDetailViewDto detail = performanceMapper.getPerformanceDetail(performanceId);
+            // 공연 회차 목록 (N행)
+            List<PerformanceSchedule> schedules = performanceMapper.getPerformanceSchedules(performanceId);
 
-        // 2. 출연진 목록 조회 (N개 행)
-        List<CastMember> castMembers = performanceMapper.getCastMembers(performanceId);
+            // 출연진 목록 (N행)
+            List<CastMember> castMembers = performanceMapper.getCastMembers(performanceId);
 
-        // 3. 출연진 리스트를 공연 정보에 세팅
-        detail.setCastMembers(castMembers);
+            // 세팅
+            detail.setSchedules(schedules);
+            detail.setCastMembers(castMembers);
 
-        return detail;
-    }
+            return detail;
+        }
+
 
     @Override
     public List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId) {
