@@ -35,10 +35,6 @@ async function fetchPerformanceData() {
         // 최신순 정렬
         const recentPerformances = [...performances].sort((a, b) => new Date(b.performanceDate) - new Date(a.performanceDate));
 
-        // 메인 배너용
-        renderMainBanner(popularPerformances.slice(0, 10));
-        initMainBanner();
-
         // 인기 공연 섹션
         renderPerformanceList(popularList, popularPerformances.slice(0, 10), "등록된 공연이 없습니다.");
 
@@ -94,14 +90,19 @@ function initMainBanner() {
         updateCenterBanner();
     }
 
-
     function updateCenterBanner() {
         // 모든 아이템 클래스 초기화
-        bannerItems.forEach((item) => item.classList.remove("center-banner-item"));
+        bannerItems.forEach((item) => item.classList.remove("center-banner-item","slide-banner-item"));
 
         // 중앙 배너 설정
         const centerItem = bannerItems[currentCenter];
         centerItem.classList.add("center-banner-item");
+
+        // 양 옆(왼쪽, 오른쪽)
+        const leftIndex = (currentCenter - 1 + total) % total;
+        const rightIndex = (currentCenter + 1) % total;
+        bannerItems[leftIndex].classList.add("slide-banner-item");
+        bannerItems[rightIndex].classList.add("slide-banner-item");
 
         // 슬라이드 이동
         const offset = -currentCenter * (bannerItems[0].offsetWidth + 24); // margin 12px * 2
