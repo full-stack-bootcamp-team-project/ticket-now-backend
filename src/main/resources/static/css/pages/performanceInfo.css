@@ -1,31 +1,30 @@
-.performance_container {
+.performance-container {
     width: 1200px;
-    border: 1px solid black;
 }
 
-.performance_header {
+.performance-header {
     border-bottom: 1px solid black;
     padding-bottom: 10px;
 }
 
-.performance_header_title {
+.performance-header-title {
     font-size: 24px;
     font-weight: bold;
     margin: 30px 20px 15px 20px;
 }
 
-.performance_header_ranking {
+.performance-header-ranking {
     font-size: 15px;
     line-height: 18px;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
-.performance_body {
+.performance-info {
     margin: 20px;
     display: flex;
 }
 
-.performance_body_image {
+.load-image {
     border: 1px solid black;
     min-width : 450px;
     max-width : 450px;
@@ -33,21 +32,71 @@
     max-height : 600px;
     margin-right: 100px;
 }
-.performance_body_image  img {
+.performance-body-image  img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.performance_body_info_detail_category {
+.performance-info-detail{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.performance-info-detail-main {
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.performance-info-detail-title {
     display: flex;
 }
 
-.performance_body_info_detail_category p {
+.performance-info-detail-content {
     padding : 0 50px 20px 0;
     font-size: 15px;
     line-height: 18px;
     min-width : 120px;
     box-sizing: border-box;
+    margin-left: 20px;
 }
 
+.ticket-info {
+    border-bottom: 1px solid black;
+    font-size: 15px;
+    line-height: 18px;
+    padding-bottom: 20px;
+}
+
+.ticket-info-title {
+    margin: 15px 0 15px 20px;
+}
+
+.ticket-info-content {
+    margin-left: 20px;
+}
+
+.performance-info-caster {
+    display: flex;
+    margin : 15px 10px
+}
+
+.performance-info-caster-data {
+    font-size: 15px;
+    line-height: 18px;
+    margin-right: 50px;
+    margin-left: 10px;
+}
+
+.performance-info button{
+    padding: 15px 20px;
+    width: 200px;
+    background-color: #FD9620;
+    font-size: 16px;
+    line-height: 27px;
+    font-weight: bold;
+    color : white;
+    border-radius: 12px;
+}
