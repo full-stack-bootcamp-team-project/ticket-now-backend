@@ -54,34 +54,38 @@
         WHERE c.castMemberName LIKE CONCAT('%' ,#{keyword}, '%')
     </select>
 
-    <!-- 공연 상세 정보 조회 view 활용 -->
-    <select id="getPerformanceDetail" resultType="PerformanceDetailViewDto">
+    <select id="getPerformanceBasicInfo" resultType="PerformanceDetailResponseDto">
         SELECT
-            p.performanceId,
-            p.performanceImagePath,
-            p.performanceTitle,
-            p.performanceCategory,
-            p.performancePrice,
-            p.performanceAddress,
-            p.performanceInfo,
-            p.performanceRanking,
-            ps.performanceScheduleStartDate,
-            ps.performanceScheduleStartTime
-        FROM performance p
-                 INNER JOIN performanceschedule ps
-                            ON p.performanceId = ps.performanceId
-        WHERE p.performanceId = #{performanceId}
+            performanceId,
+            performanceTitle,
+            performanceImagePath,
+            performanceCategory,
+            performancePrice,
+            performanceAddress,
+            performanceInfo,
+            performanceRanking
+        FROM performance
+        WHERE performanceId = #{performanceId}
     </select>
 
-    <!-- 출연진 목록 조회 -->
+    <select id="getPerformanceSchedules" resultType="PerformanceSchedule">
+        SELECT
+            performanceScheduleId,
+            performanceId,
+            performanceScheduleStartDate,
+            performanceScheduleStartTime
+        FROM performanceschedule
+        WHERE performanceId = #{performanceId}
+    </select>
+
     <select id="getCastMembers" resultType="CastMember">
         SELECT
             cm.castMemberId,
             cm.castMemberName,
             cm.castMemberImagePath
         FROM castmember cm
-        INNER JOIN performancecastmember pcm
-        ON cm.castMemberId = pcm.castMemberId
+                 INNER JOIN performancecastmember pcm
+                            ON cm.castMemberId = pcm.castMemberId
         WHERE pcm.performanceId = #{performanceId}
     </select>
 

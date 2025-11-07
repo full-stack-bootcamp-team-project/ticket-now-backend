@@ -1,7 +1,7 @@
 package com.ticketnow.performance.controller;
 
 import com.ticketnow.performance.model.dto.Performance;
-import com.ticketnow.performance.model.dto.PerformanceDetailViewDto;
+import com.ticketnow.performance.model.dto.PerformanceDetailResponseDto;
 import com.ticketnow.performance.model.dto.PerformanceScheduleSeatViewDto;
 import com.ticketnow.performance.model.service.PerformanceServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class PerformanceController {
     // http://localhost:8080/api/performance/detail?performanceId=P003
     // 공연 상세 조회 (예: /api/performance/detail/123)
     @GetMapping("/detail")
-    public PerformanceDetailViewDto getPerformanceDetail(@RequestParam String performanceId) {
+    public PerformanceDetailResponseDto getPerformanceDetail(@RequestParam String performanceId) {
         return performanceService.getPerformanceDetail(performanceId);
     }
 

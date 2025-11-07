@@ -1,8 +1,7 @@
 package com.ticketnow.performance.model.service;
 
-import com.ticketnow.performance.model.dto.CastMember;
 import com.ticketnow.performance.model.dto.Performance;
-import com.ticketnow.performance.model.dto.PerformanceDetailViewDto;
+import com.ticketnow.performance.model.dto.PerformanceDetailResponseDto;
 import com.ticketnow.performance.model.dto.PerformanceScheduleSeatViewDto;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public interface PerformanceService {
     List<Performance> searchCastPerformance(String searchType, String keyword);
 
     // 공연 상세 조회
-    PerformanceDetailViewDto getPerformanceDetail(String performanceId);
+    PerformanceDetailResponseDto getPerformanceDetail(String performanceId);
 
     // 공연 회차별 좌석 조회
     List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId);
