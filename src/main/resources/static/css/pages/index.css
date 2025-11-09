@@ -112,7 +112,7 @@
 .performance-item {
     min-width: 216px;
     width: 216px;
-    border: 1px solid var(--1-GRAY-300);
+    /*border: 1px solid var(--1-GRAY-300);*/
     box-sizing: border-box;
     cursor: pointer;
 }
