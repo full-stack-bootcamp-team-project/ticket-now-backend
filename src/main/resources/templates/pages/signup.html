@@ -338,43 +338,50 @@
 
 <!-- TODO 달력 관련 추가 -->
 <script>
-    const monthYear = document.getElementById('monthYear');
-    const dates = document.getElementById('dates');
-    const prevBtn = document.getElementById('calendarPrev');
-    const nextBtn = document.getElementById('calendarNext');
+    const monthYear = document.getElementById('monthYear'); // 달력의 월 체크 - 상단 title
+    const dates = document.getElementById('dates'); // 날짜 들어가는 부분 전체
 
-    let today = new Date();
-    let currentMonth = today.getMonth();
-    let currentYear = today.getFullYear();
+    const prevBtn = document.getElementById('calendarPrev'); // 이전 달로 이동 버튼
+    const nextBtn = document.getElementById('calendarNext'); // 다음 달로 이동 버튼
+
+    let today = new Date(); // 오늘 날짜
+    let currentMonth = today.getMonth(); // 이번달
+    let currentYear = today.getFullYear(); // 이번 년도
     let selectedDate = null; // 선택된 날짜 저장
 
+    /**
+     * 날짜 노출시키는 함수
+     * @param year 연도
+     * @param month 월(0~11)
+     */
     function renderCalendar(year, month) {
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
+        const firstDay = new Date(year, month, 1); // 이번달 1일
+        const lastDay = new Date(year, month + 1, 0); // 이번달의 마지막 날
 
-        monthYear.textContent = `${year}.${month + 1}`;
+        monthYear.textContent = `${year}.${month + 1}`; // 달력의 월 체크 - 상단 title 텍스트 예)2025.11
 
-        const startDay = firstDay.getDay();
-        const daysInMonth = lastDay.getDate();
+        const startDay = firstDay.getDay(); // 이번달의 요일 지정 (0~6, 일~토)
+        const daysInMonth = lastDay.getDate(); // 이번 달의 총 일수 (마지막 날짜의 일 부분)
+
 
         const prevLastDay = new Date(year, month, 0); // 이전 달 마지막 날
-        const prevMonthDays = prevLastDay.getDate();
+        const prevMonthDays = prevLastDay.getDate(); // 이전 달 총 일수
 
-        let html = '';
+        let html = ''; // 생성한 날짜 html
 
-        // 이전 달 날짜 표시
+        // 이전 달 날짜 표시( 비활성화 )
         for (let i = startDay - 1; i >= 0; i--) {
-            const date = prevMonthDays - i;
-            html += `<div class="date-area inactive"><p class="date">${date}</p></div>`;
+            const date = prevMonthDays - i; // 이전 달 총 일수 - 1
+            html += `<div class="date-area inactive"><p class="date">${date}</p></div>`; // html 노출
         }
 
-        // 이번 달
+        // 이번 달 생성
         for (let date = 1; date <= daysInMonth; date++) {
-            const day = new Date(year, month, date).getDay();
-            let classes = 'date-area';
+            const day = new Date(year, month, date).getDay(); // 요일 계산
+            let classes = 'date-area'; // css 기본값 - reset 용도
 
-            if (day === 0) classes += ' sunday';
-            else if (day === 6) classes += ' saturday';
+            if (day === 0) classes += ' sunday'; // 일요일 클래스 추가
+            else if (day === 6) classes += ' saturday'; // 토요일 클래스 추가
 
             if (
                 date === today.getDate() &&
@@ -382,54 +389,57 @@
                 year === today.getFullYear()
             ) {
                 classes += ' today';
-            }
+            } // 클래스 추가
 
-            html += `<div class="${classes}" data-date="${year}-${month + 1}-${date}"><p class="date">${date}</p></div>`;
+            html += `<div class="${classes}" data-date="${year}-${month + 1}-${date}"><p class="date">${date}</p></div>`; // html에 날짜 추가
         }
 
         // 다음 달 날짜 표시
-        const totalCells = startDay + daysInMonth;
-        const nextDays = 7 - (totalCells % 7);
+        const totalCells = startDay + daysInMonth; // 값이 있는 셀의 수
+        const nextDays = 7 - (totalCells % 7); // 채워야 할 다음달 날짜의 수
         if (nextDays < 7) {
             for (let i = 1; i <= nextDays; i++) {
                 html += `<div class="date-area inactive"><p class="date">${i}</p></div>`;
             }
-        }
+        } // 1부터 nextDays 값까지 숫자 채워서 html 노출하기
 
-        dates.innerHTML = html;
+        dates.innerHTML = html; // 최종 html 갱신
     }
 
     // 날짜 클릭 이벤트 추가
     dates.addEventListener('click', (e) => {
-        const target = e.target.closest('.date-area');
-        if (!target || target.classList.contains('inactive')) return;
+        const target = e.target.closest('.date-area'); // 날짜 찾기
+        if (!target || target.classList.contains('inactive')) return; // 이전 달, 다음 달, 타겟이 없을 경우 return
 
-        // 기존 선택 해제
-        document.querySelectorAll('.dates .date-area').forEach(d => d.classList.remove('selected'));
+        // 기존 선택 된 selected 클래스 지워주기
+        document.querySelectorAll('.dates .date-area').forEach(d => d.classList.remove('selected')); // 하나만 선택되어지게 작업
 
-        // 새로 선택
+        // 새로 선택 된 selected 클래스 생성해주기
         target.classList.add('selected');
-        selectedDate = target.dataset.date;
 
-        console.log(`선택된 날짜: ${selectedDate}`);
+        selectedDate = target.dataset.date; // 선택된 값 selectedDate 변수에 저장
+
+        console.log(`선택된 날짜: ${selectedDate}`); // 날짜 확인
     });
 
+    // 이전 버튼 눌렀을 경우 - 이전 달로 이동
     prevBtn.addEventListener('click', () => {
         currentMonth--;
         if (currentMonth < 0) {
             currentMonth = 11;
             currentYear--;
-        }
-        renderCalendar(currentYear, currentMonth);
+        } // 이번달이 1월일 경우 다시 1로 갈 수 있게
+        renderCalendar(currentYear, currentMonth); // 날짜 재 노출
     });
 
+    // 다음 버튼 눌렀을 경우 - 다음 달로 이동
     nextBtn.addEventListener('click', () => {
         currentMonth++;
         if (currentMonth > 11) {
             currentMonth = 0;
             currentYear++;
-        }
-        renderCalendar(currentYear, currentMonth);
+        } // 이번달이 12월일 경우 다시 1로 갈 수 있게
+        renderCalendar(currentYear, currentMonth); // 날짜 재 노출
     });
 
     renderCalendar(currentYear, currentMonth);
@@ -438,34 +448,44 @@
 
 <!-- TODO 좌석 선택 추가 -->
 <script>
+    /* 좌석 구역 나누기 A ~ F */
     const sections = {
-        A: { rows: 5, cols: 8 },
-        B: { rows: 10, cols: 8 },
-        C: { rows: 5, cols: 8 },
-        D: { rows: 5, cols: 8 },
-        E: { rows: 10, cols: 8 },
-        F: { rows: 5, cols: 8 },
+        A: { rows: 8, cols: 5 },
+        B: { rows: 8, cols: 10 },
+        C: { rows: 8, cols: 5 },
+        D: { rows: 8, cols: 5 },
+        E: { rows: 8, cols: 10 },
+        F: { rows: 8, cols: 5 },
     };
 
-    let selectedSeats = [];
+    let selectedSeats = []; // 선택한 좌석 저장하는 배열
 
+    /* 좌석 생성 */
     function createSeats() {
-        for (const [section, size] of Object.entries(sections)) {
-            const container = document.getElementById(section);
-            container.style.gridTemplateColumns = `repeat(${size.cols}, 20px)`;
-            for (let r = 1; r <= size.rows; r++) {
-                for (let c = 1; c <= size.cols; c++) {
-                    const seatId = `${section}-${r}열 ${c}번`;
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.id = seatId;
-                    input.className = 'seat-input';
+        for (const [section, size] of Object.entries(sections)) { // 좌석 넣어주기, 객체 반복
+            const container = document.getElementById(section); // section -> data-section에 넣은 값, A~F
 
-                    const label = document.createElement('label');
-                    label.className = 'seat';
-                    label.htmlFor = seatId;
-                    label.dataset.seat = seatId;
+            // Grid 를 이용한 좌석 배치
+            container.style.gridTemplateColumns = `repeat(${size.cols}, 20px)`; // 좌석 크기 20px
 
+            // row 값과 col 값을 기준으로 잡고 좌석 생성
+            for (let r = 1; r <= size.rows; r++) { // row
+                for (let c = 1; c <= size.cols; c++) { // col
+                    const seatId = `${section}-${r}열 ${c}번`; // A-1열 1번
+
+                    // 좌석 선택을 위한 input 체크박스 생성
+                    const input = document.createElement('input'); // input 생성
+                    input.type = 'checkbox'; // 타입값 지정
+                    input.id = seatId; // 좌석 id
+                    input.className = 'seat-input'; // css 클래스 지정
+
+                    // label과 연결 (디자인 작업을 위함)
+                    const label = document.createElement('label'); // label 생성
+                    label.className = 'seat'; // css 클래스 지정
+                    label.htmlFor = seatId; // for 지정 -> 클릭 시 해당 input 연결
+                    label.dataset.seat = seatId; // 좌석 정보 저장
+
+                    // label 내부에 input을 넣고, 위에 정해준 container에 추가
                     label.appendChild(input);
                     container.appendChild(label);
                 }
@@ -473,36 +493,45 @@
         }
     }
 
+    /* 선택한 좌석 업데이트 -> 화면 노출 */
     function updateSelectedSeats() {
+        // 선택 좌석이 없을 경우 입력값(임시 - 좌석을 선택해주세요.)
+        // 있을 경우 , 를 통해 구분지어 노출
         const display = selectedSeats.length ? selectedSeats.join(', ') : '좌석을 선택해주세요.';
-        document.getElementById('selectedSeats').textContent = display;
+        document.getElementById('selectedSeats').textContent = display; // #selectedSeats에 텍스트 전달
     }
 
-    document.addEventListener('change', (e) => {
-        const checkbox = e.target.closest('.seat-input');
-        if (!checkbox) return;
+    /* 좌석을 클릭한 경우 */
+    document.addEventListener('change', (e) => { // 변화 값이 있을 경우
+        const checkbox = e.target.closest('.seat-input'); // 체크박스 인풋 찾기
+        if (!checkbox) return; // 체크박스가 아니면 return;
 
-        const seatId = checkbox.parentElement.dataset.seat;
+        const seatId = checkbox.parentElement.dataset.seat; // label에 저장된 좌석 정보 가져오고
 
-        if (checkbox.checked) {
-            selectedSeats.push(seatId);
-        } else {
-            selectedSeats = selectedSeats.filter(s => s !== seatId);
+        if (checkbox.checked) { // 체크가 되어있으면
+            selectedSeats.push(seatId); // seatId 값에 넣기
+        } else { // 체크가 안 되어있으면
+            selectedSeats = selectedSeats.filter(s => s !== seatId); // 좌석 제거한 값 넣기
         }
-        updateSelectedSeats();
+        updateSelectedSeats(); // 선택 상태 갱신
     });
 
     // 예매하기 (임시 버튼)
-    document.getElementById('reserveBtn').addEventListener('click', () => {
-        if (!selectedSeats.length) {
+    document.getElementById('reserveBtn').addEventListener('click', () => { // #reserveBtn을 클릭 시
+        if (!selectedSeats.length) { // 선택된 좌석이 없는 경우
             alert('좌석을 선택해주세요.');
             return;
         }
+        // 선택된 좌석 alert 으로 노출
         alert('예매 완료: ' + selectedSeats.join(', '));
+
         // 선택 초기화
-        document.querySelectorAll('.seat-input:checked').forEach(c => c.checked = false);
-        selectedSeats = [];
-        updateSelectedSeats();
+        document.querySelectorAll('.seat-input:checked').forEach(c => {
+                c.checked = false; // 체크된 좌석 체크 해제
+                c.disabled = true; // 예매 완료된 좌석 disabled
+        });
+        selectedSeats = []; // 선택 배열 비우기
+        updateSelectedSeats(); // 선택 표시 초기화
     });
 
     createSeats();
