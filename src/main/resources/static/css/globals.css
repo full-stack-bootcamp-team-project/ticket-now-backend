@@ -27,7 +27,6 @@ input {
     padding: 12px;
     box-sizing: border-box;
 }
-
 .default-input input {
     width: 100%;
     font-size: 16px;
@@ -35,11 +34,9 @@ input {
     font-weight: 500;
     color: var(--1-GRAY-900);
 }
-
 .default-input input::placeholder {
     color: var(--1-GRAY-500);
 }
-
 .default-input:has(input:focus) {
     border: 1px solid var(--1-GRAY-600);
 }
@@ -50,6 +47,7 @@ input {
     margin-bottom: 40px;
 }
 
+/* input button flex */
 .default-input-button {
     display: flex;
     justify-content: space-between;
@@ -64,9 +62,8 @@ input {
     line-height: 20px;
     font-weight: 400;
     color: var(--1-GRAY-900);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
-
 .input-label .essential {
     display: inline-block;
     margin-left: 4px;
@@ -80,21 +77,26 @@ input {
 .default-input.password-view {
     display: flex;
 }
-
 .password-view-button {
     width: 24px;
     height: 24px;
     background: url("../images/password-view-on.png") no-repeat center/100%;
     margin-left: 10px;
 }
-
 .password-view-button.password-off {
     background-image: url("../images/password-view-off.png");
 }
-
 .password-view-button:hover,
 .password-view-button:active {
     opacity: 0.7;
+}
+
+/* tel input */
+.first-tel {
+    max-width: 78px;
+}
+.first-tel input {
+    text-align: center;
 }
 
 /* validation */
@@ -107,11 +109,9 @@ input {
     font-weight: 400;
     margin-top: 4px;
 }
-
 .input-validation.input-validation-success {
     color: var(--1-SUCCESS);
 }
-
 .input-validation.input-validation-error {
     color: var(--1-ERROR);
 }
@@ -131,14 +131,13 @@ input {
     text-align: center;
     box-sizing: border-box;
 }
-
 .default-button:hover,
 .default-button:active {
     background-color: var(--1-MAIN-HOVER);
     border: 1px solid var(--1-MAIN-HOVER);
 }
 
-/* button gray*/
+/* button gray */
 .gray-button {
     width: 100%;
     height: 44px;
@@ -153,12 +152,11 @@ input {
     text-align: center;
     box-sizing: border-box;
 }
-
-.duplicate-button {
+.gray-button.duplicate-button {
     max-width: 97px;
     height: 48px;
+    padding: 12px;
 }
-
 .gray-button:hover,
 .gray-button:active {
     background-color: var(--1-GRAY-700);
@@ -180,12 +178,12 @@ input {
     text-align: center;
     box-sizing: border-box;
 }
-
 .line-button:hover,
 .line-button:active {
     background-color: var(--1-GRAY-100);
 }
 
+/* button all disabled */
 .default-button:disabled,
 .gray-button:disabled
 .line-button:disabled {
@@ -209,7 +207,6 @@ input {
     font-weight: 600;
     color: var(--1-GRAY-500);
 }
-
 .step-title .step-red {
     display: inline-block;
     font-size: 20px;
@@ -218,7 +215,6 @@ input {
     color: var(--1-ERROR);
     margin-right: 10px;
 }
-
 .radio-list .radio-item {
     display: flex;
 }
@@ -228,7 +224,6 @@ input {
     width: 0;
     height: 0;
 }
-
 .radio-list .radio-item .radio-input + .radio-label:after {
     content: '';
     width: 20px;
@@ -239,12 +234,9 @@ input {
     left: 0;
     transform: translateY(-50%);
 }
-
 .radio-list .radio-item .radio-input:checked + .radio-label:after {
     background-image: url("../images/radio-button-checked.png");
 }
-
-
 .radio-list .radio-item .radio-label {
     min-width: 44px;
     font-size: 16px;
@@ -253,4 +245,66 @@ input {
     color: var(--1-GRAY-900);
     padding-left: 32px;
     position: relative;
+}
+
+/* default performance list */
+.category-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 0;
+}
+/* default title */
+.category-section .container-title {
+    text-align: center;
+    margin-bottom: 42px;
+}
+/* performance list */
+.category-section .performance-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px 30px;
+    gap: 30px; /*TODO*/
+}
+/* performance item */
+.performance-list .performance-item {
+    min-width: 216px;
+    width: 216px;
+    /*border: 1px solid var(--1-GRAY-300);*/
+    box-sizing: border-box;
+    cursor: pointer;
+}
+/* performance item image */
+.performance-list .performance-item img {
+    width: 100%;
+    height: 302px;
+    transition: all 0.3s;
+    object-fit: cover;
+}
+.performance-list .performance-item img:hover{
+    transform: scale(1.08);
+}
+
+/* performance item textbox */
+.performance-list .performance-item .performance-title-area {
+    height: 90px;
+    max-height: 90px;
+    padding: 24px 10px;
+    box-sizing: border-box;
+}
+/* performance item text */
+.performance-list .performance-item .performance-title-area .performance-title {
+    font-size: 16px;
+    font-size: 18px; /*TODO*/
+    line-height: 22px;
+    font-weight: 400;
+    color: var(--1-GRAY-900);
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }

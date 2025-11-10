@@ -1,4 +1,5 @@
-.signup-container{
+/* 회원가입 */
+.signup-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,24 +8,19 @@
     padding: 50px 0;
 }
 
-.container-title {
+/* 타이틀 */
+.signup-container .container-title {
     padding-bottom: 50px;
     text-align: center;
 }
 
-form {
+/* 회원가입 폼 영역 */
+.signupForm {
     width: 100%;
     max-width: 519px;
 }
 
-.input-label {
-    margin-bottom: 6px;
-}
-
-.default-input {
-    width: 100%;
-}
-
+/* 라디오 정렬 */
 .radio-list {
     display: flex;
     justify-content: flex-start;
@@ -32,6 +28,7 @@ form {
     gap: 60px;
 }
 
+/* 인풋 정렬 */
 .default-input-flex {
     display: flex;
     justify-content: space-between;
@@ -39,30 +36,20 @@ form {
     gap: 7px;
 }
 
-.duplicate-button {
-    padding: 12px;
-}
-
+/* 화원가입 버튼 */
 .signup-button {
     height: 60px;
     font-size: 18px;
     margin-top: 10px;
 }
 
-.first-tel {
-    max-width: 78px;
-}
-
-.first-tel input {
-    text-align: center;
-}
-
+/* 주소 인풋 */
 .address-input-wrap {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-
+/* 주소 버튼 */
 .line-button {
     max-width: 97px;
     height: 48px;
