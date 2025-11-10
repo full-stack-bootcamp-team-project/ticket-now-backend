@@ -1,6 +1,7 @@
 package com.ticketnow.reservation.model.service;
 
-import com.ticketnow.reservation.model.dto.Reservation;
+import com.ticketnow.reservation.model.dto.UserReservationViewDto;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface ReservationService {
     void insertReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);
 
     // 예매 내역 조회
-    List<Reservation> getReservation(String userId);
+    List<UserReservationViewDto> getReservation(HttpSession session);
 
     // 예매 삭제
     void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);

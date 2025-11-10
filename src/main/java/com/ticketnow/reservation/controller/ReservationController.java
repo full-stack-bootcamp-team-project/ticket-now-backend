@@ -1,8 +1,10 @@
 package com.ticketnow.reservation.controller;
 
 import com.ticketnow.reservation.model.dto.Reservation;
+import com.ticketnow.reservation.model.dto.UserReservationViewDto;
 import com.ticketnow.reservation.model.service.ReservationService;
 import com.ticketnow.reservation.model.service.ReservationServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,8 @@ public class ReservationController {
     // http://localhost:8080/api/reservation/get?userId=U002
     // 특정 사용자 예매 조회
     @GetMapping("/get")
-    public List<Reservation> getReservation(@RequestParam String userId) {
-        return reservationService.getReservation(userId);
+    public List<UserReservationViewDto> getReservation(HttpSession  session) {
+        return reservationService.getReservation(session);
     }
 
     // http://localhost:8080/api/reservation/delete?performanceScheduleId=PS003&userId=U002&seatId=A&seatNumber=11

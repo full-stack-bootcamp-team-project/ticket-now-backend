@@ -16,7 +16,7 @@ public class Reservation {
     private String seatId;
 
     // 좌석 번호
-    private String setNumber;
+    private String seatNumber;
 
     // 유저 id
     private String userId;

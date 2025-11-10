@@ -1,6 +1,6 @@
 package com.ticketnow.reservation.model.mapper;
 
-import com.ticketnow.reservation.model.dto.Reservation;
+import com.ticketnow.reservation.model.dto.UserReservationViewDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface ReservationMapper {
     void insertReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);
 
     // 예매 내역 조회
-    List<Reservation> getReservation(String userId);
+    List<UserReservationViewDto> getReservation(String userId);
 
     // 예매 삭제
     void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);

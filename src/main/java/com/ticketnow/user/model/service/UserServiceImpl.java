@@ -53,7 +53,9 @@ public class UserServiceImpl implements UserService {
 
     // 유저 정보 조회 -> 마이페이지
     @Override
-    public User userGetInfo(String userId) {
+    public User userGetInfo(HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        String userId = loginUser.getUserId();
         return userMapper.userGetInfo(userId);
     }
 

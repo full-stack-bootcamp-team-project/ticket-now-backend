@@ -105,8 +105,8 @@ public class UserController {
     // http://localhost:8080/api/user/myPage?userId=U001
     // 개인정보 조회 기능
     @GetMapping("/myPage")
-    public User userGetInfo(@RequestParam String userId) {
-        return userService.userGetInfo(userId);
+    public User userGetInfo(HttpSession session) {
+        return userService.userGetInfo(session);
     }
 
     // http://localhost:8080/api/user/myPage/confirmPassword?userId=U001&currentPassword=pw1234
