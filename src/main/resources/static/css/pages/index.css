@@ -1,3 +1,4 @@
+/* 메인 배너, 캐러셀 */
 .main-banner-wrap {
     width: 100vw;
     max-width: 100vw;
@@ -5,6 +6,7 @@
     overflow: hidden;
 }
 
+/* 메인 배너 리스트 */
 .main-banner {
     display: flex;
     justify-content: flex-start;
@@ -14,6 +16,7 @@
     padding: 43px 0;
 }
 
+/* 메인 배너 아이템 */
 .main-banner-item {
     position: relative;
     min-width: 450px;
@@ -26,6 +29,13 @@
     cursor: pointer;
 }
 
+/* 메인 배너 아이템 - 가운데 */
+.main-banner-item.center-banner-item {
+    transform: scale(1.12);
+    margin: 0 39px;
+}
+
+/* 메인 배너 아이템 - 겁정 박스(센터가 돋보이게 하는 용도) */
 .main-banner-item:after{
     content:'';
     width: 100%;
@@ -36,20 +46,14 @@
     left: 0;
     opacity: 0.7;
 }
-
-.main-banner-item.center-banner-item {
-    transform: scale(1.12);
-    margin: 0 39px;
-}
-
-.main-banner-item.center-banner-item:after {
-    opacity: 0;
-}
-
 .main-banner-item.slide-banner-item:after {
-    opacity: 0.3;
+    opacity: 0.3; /* 센터 바로 옆 */
+}
+.main-banner-item.center-banner-item:after {
+    opacity: 0; /* 센터 */
 }
 
+/* 메인 아이템 - 이미지 */
 .main-banner-item .main-banner-image {
     width: 100%;
     height: 100%;
@@ -57,6 +61,7 @@
     transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* 메인 아이템 - 공연 타이틀 */
 .main-banner-item .main-banner-item-title {
     position: absolute;
     bottom: 50px;
@@ -67,84 +72,23 @@
     font-weight: 600;
     color:var(--1-GRAY-0);
     text-align: center;
-    text-shadow: 0px 0px 6px var(--1-GRAY-900);
+    text-shadow: 0px 0px 6px var(--1-GRAY-900); /* 하얀 배경을 위한 효과 */
 }
 
+/* 메인 배너 캐러셀 */
 .main-banner-arrow {
     width: 50px;
     height: 60px;
     position: absolute;
     top: 50%;
 }
-
+/* 이전 */
 .main-banner-arrow#prevBtn {
     left: 30px;
     background: url("../../images/arrow-prev.png") no-repeat center/100%;
 }
-
+/* 다음 */
 .main-banner-arrow#nextBtn {
     right: 30px;
     background: url("../../images/arrow-next.png") no-repeat center/100%;
  }
-
-
-.popular-section {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 36px 0;
-}
-
-.container-title {
-    text-align: center;
-    margin-bottom: 42px;
-}
-
-.popular-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px 30px;
-    gap: 30px; /*TODO*/
-}
-
-.performance-item {
-    min-width: 216px;
-    width: 216px;
-    /*border: 1px solid var(--1-GRAY-300);*/
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.performance-item img {
-    width: 100%;
-    height: 302px;
-    transition: all 0.3s;
-    object-fit: cover;
-}
-
-.performance-item img:hover{
-    transform: scale(1.08);
-}
-
-.performance-title-area {
-    height: 90px;
-    max-height: 90px;
-    padding: 24px 10px;
-    box-sizing: border-box;
-}
-
-.performance-title {
-    font-size: 16px;
-    font-size: 18px; /*TODO*/
-    line-height: 22px;
-    font-weight: 400;
-    color: var(--1-GRAY-900);
-    text-align: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-}
