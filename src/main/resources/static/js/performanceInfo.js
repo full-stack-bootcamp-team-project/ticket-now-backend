@@ -1,7 +1,7 @@
 const API_BASE_URL = "http://localhost:8080"
 
 window.addEventListener("DOMContentLoaded", () => {
-    if(document.querySelector(".performance_info")){
+    if(document.querySelector(".performance-info")){
         loadPerformanceDetail();
     }
 });
@@ -24,7 +24,7 @@ async function loadPerformanceDetail() {
 
     const performanceId = urlParams.get("performanceId");
 
-    if(!performanceId) {
+    if (!performanceId) {
         alert("잘못된 공연 정보입니다.")
         window.location.href = "/performance/all";
     }
@@ -32,16 +32,54 @@ async function loadPerformanceDetail() {
     const p = await detailFunction(performanceId);
     console.log("DB 데이터 조회 : ", p)
 
+    const image = document.getElementById("performanceBodyImage");
+    const headerTitle = document.getElementById("performanceHeaderTitle");
+    const performanceHeaderCategory = document.getElementById("performanceHeaderCategory");
+
+    headerTitle.innerText = p.performanceTitle;
+    // headerTitle.innerText = p.castMembers[0].castMemberId; // 목록 가져오는 형태
+
+    image.innerHTML = `
+    <img src="${p.performanceImagePath}" class="load-image" />
+    `;
+    performanceHeaderCategory.innerHTML = `
+    <p class="performance-header-ranking"> ${p.performanceCategory} > ${p.performanceCategory} 주간 순위 ${p.performanceRanking}위</p>
+    `;
+
+    const reservationBtn = document.getElementById("reservationBtn");
+
+    reservationBtn.addEventListener("click", () =>{
+        goToReservation(p.performanceId)
+    })
 }
 
 // 2. 출연자 정보 가져오기
-async function loadCastInfo() {
-    await fetch(`/performance/cast/${performanceId}`);
+function loadCastInfo() {
+    fetch(`/performance/cast/${performanceId}`);
 }
 
 // 3. 예매 페이지로 이동
-function goToReservation() {
+function goToReservation(performanceId) {
+    const width = 1200;
+    const height = 800;
+    const left = (window.screen.width - width) / 2;
+    const top = (window.screen.height - height) / 2;
+    const options = `
+        width=${width},
+        height=${height},
+        left=${left},
+        top=${top},
+    `;
+
+    window.open(
+        `${API_BASE_URL}/reservation?performanceId=${performanceId}`,
+        "_blank",
+        options
+    );
 }
+
+
+
 
 /*
 // URL 예시: http://localhost:8080/performance?category=music

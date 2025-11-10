@@ -117,6 +117,7 @@ async function detailFunction(performanceId) {
 }
 
 
+// 1. 페이지 로드 시 공연 상세 정보 가져오기
 async function loadPerformanceDetail() {
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -137,4 +138,4 @@ async function loadPerformanceDetail() {
 
 
 }
-
+}

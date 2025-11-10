@@ -50,6 +50,13 @@ input {
     margin-bottom: 40px;
 }
 
+.default-input-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 6px;
+}
+
 /* input label */
 .input-label {
     display: flex;
@@ -145,6 +152,11 @@ input {
     color: var(--1-GRAY-0);
     text-align: center;
     box-sizing: border-box;
+}
+
+.duplicate-button {
+    max-width: 97px;
+    height: 48px;
 }
 
 .gray-button:hover,
