@@ -1,8 +1,8 @@
 <!-- todo 달력 -->
 const monthYear = document.getElementById('monthYear');
 const dates = document.getElementById('dates');
-const prevBtn = document.getElementById('calendarPrev');
-const nextBtn = document.getElementById('calendarNext');
+const calendarPrev = document.getElementById('calendarPrev');
+const calendarNext = document.getElementById('calendarNext');
 
 let today = new Date();
 let currentMonth = today.getMonth();
@@ -73,9 +73,12 @@ dates.addEventListener('click', (e) => {
     selectedDate = target.dataset.date;
 
     console.log(`선택된 날짜: ${selectedDate}`);
+
+    const choiceDate = document.querySelector('.choice-date');
+    choiceDate.style.display = 'block';
 });
 
-prevBtn.addEventListener('click', () => {
+calendarPrev.addEventListener('click', () => {
     currentMonth--;
     if (currentMonth < 0) {
         currentMonth = 11;
@@ -84,7 +87,7 @@ prevBtn.addEventListener('click', () => {
     renderCalendar(currentYear, currentMonth);
 });
 
-nextBtn.addEventListener('click', () => {
+calendarNext.addEventListener('click', () => {
     currentMonth++;
     if (currentMonth > 11) {
         currentMonth = 0;
@@ -100,7 +103,7 @@ renderCalendar(currentYear, currentMonth);
 const API_BASE_URL = "http://localhost:8080"
 
 window.addEventListener("DOMContentLoaded", () => {
-    if (document.querySelector(".reservation_info")) {
+    if (document.querySelector(".reservation-info")) {
         loadPerformanceDetail();
     }
 });
@@ -117,6 +120,7 @@ async function detailFunction(performanceId) {
 }
 
 
+
 // 1. 페이지 로드 시 공연 상세 정보 가져오기
 async function loadPerformanceDetail() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -129,8 +133,43 @@ async function loadPerformanceDetail() {
     const infoTime = document.getElementById("infoTime");
     const infoCaster = document.getElementById("infoCaster");
 
-
     infoTime.innerText = `${r.schedules[0].performanceScheduleStartTime}`;
 
+    console.log(r.castMembers.length);
+    infoCaster.innerHTML = `<div class="info-caster"><p class="info-caster-list">출연진</p></div>`;
+    for(let i = 0; i < r.castMembers.length; i++){
+        infoCaster.innerHTML += `
+        <div class="info-caster">${r.castMembers[i].castMemberName}</div>`;
+    }
+
+    const performanceImage = document.getElementById("performanceImage");
+    const performanceTitle = document.getElementById("performanceTitle");
+    const performanceDate = document.getElementById("performanceDate");
+    const performanceAddress = document.getElementById("performanceAddress");
+
+    performanceImage.innerHTML = `
+    <img src=${r.performanceImagePath} />`;
+    performanceTitle.innerText = `${r.performanceTitle}`;
+    performanceDate.innerText = `${r.schedules[0].performanceScheduleStartDate} ~`;
+    performanceAddress.innerText = `${r.performanceAddress}`;
 
 }
+
+const first = document.querySelectorAll(".prev-btn");
+first.addEventListener("click", () => {
+    alert("첫 번째 페이지입니다.");
+})
+
+const stepBtn = document.querySelectorAll(".next-btn");
+const tabs = document.querySelectorAll(".tab-content");
+
+stepBtn.addEventListener("click", () => {
+
+    const tabReservationInfo = document.getElementById("tabReservationInfo");
+
+    if(tabReservationInfo)
+    tabReservationInfo.classList.remove("active")
+
+
+    document.getElementById("tabSeatInfo").classList.add("active");
+})
