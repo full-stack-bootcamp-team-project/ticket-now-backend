@@ -20,3 +20,41 @@ if(loginForm != null){
         }
     })
 }
+
+// 로그인 내 팝업 생성
+const findIdBtn = document.querySelector(".login-find-button");
+const backdrop = document.getElementById("backdrop");
+const modal = document.getElementById("findIdModal");
+const cancelBtn = document.getElementById("cancelBtn");
+const submitBtn = document.getElementById("submitBtn");
+
+// 모달 열기
+findIdBtn.addEventListener("click", () => {
+    backdrop.classList.remove("hidden");
+    modal.classList.remove("hidden");
+});
+
+// 모달 닫기 함수
+function closeModal() {
+    modal.classList.add("hidden");
+    backdrop.classList.add("hidden");
+}
+
+// 닫기 버튼 클릭
+cancelBtn.addEventListener("click", closeModal);
+
+// 확인 버튼 클릭
+submitBtn.addEventListener("click", () => {
+    const name = document.getElementById("nameInput").value.trim();
+    const ssn1 = document.getElementById("ssn1").value.trim();
+    const ssn2 = document.getElementById("ssn2").value.trim();
+
+    if (!name || !ssn1 || !ssn2) {
+        alert("모든 항목을 입력해주세요.");
+        return;
+    }
+
+    alert(`입력 확인!\n이름: ${name}\n주민번호: ${ssn1}-${ssn2}`);
+    closeModal();
+});
+
