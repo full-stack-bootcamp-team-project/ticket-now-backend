@@ -100,7 +100,7 @@ renderCalendar(currentYear, currentMonth);
 const API_BASE_URL = "http://localhost:8080"
 
 window.addEventListener("DOMContentLoaded", () => {
-    if(document.querySelector(".reservation_info")){
+    if (document.querySelector(".reservation_info")) {
         loadPerformanceDetail();
     }
 });
@@ -109,7 +109,7 @@ async function detailFunction(performanceId) {
 
     const res = await fetch(API_BASE_URL + `/api/performance/detail?performanceId=${performanceId}`);
 
-    if(!res.ok){
+    if (!res.ok) {
         throw new Error("공연 정보를 불러오는데 실패했습니다.")
     }
 
@@ -130,12 +130,7 @@ async function loadPerformanceDetail() {
     const infoCaster = document.getElementById("infoCaster");
 
 
-
-
     infoTime.innerText = `${r.schedules[0].performanceScheduleStartTime}`;
 
 
-
-
-}
 }
