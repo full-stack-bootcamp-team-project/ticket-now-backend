@@ -1,6 +1,7 @@
 package com.ticketnow.user.model.service;
 
 import com.ticketnow.user.model.dto.User;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface UserService {
     void userUpdatePassword(String userId, String newPassword);
 
     // 유저 정보 조회 -> 마이페이지
-    User userGetInfo(String userId);
+    User userGetInfo(HttpSession session);
 
     // 비밀번호 찾기 -> 마이페이지
     boolean userConfirmPassword(String userId, String currentPassword);

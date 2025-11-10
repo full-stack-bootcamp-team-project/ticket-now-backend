@@ -13,9 +13,9 @@
     </insert>
 
     <!-- 특정 사용자 예매 조회 -->
-    <select id="getReservation" resultType="Reservation">
+    <select id="getReservation" resultType="UserReservationViewDto">
         SELECT *
-        FROM reservation
+        FROM UserReservationViewDto
         WHERE userId = #{userId}
     </select>
 

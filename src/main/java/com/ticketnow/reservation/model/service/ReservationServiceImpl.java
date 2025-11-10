@@ -1,7 +1,10 @@
 package com.ticketnow.reservation.model.service;
 
 import com.ticketnow.reservation.model.dto.Reservation;
+import com.ticketnow.reservation.model.dto.UserReservationViewDto;
 import com.ticketnow.reservation.model.mapper.ReservationMapper;
+import com.ticketnow.user.model.dto.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +22,9 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public List<Reservation> getReservation(String userId) {
+    public List<UserReservationViewDto> getReservation(HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        String userId = loginUser.getUserId();
         return reservationMapper.getReservation(userId);
     }
 
