@@ -35,16 +35,29 @@ async function loadPerformanceDetail() {
     const image = document.getElementById("performanceBodyImage");
     const headerTitle = document.getElementById("performanceHeaderTitle");
     const performanceHeaderCategory = document.getElementById("performanceHeaderCategory");
+    const performanceCategory = document.getElementById("performanceCategory");
+    const performanceTitle = document.getElementById("performanceTitle");
+    const performanceAddress = document.getElementById("performanceAddress");
+    const performanceScheduleStartDate = document.getElementById("performanceScheduleStartDate");
+    const performanceScheduleStartTime = document.getElementById("performanceScheduleStartTime");
+    const performancePrice = document.getElementById("performancePrice");
+    const performanceInfo = document.getElementById("performanceInfo");
+
 
     headerTitle.innerText = p.performanceTitle;
-    // headerTitle.innerText = p.castMembers[0].castMemberId; // 목록 가져오는 형태
-
     image.innerHTML = `
     <img src="${p.performanceImagePath}" class="load-image" />
     `;
     performanceHeaderCategory.innerHTML = `
     <p class="performance-header-ranking"> ${p.performanceCategory} > ${p.performanceCategory} 주간 순위 ${p.performanceRanking}위</p>
     `;
+    performanceCategory.innerText = `${p.performanceCategory}`;
+    performanceTitle.innerText = `${p.performanceTitle}`;
+    performanceAddress.innerText = `${p.performanceAddress}`;
+    performanceScheduleStartDate.innerText = `${p.schedules[0].performanceScheduleStartDate}`;
+    performanceScheduleStartTime.innerText = `${p.schedules[0].performanceScheduleStartTime}`;
+    performancePrice.innerText = `${Number(p.performancePrice).toLocaleString()}원`;
+    performanceInfo.innerText = `${p.performanceInfo}`;
 
     const reservationBtn = document.getElementById("reservationBtn");
 
