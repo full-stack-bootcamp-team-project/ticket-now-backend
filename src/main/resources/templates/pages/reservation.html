@@ -5,107 +5,190 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>TicketNow - 예매페이지</title>
     <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/pages/reservation.css">
 </head>
 <body>
 <div class="body">
-    <div class="reservation_container">
-        <div class="set_info">
+    <div class="reservation-container">
+        <div class="tab-content active" id="tabReservationInfo" data-tab="info">
             <div class="date-wrap">
                 <div class="info">
                     <span>STEP1</span>날짜 선택
                 </div>
-                <div class="date-month">
-                    <button type="button" class="month_move" id="monthPrev" data-ym="2025-10-01"><</button>
-                    <span id="monthThis">2025.11</span>
-                    <button type="button" class="month_move" id="monthNext" data-ym="2025-12-01">></button>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button class="calendar-header-prev" id="calendarPrev"></button>
+                        <div id="monthYear"></div>
+                        <button class="calendar-header-next" id="calendarNext"></button>
+                    </div>
+                    <div class="calendar-body">
+                        <div class="days">
+                            <div class="day">일</div>
+                            <div class="day">월</div>
+                            <div class="day">화</div>
+                            <div class="day">수</div>
+                            <div class="day">목</div>
+                            <div class="day">금</div>
+                            <div class="day">토</div>
+                        </div>
+                        <div class="dates" id="dates"></div>
+                    </div>
                 </div>
-                <table class="date-day">
-                    <thead>
-                        <tr>
-                            <th>일</th>
-                            <th>월</th>
-                            <th>화</th>
-                            <th>수</th>
-                            <th>목</th>
-                            <th>금</th>
-                            <th>토</th>
-                        </tr>
-                    </thead>
-                    <tbody id="month-number">
-                        <tr>
-                            <td class="sun"></td>
-                            <td class="mon"></td>
-                            <td class="tue"></td>
-                            <td class="wed"></td>
-                            <td class="thu"></td>
-                            <td class="fri"></td>
-                            <td class="sat">1</td>
-                        </tr>
-                        <tr>
-                            <td class="sun">2</td>
-                            <td class="mon">3</td>
-                            <td class="tue">4</td>
-                            <td class="wed">5</td>
-                            <td class="thu">6</td>
-                            <td class="fri">7</td>
-                            <td class="sat">8</td>
-                        </tr>
-                        <tr>
-                            <td class="sun">9</td>
-                            <td class="mon">10</td>
-                            <td class="tue">11</td>
-                            <td class="wed">12</td>
-                            <td class="thu">13</td>
-                            <td class="fri">14</td>
-                            <td class="sat">15</td>
-                        </tr>
-                        <tr>
-                            <td class="sun">16</td>
-                            <td class="mon">17</td>
-                            <td class="tue">18</td>
-                            <td class="wed">19</td>
-                            <td class="thu">20</td>
-                            <td class="fri">21</td>
-                            <td class="sat">22</td>
-                        </tr>
-                        <tr>
-                            <td class="sun">23</td>
-                            <td class="mon">24</td>
-                            <td class="tue">25</td>
-                            <td class="wed">26</td>
-                            <td class="thu">27</td>
-                            <td class="fri">28</td>
-                            <td class="sat">29</td>
-                        </tr>
-                        <tr>
-                            <td class="sun">30</td>
-                            <td class="mon"></td>
-                            <td class="tue"></td>
-                            <td class="wed"></td>
-                            <td class="thu"></td>
-                            <td class="fri"></td>
-                            <td class="sat"></td>
-                        </tr>
-
-                    </tbody>
-                </table>
                 <div class="info">
                     <span>STEP12</span>시간 선택
                 </div>
-                <div class="choice_date">
+                <div class="choice-date" style="display: none">
                     <div>
-                    <span class="info-time">21:00</span>
+                    <span class="info-time" id="infoTime">21:00</span>
                     </div>
-                    <p class="info-caster"><span>출연진</span> 김서연, 박슬기</p>
+                    <p class="info-caster" id="infoCaster"></p>
                 </div>
             </div>
         </div>
+        <div class="tab-content" id="tabSeatInfo" data-tab="seat">
+            <div class="date-wrap">
+                <div class="info">
+                    <span>STEP3</span>좌석선택
+                </div>
+                <div class="stage-wrap">
+                    <div class="stage-title">STAGE</div>
+                    <!-- 1층 -->
+                    <div class="floor-title">1F</div>
+                    <div class="section-flex">
+                        <div class="section-seat-num">
+                            <p class="seat-num">1</p>
+                            <p class="seat-num">2</p>
+                            <p class="seat-num">3</p>
+                            <p class="seat-num">4</p>
+                            <p class="seat-num">5</p>
+                            <p class="seat-num">6</p>
+                            <p class="seat-num">7</p>
+                            <p class="seat-num">8</p>
+                        </div>
+                        <div class="section-flex-gap">
+                            <div class="section-wrap" data-section="A">
+                                <div class="section-name">A</div>
+                                <div class="seats" style="grid-template-columns: repeat(8, 20px);" id="A"></div>
+                            </div>
+                            <div class="section-wrap" data-section="B">
+                                <div class="section-name">B</div>
+                                <div class="seats seats-big" style="grid-template-columns: repeat(8, 20px);" id="B"></div>
+                            </div>
+                            <div class="section-wrap" data-section="C">
+                                <div class="section-name">C</div>
+                                <div class="seats" style="grid-template-columns: repeat(8, 20px);" id="C"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2층 -->
+                    <div class="floor-title">2F</div>
+                    <div class="section-flex">
+                        <div class="section-seat-num">
+                            <p class="seat-num">1</p>
+                            <p class="seat-num">2</p>
+                            <p class="seat-num">3</p>
+                            <p class="seat-num">4</p>
+                            <p class="seat-num">5</p>
+                            <p class="seat-num">6</p>
+                            <p class="seat-num">7</p>
+                            <p class="seat-num">8</p>
+                        </div>
+                        <div class="section-flex-gap">
+                            <div class="section-wrap" data-section="D">
+                                <div class="section-name">D</div>
+                                <div class="seats" style="grid-template-columns: repeat(8, 20px);" id="D"></div>
+                            </div>
+                            <div class="section-wrap" data-section="E">
+                                <div class="section-name">E</div>
+                                <div class="seats seats-big" style="grid-template-columns: repeat(8, 20px);" id="E"></div>
+                            </div>
+                            <div class="section-wrap" data-section="F">
+                                <div class="section-name">F</div>
+                                <div class="seats" style="grid-template-columns: repeat(8, 20px);" id="F"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-seats" id="selectedSeats">좌석을 선택해주세요.</div>
+                </div>
 
-        <div class="reservation_info">
-            <p>데이터 확인</p>
+            </div>
+
+
         </div>
+        <div class="tab-content" id="tabPrice" data-tab="price">
+            <!-- 탭 안에 탭을 만들어야함 -->
+        </div>
+        <div class="tab-content" id="tabFinal" data-tab="price"></div>
 
+
+        <div class="reservation-info" id="reservationInfo">
+            <div class="performance-info">
+                <div class="performance-info-img"
+                    id="performanceImage">이미지</div>
+                <div class="performance-info-content">
+                    <p class="performance-info-content-title"
+                        id="performanceTitle">제목</p>
+                    <p class="performance-info-content-text"
+                        id="performanceDate">날짜</p>
+                    <p class="performance-info-content-text"
+                        id="performanceAddress">장소</p>
+                </div>
+            </div>
+            <div class="reservation-detail">
+                <span class="reservation-choice">선택내역</span>
+                <div class="reservation-choice-detail">
+                    <p class="reservation-choice-detail-title">날짜</p>
+                    <p class="reservation-choice-detail-content"
+                        id="reservationDate"></p>
+                </div>
+                <div class="reservation-choice-detail">
+                    <p class="reservation-choice-detail-title">시간</p>
+                    <p class="reservation-choice-detail-content"
+                        id="reservationTime"></p>
+                </div>
+                <div class="reservation-choice-detail">
+                    <p class="reservation-choice-detail-title">매수</p>
+                    <p class="reservation-choice-detail-content"
+                        id="reservationSeatLength"></p>
+                </div>
+                <div class="reservation-choice-detail">
+                    <p class="reservation-choice-detail-title">좌석</p>
+                    <p class="reservation-choice-detail-content"
+                        id="reservationSeat"></p>
+                </div>
+            </div>
+            <div class="reservation-price">
+                <span class="reservation-price-title">결제내역</span>
+                <div class="reservation-price-detail">
+                    <p class="reservation-price-detail-title">티켓금액</p>
+                    <p class="reservation-price-detail-content"></p>
+                </div>
+                <div class="reservation-price-detail">
+                    <p class="reservation-price-detail-title">애매수수료</p>
+                    <p class="reservation-price-detail-content"></p>
+                </div>
+                <div class="reservation-price-detail">
+                    <p class="reservation-price-detail-title">배송료</p>
+                    <p class="reservation-price-detail-content"></p>
+                </div>
+                <div class="reservation-price-detail">
+                    <p class="reservation-price-detail-title">총 금액(+)</p>
+                    <p class="reservation-price-detail-content"></p>
+                </div>
+            </div>
+            <div class="final-price">
+                <div class="final-price-detail">
+                    <p class="final-price-money">최종 결제금액</p>
+                    <p class="final-price-money">원</p>
+                </div>
+            </div>
+            <div class="choice-btn">
+                <button type="button" class="prev-btn" id="prevBtn">닫기</button>
+                <button type="button" class="next-btn" id="nextBtn">다음단계</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
+<script src="/js/reservation.js"></script>
 </html>
