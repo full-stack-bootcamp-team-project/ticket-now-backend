@@ -7,6 +7,14 @@
     max-height : 800px;
 }
 
+.tab-content.active {
+    padding-left: 100px;
+    display: block;
+}
+
+.tab-content {
+    display: none;
+}
 
 .tab-content.active {
     padding-left: 100px;
@@ -170,6 +178,9 @@
 .choice-date {
     border : 1px solid black;
     border-radius: 10px;
+    width: 450px;
+    padding-left: 20px;
+    padding-top : 10px;
     padding : 20px;
     width: 450px;
 }
@@ -192,6 +203,48 @@
 }
 /*****************************************/
 
+
+/* 공연 정보*/
+.reservation-info {
+    border-left: 1px solid #BDBDBD;
+    margin : 30px 30px 50px 0;
+    width: 350px;
+}
+
+.performance-info {
+    border-bottom : 1px solid #BDBDBD;
+    display: flex;
+    margin: 20px;
+}
+
+.info-caster-list {
+    color : #616161;
+}
+/*****************************************/
+
+.performance-info-img {
+    min-width : 100px;
+    max-width:  100px;
+    min-height : 150px;
+    max-height:  150px;
+    margin: 0 20px 20px 0;
+
+}
+
+.performance-info-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.performance-info-content {
+    margin-bottom : 20px;
+}
+
+.performance-info-content-title {
+    font-size: 20px;
+    font-weight: bold;
+}
 
 /* 공연 정보*/
 .reservation-info {
@@ -236,6 +289,25 @@
     line-height: 19px;
     color : #757575;
     margin : 20px 0;
+}
+
+.reservation-detail {
+    border-bottom : 1px solid #BDBDBD;
+    margin: 0 20px 20px 20px;
+
+}
+
+.reservation-choice {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+}
+
+.reservation-choice-detail {
+    display: flex;
+    margin: 10px 0;
+}
+
 }
 
 .reservation-detail {
@@ -319,6 +391,12 @@
 .choice-btn {
     display: flex;
     justify-content: space-between;
+    padding : 20px;
+    gap : 20px;
+}
+
+.prev-btn {
+    width: 50%;
 }
 
 .prev-btn {
@@ -331,6 +409,23 @@
     font-size: 18px;
     line-height: 22px;
     font-weight: 500;
+    display: none;
+    cursor: pointer;
+    border: none;
+}
+
+.prev-btn:hover{
+   background-color: #616161;
+}
+
+
+.prev-btn.active{
+    display: block;
+}
+
+
+.next-btn {
+    width: 50%;
 }
 
 .next-btn {
@@ -343,4 +438,147 @@
     font-size: 18px;
     line-height: 22px;
     font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+
+.next-btn:hover{
+    background-color: #E88619;
+}
+
+
+.choice-btn .next-btn:only-child,
+.choice-btn.next-btn[style*="width:100%"] {
+    width: 100% !important;}
+
+.tab-content {
+    display: none;
+}
+
+
+.tab-content.active{
+    padding-left: 100px;
+    display: block;
+}
+
+
+.stage-wrap {
+    width: 574px;
+}
+.stage-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7px;
+    width: 100%;
+    height: 55px;
+    font-size: 26px;
+    line-height: 31px;
+    font-weight: 600;
+    color: var(--1-GRAY-0);
+    text-align: center;
+    background: var(--1-GRAY-400);
+    margin-bottom: 12px;
+}
+
+.floor-title {
+    justify-content: center;
+    align-items: center;
+    margin-left: 7px;
+    width: 100%;
+    height: 24px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+    color: var(--1-GRAY-0);
+    text-align: center;
+    background: var(--1-GRAY-300);
+    margin-bottom: 20px;
+}
+
+.section-flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+.section-flex-gap {
+    display: flex;
+    justify-content: flex-start;
+    gap: 44px;
+}
+
+.section-seat-num {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-right: 7px;
+    padding-top: 23px;
+}
+
+.seat-num {
+    height: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--1-GRAY-900);
+    text-align: center;
+}
+
+.section-wrap{
+
+}
+.section-wrap .section-name {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--1-GRAY-900);
+    text-align: center;
+    margin-bottom: 8px;
+}
+.section-wrap .seat {
+    display: inline-block;
+    min-width: 20px;
+    width: 20px;
+    min-height: 14px;
+    height: 14px;
+    background: var(--1-MAIN);
+    cursor: pointer;
+}
+
+.section-wrap .seat input {
+    display: none;
+}
+
+.section-wrap .seat:has(input:checked) {
+    background: var(--1-GRAY-900) url("../../images/seat-checked.png") no-repeat center/100%;
+}
+
+.section-wrap .seat:has(input:disabled) {
+    background: var(--1-GRAY-300);
+}
+
+.seats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 116px;
+}
+.seats-big {
+    max-width: 236px;
+}
+.selected-seats{
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+    color: var(--1-GRAY-900);
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: 1px solid var(--1-GRAY-900);
 }
