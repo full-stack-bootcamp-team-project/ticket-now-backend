@@ -4,6 +4,11 @@ const API_BASE_URL = "http://localhost:8080"
 // URL Parameters
 const urlParams = new URLSearchParams(window.location.search);
 const performanceId = urlParams.get("performanceId");
+<!-- todo 달력 -->
+const monthYear = document.getElementById('monthYear');
+const dates = document.getElementById('dates');
+const calendarPrev = document.getElementById('calendarPrev');
+const calendarNext = document.getElementById('calendarNext');
 
 // Wait for DOM to be fully loaded
 window.addEventListener("DOMContentLoaded", () => {
@@ -165,6 +170,17 @@ window.addEventListener("DOMContentLoaded", () => {
         1:{prev:"이전단계", next:"다음단계"},
         2:{prev:"이전단계", next:"예약하기"},
         3:{prev:"닫기", next:"마이페이지 이동"}
+    console.log(`선택된 날짜: ${selectedDate}`);
+
+    const choiceDate = document.querySelector('.choice-date');
+    choiceDate.style.display = 'block';
+});
+
+calendarPrev.addEventListener('click', () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
     }
 
 // Seat selection
@@ -205,6 +221,11 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+calendarNext.addEventListener('click', () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
     }
 
     function updateSelectedSeats() {
@@ -238,6 +259,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function getActiveTabIndex() {
         return Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
+window.addEventListener("DOMContentLoaded", () => {
+    if (document.querySelector(".reservation-info")) {
+        loadPerformanceDetail();
     }
 
     function updateButtons(){
@@ -276,6 +300,10 @@ window.addEventListener("DOMContentLoaded", () => {
         tabs[currentIndex - 1].classList.add('active');
         updateButtons();
     })
+
+// 1. 페이지 로드 시 공연 상세 정보 가져오기
+async function loadPerformanceDetail() {
+    const urlParams = new URLSearchParams(window.location.search);
 
     nextBtn.addEventListener('click', () => {
         const currentIndex = getActiveTabIndex();
@@ -335,3 +363,43 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
 }); // End of DOMContentLoaded
+    infoTime.innerText = `${r.schedules[0].performanceScheduleStartTime}`;
+
+    console.log(r.castMembers.length);
+    infoCaster.innerHTML = `<div class="info-caster"><p class="info-caster-list">출연진</p></div>`;
+    for(let i = 0; i < r.castMembers.length; i++){
+        infoCaster.innerHTML += `
+        <div class="info-caster">${r.castMembers[i].castMemberName}</div>`;
+    }
+
+    const performanceImage = document.getElementById("performanceImage");
+    const performanceTitle = document.getElementById("performanceTitle");
+    const performanceDate = document.getElementById("performanceDate");
+    const performanceAddress = document.getElementById("performanceAddress");
+
+    performanceImage.innerHTML = `
+    <img src=${r.performanceImagePath} />`;
+    performanceTitle.innerText = `${r.performanceTitle}`;
+    performanceDate.innerText = `${r.schedules[0].performanceScheduleStartDate} ~`;
+    performanceAddress.innerText = `${r.performanceAddress}`;
+
+}
+
+const first = document.querySelectorAll(".prev-btn");
+first.addEventListener("click", () => {
+    alert("첫 번째 페이지입니다.");
+})
+
+const stepBtn = document.querySelectorAll(".next-btn");
+const tabs = document.querySelectorAll(".tab-content");
+
+stepBtn.addEventListener("click", () => {
+
+    const tabReservationInfo = document.getElementById("tabReservationInfo");
+
+    if(tabReservationInfo)
+    tabReservationInfo.classList.remove("active")
+
+
+    document.getElementById("tabSeatInfo").classList.add("active");
+})

@@ -6,6 +6,7 @@
         <title>로그인</title>
         <link rel="stylesheet" href="/css/style.css" />
         <link rel="stylesheet" href="/css/pages/login.css">
+        <link rel="stylesheet" href="/css/pages/loginModal.css">
     </head>
     <body>
         <th:block th:replace="~{header}"></th:block>
@@ -36,21 +37,26 @@
                 </form>
 
                 <div class="login-find-line">
-                    <button type="button" class="login-find-button font-right">이메일 찾기</button>
-                    <button type="button" class="login-find-button">비밀번호 찾기</button>
+                    <button type="button" class="login-find-button font-right" id="findId">이메일 찾기</button>
+                    <button type="button" class="login-find-button" id="findPassword">비밀번호 찾기</button>
                 </div>
 
                 <div class="login-signup-line">
-                    <span>계정이 없으신가요?</span>
+                    <span class="signup-text">계정이 없으신가요?</span>
                     <button type="button" class="signup-button">회원가입</button>
                 </div>
             </div>
         </div>
 
         <th:block th:replace="~{footer}"></th:block>
+        <div class="modal-wrap">
+            <!-- backdrop -->
+            <div id="backdrop" class="backdrop hidden"></div>
 
-        <th:block th:replace="~{pages/findId}"></th:block>
-<!--        <th:block th:replace="~{pages/findPassword}"></th:block>-->
+            <th:block th:replace="~{pages/findId}"></th:block>
+            <th:block th:replace="~{pages/findPassword}"></th:block>
+        </div>
         <script src="/js/login.js"></script>
+        <script src="/js/loginModal.js"></script>
     </body>
 </html>
