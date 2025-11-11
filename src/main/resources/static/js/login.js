@@ -1,7 +1,8 @@
 // 이메일 비밀번호 미작성시 로그인 제한
 const loginEmail = document.querySelector("#loginForm input[name='userEmail']")
-const loginForm = document.querySelector("#loginForm");
+const loginForm = document.getElementById("loginForm");
 const loginPw= document.querySelector("#loginForm input[name='userPw']");
+const signupBtn = document.getElementById("signupBtn");
 
 if(loginForm != null){
     loginForm.addEventListener("submit",e=>{
@@ -20,3 +21,7 @@ if(loginForm != null){
         }
     })
 }
+
+signupBtn.addEventListener("click", () => {
+    window.open("/user/signup","_self")
+})
