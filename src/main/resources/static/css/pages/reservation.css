@@ -169,7 +169,7 @@
 .choice-date {
     border : 1px solid black;
     border-radius: 10px;
-    width: 450px;
+    width: 470px;
     padding-left: 20px;
     padding-top : 10px;
 }
@@ -500,3 +500,127 @@
     border-radius: 10px;
     border: 1px solid var(--1-GRAY-900);
 }
+
+/* 결제 수단 css */
+.payment-info {
+    color: #757575;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 30px;
+}
+
+.payment-title {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.tab-button-container {
+    border: 1px solid #BDBDBD;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.tab-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    padding : 20px;
+    color : #757575;
+    font-size: 18px;
+    line-height: 22px;
+    box-sizing: border-box;
+}
+
+#tabBank {
+    border-right: 1px solid #BDBDBD;
+}
+
+#tabEasy {
+    border-left: 1px solid #BDBDBD;
+}
+
+
+.tab-button.active {
+    background-color: #FF3B30;
+    color: white;
+    font-weight: bold;
+}
+
+.tab-result {
+    display: none;
+}
+
+.tab-result.active {
+    display: block;
+}
+
+.payment-bank,
+.payment-card,
+.payment-easy {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 20px 0;
+    font-weight: 500;
+}
+
+.choice-payment {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, auto);
+    border-top: 1px solid #BDBDBD;
+    border-bottom: 1px solid #BDBDBD;
+    text-align: center;
+}
+
+.payment-list {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    border-top: 1px solid #BDBDBD;
+    border-right: 1px solid #BDBDBD;
+    cursor: pointer;
+}
+
+.payment-list:nth-child(-n+5) {
+    border-top: none;
+}
+
+.payment-list:nth-child(5n) {
+    border-right: none;
+}
+
+.check-ticketnow {
+    background-color: #EEEEEE;
+    margin-top: 30px;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.ticketnow-info {
+    display: flex;
+    justify-content: left;
+}
+
+.ticketnow-title {
+    color: #757575;
+    width: 100px;
+}
+
+.payment-bank-title {
+    padding: 10px 0;
+    font-size: 14px;
+    line-height: 18px;
+    color: #757575;
+}
+
+.payment-bank-content {
+    padding: 3px 0;
+}
+

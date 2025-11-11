@@ -207,11 +207,18 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function updateSelectedSeats() {
+    async function updateSelectedSeats() {
         const display = selectedSeats.length ? selectedSeats.join(', ') : '좌석을 선택해주세요.';
         const selectedSeatsElement = document.getElementById('selectedSeats');
         const reservationSeat = document.getElementById("reservationSeat");
         const reservationSeatLength = document.getElementById("reservationSeatLength");
+        const reservationPrice = document.getElementById("reservationPrice");
+        const reservationCharge = document.getElementById("reservationCharge");
+        const reservationDelivery = document.getElementById("reservationDelivery");
+        const reservationTotalPrice = document.getElementById("reservationTotalPrice");
+        const finalPrice = document.getElementById("finalPrice");
+
+        const p = await detailFunction(performanceId);
 
         if (selectedSeatsElement) {
             selectedSeatsElement.textContent = display;
@@ -219,7 +226,13 @@ window.addEventListener("DOMContentLoaded", () => {
             reservationSeatLength.innerText = `${selectedSeats.length}`;
 
             reservationSeat.innerHTML = selectedSeats.map(item => `<p>${item}</p>`).join('');
+            reservationPrice.innerText = `${Number(selectedSeats.length * p.performancePrice).toLocaleString() + " 원"}`;
+            reservationCharge.innerText = Number(4000).toLocaleString() + " 원";
+            reservationDelivery.innerText = "0";
+            reservationTotalPrice.innerText = `${Number(selectedSeats.length * p.performancePrice + 4000).toLocaleString() + " 원"}`;
+            finalPrice.innerText = `${Number(selectedSeats.length * p.performancePrice + 4000).toLocaleString() + " 원"}`;
         }
+
     }
 
     document.addEventListener('change', (e) => {
@@ -301,12 +314,12 @@ window.addEventListener("DOMContentLoaded", () => {
                     return false;
                 }
                 break;
-                const selectedTime = document.querySelector(".time-selected");
-                if(!selectedTime) {
-                    alert("시간을 선택해주세요.")
-                    return false;
-                }
-                break;
+                // const selectedTime = document.querySelector(".time-selected");
+                // if(!selectedTime) {
+                //     alert("시간을 선택해주세요.")
+                //     return false;
+                // }
+                // break;
             case 1:
                 if(selectedSeats.length === 0) {
                     alert("좌석을 선택해주세요.")
