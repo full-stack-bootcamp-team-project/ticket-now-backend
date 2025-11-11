@@ -16,6 +16,14 @@ body {
 input {
     caret-color: var(--1-MAIN);
 }
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+    box-shadow: 0 0 0 1000px white inset;
+}
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: #000;
+    text-fill-color:  #000;
+}
 
 /* input */
 .default-input {
@@ -31,7 +39,7 @@ input {
     width: 100%;
     font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--1-GRAY-900);
 }
 .default-input input::placeholder {

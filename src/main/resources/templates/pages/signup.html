@@ -16,20 +16,19 @@
 
             <div th:if="${error}" class="error-message" th:text="${error}"></div>
 
-            <form id="signupForm">
+            <form action="/user/signup" method="POST" name="signUpForm" id="signUpForm">
                 <div class="form-group">
                     <div class="default-input-wrap">
-                        <label for="email" class="input-label">이메일<span class="essential">*</span></label>
+                        <label for="userEmail" class="input-label">이메일<span class="essential">*</span></label>
 
                         <div class="default-input-button">
                             <div class="default-input">
-                                <input type="text" id="email" placeholder="이메일 입력">
+                                <input type="email" name="userEmail" id="userEmail" placeholder="이메일 입력">
                             </div>
-                            <button type="button" class="gray-button duplicate-button">중복확인</button>
+                            <button type="button" class="gray-button duplicate-button" id="duplicateBtn">중복확인</button>
                         </div>
 
-                        <p class="input-validation input-validation-error">error code</p>
-                        <!--<p class="input-validation input-validation-success">success code</p>-->
+                        <p class="input-validation"></p>
                     </div>
                 </div>
 
@@ -39,13 +38,10 @@
 
                         <div class="default-input password-view">
                             <input type="password" id="userPw" name="userPw" placeholder="비밀번호 입력" required>
-                            <button type="button" class="password-view-button"></button>
-                            <!-- class 추가로 버튼 아이콘 변경 -->
                             <button type="button" class="password-view-button password-off"></button>
                         </div>
 
-                        <p class="input-validation input-validation-error">error code</p>
-                        <!--<p class="input-validation input-validation-success">success code</p>-->
+                        <p class="input-validation"></p>
                     </div>
                 </div>
 
@@ -55,25 +51,21 @@
 
                         <label class="default-input password-view">
                             <input type="password" id="checkUserPw" name="checkUserPw" placeholder="비밀번호 확인" required>
-                            <button type="button" class="password-view-button"></button>
-                            <!-- class 추가로 버튼 아이콘 변경 -->
                             <button type="button" class="password-view-button password-off"></button>
                         </label>
 
-                        <p class="input-validation input-validation-error">error code</p>
-                        <!--<p class="input-validation input-validation-success">success code</p>-->
+                        <p class="input-validation"></p>
                     </div>
                 </div>
 
                 <div class="default-input-wrap">
-                    <label for="name" class="input-label">이름<span class="essential">*</span></label>
+                    <label for="userName" class="input-label">이름<span class="essential">*</span></label>
 
                     <div class="default-input">
-                        <input type="text" id="name" name="name" placeholder="이름 입력">
+                        <input type="text" id="userName" name="userName" placeholder="이름 입력">
                     </div>
 
-                    <p class="input-validation input-validation-error">error code</p>
-                    <!--<p class="input-validation input-validation-success">success code</p>-->
+                    <p class="input-validation"></p>
                 </div>
 
                 <div class="default-input-wrap">
@@ -81,11 +73,11 @@
 
                     <div class="radio-list">
                         <div class="radio-item">
-                            <input type="radio" id="male" name="gender" value="m" class="radio-input">
+                            <input type="radio" id="male" name="gender" value="M" class="radio-input">
                             <label for="male" class="radio-label">남성</label>
                         </div>
                         <div class="radio-item">
-                            <input type="radio" id="female" name="gender" value="f" class="radio-input">
+                            <input type="radio" id="female" name="gender" value="F" class="radio-input">
                             <label for="female" class="radio-label">여성</label>
                         </div>
                     </div>
@@ -96,27 +88,25 @@
 
                     <div class="default-input-flex">
                         <div class="default-input">
-                            <input type="text" id="ssn1" name="ssn1">
+                            <input type="text" id="userSSN1" name="ssn1">
                         </div>
                         <span>-</span>
                         <div class="default-input">
-                            <input type="text" id="ssn2" name="ssn2">
+                            <input type="text" id="userSSN2" name="ssn2">
                         </div>
                     </div>
 
-                    <p class="input-validation input-validation-error">error code</p>
-                    <!--<p class="input-validation input-validation-success">success code</p>-->
+                    <p class="input-validation"></p>
                 </div>
 
                 <div class="default-input-wrap">
-                    <label for="nickName" class="input-label">닉네임<span class="essential">*</span></label>
+                    <label for="userNickName" class="input-label">닉네임<span class="essential">*</span></label>
 
                     <div class="default-input">
-                        <input type="text" id="nickName" name="nickName" placeholder="닉네임 입력">
+                        <input type="text" id="userNickName" name="userNickName" placeholder="닉네임 입력">
                     </div>
 
-                    <p class="input-validation input-validation-error">error code</p>
-                    <!--<p class="input-validation input-validation-success">success code</p>-->
+                    <p class="input-validation"></p>
                 </div>
 
                 <div class="default-input-wrap">
@@ -135,11 +125,10 @@
                             <input type="tel" id="tel3" name="tel2">
                         </div>
 
-                        <button type="button" class="gray-button duplicate-button">중복확인</button>
+                        <button type="button" class="gray-button duplicate-button" id=duplicateBtn">중복확인</button>
                     </div>
 
-                    <p class="input-validation input-validation-error">error code</p>
-                    <!--<p class="input-validation input-validation-success">success code</p>-->
+                    <p class="input-validation"></p>
                 </div>
 
                 <div class="default-input-wrap">
@@ -148,17 +137,17 @@
                     <div class="address-input-wrap">
                         <div class="default-input-flex">
                             <div class="default-input">
-                                <input type="text" id="address1" name="address" placeholder="우편번호">
+                                <input type="text" id="postcode" name="userAddress" placeholder="우편번호">
                             </div>
-                            <button type="button" class="line-button">검색</button>
+                            <button type="button" class="line-button" id="searchAddress">검색</button>
                         </div>
 
                         <div class="default-input">
-                            <input type="text" id="address2" name="address" placeholder="도로명/지번 주소">
+                            <input type="text" id="address" name="userAddress" placeholder="도로명/지번 주소">
                         </div>
 
                         <div class="default-input">
-                            <input type="text" id="address3" name="address" placeholder="상세 주소">
+                            <input type="text" id="detailAddress" name="userAddress" placeholder="상세 주소">
                         </div>
                     </div>
                 </div>
@@ -169,6 +158,9 @@
     </div>
 
     <th:block th:replace="~{footer}"></th:block>
+
+    <!-- 주소 검색 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <script src="/js/signup.js"></script>
     </body>
