@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             /^[가-힣a-zA-Z]{2,10}$/.test(v) || "이름은 2~10자, 한글 또는 영문만 가능합니다.",
         nickname: (v) =>
             /^[가-힣a-zA-Z]{2,10}$/.test(v) || "닉네임은 2~10자, 한글 또는 영문만 가능합니다.",
+        // 아무것도 치지 않았을 때 validation 넣기
         ssn: (v) => {
             const [s1, s2] = v.split("-");
             if (!/^\d+$/.test(s1) || !/^\d+$/.test(s2)) return "숫자만 입력 가능합니다.";
