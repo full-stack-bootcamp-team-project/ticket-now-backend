@@ -38,4 +38,7 @@ public interface UserService {
 
     // 유저 핸드폰 번호 중복 확인
     boolean checkPhone(String userPhone);
+
+    // 유저 주민등록번호 중복 확인
+    boolean checkSSN(String userSSN);
 }
