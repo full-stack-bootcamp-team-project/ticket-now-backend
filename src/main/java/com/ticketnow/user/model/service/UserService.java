@@ -34,8 +34,8 @@ public interface UserService {
     void userUpdateInfo(User user);
 
     // 유저 이메일 중복 확인
-    boolean checkEmail(String userId, String userEmail);
+    boolean checkEmail(String userEmail);
 
     // 유저 핸드폰 번호 중복 확인
-    boolean checkPhone(String userId, String userPhone);
+    boolean checkPhone(String userPhone);
 }
