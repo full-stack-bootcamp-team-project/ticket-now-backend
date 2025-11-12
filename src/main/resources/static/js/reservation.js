@@ -5,10 +5,14 @@ const API_BASE_URL = "http://localhost:8080"
 const urlParams = new URLSearchParams(window.location.search);
 const performanceId = urlParams.get("performanceId");
 
+let selectedScheduleId = null;
+let selectedSeats = [];
+
 // Wait for DOM to be fully loaded
 window.addEventListener("DOMContentLoaded", () => {
 
-// Calendar setup
+    // Calendar setup
+    // 달력
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
     const calendarPrev = document.getElementById('calendarPrev');
@@ -54,8 +58,9 @@ window.addEventListener("DOMContentLoaded", () => {
             ) {
                 classes += ' today';
             }
-
-            html += `<div class="${classes}" data-date="${year}-${month + 1}-${date}"><p class="date">${date}</p></div>`;
+            const formattedMonth = String(month + 1).padStart(2, '0');
+            const formattedDate = String(date).padStart(2, '0');
+            html += `<div class="${classes}" data-date="${year}-${formattedMonth}-${formattedDate}"><p class="date">${date}</p></div>`;
         }
 
         // Next month dates
@@ -70,7 +75,8 @@ window.addEventListener("DOMContentLoaded", () => {
         dates.innerHTML = html;
     }
 
-// Date click event
+    // Date click event
+    // 달력 클릭 이벤트
     dates.addEventListener('click', async (e) => {
         const target = e.target.closest('.date-area');
         if (!target || target.classList.contains('inactive')) return;
@@ -87,14 +93,58 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const d = await detailFunction(performanceId);
 
+        const infoTime = document.getElementById("infoTime");
+        const infoCaster = document.getElementById("infoCaster");
+
+        let found = false; // 날짜 존재 여부 표시
+
+        for (let i = 0; i < d.schedules.length; i++) {
+            const date = d.schedules[i].performanceScheduleStartDate;
+            console.log("DB 날짜:", date);
+
+            if (date === selectedDate) {
+                console.log("선택한 날짜의 스케줄:", d.schedules[i]);
+                const scheduleId = d.schedules[i].performanceScheduleId;
+                selectedScheduleId = d.schedules[i].performanceScheduleId;
+                console.log("scheduleId:", scheduleId);
+                found = true;
+
+                infoTime.style.display = "block";
+                infoCaster.style.display = "flex";
+
+                infoTime.innerText = `${d.schedules[i].performanceScheduleStartTime}`;
+                infoCaster.innerHTML = `<div class="info-caster"><p class="info-caster-list">출연진</p></div>`;
+
+                for(let j = 0; j < d.castMembers.length; j++){
+                    infoCaster.innerHTML += `
+                <div class="info-caster">${d.castMembers[j].castMemberName}</div>`;
+                }
+
+                // sendScheduleIdToServer(scheduleId); DB 보내는 방법
+
+                break;
+            }
+        }
+
+        if (!found) {
+            alert("해당하는 날짜에 공연이 없습니다.");
+            infoTime.style.display = "none";
+            infoCaster.style.display = "none";
+        }
+
+
         const reservationDate = document.getElementById("reservationDate");
         const reservationTime = document.getElementById("reservationTime");
 
         const [year, month, day] = selectedDate.split('-');
         reservationDate.innerText = `${year}년 ${month}월 ${day}일`;
         reservationTime.innerText = `${d.schedules[0].performanceScheduleStartTime}`;
+
+
+
     });
 
+    // 달력 이전 버튼 클릭
     calendarPrev.addEventListener('click', () => {
         currentMonth--;
         if (currentMonth < 0) {
@@ -104,6 +154,7 @@ window.addEventListener("DOMContentLoaded", () => {
         renderCalendar(currentYear, currentMonth);
     });
 
+    // 달력 다음 버튼 클릭
     calendarNext.addEventListener('click', () => {
         currentMonth++;
         if (currentMonth > 11) {
@@ -116,7 +167,8 @@ window.addEventListener("DOMContentLoaded", () => {
     renderCalendar(currentYear, currentMonth);
 
 
-// Data fetching functions
+    // Data fetching functions
+    // 공연 정보 JSON 형식으로 변환
     async function detailFunction(performanceId) {
         const res = await fetch(API_BASE_URL + `/api/performance/detail?performanceId=${performanceId}`);
 
@@ -127,31 +179,39 @@ window.addEventListener("DOMContentLoaded", () => {
         return await res.json();
     }
 
+    // 좌석 정보 JSON 형식으로 변환
+    async function seatFunction(performanceScheduleId){
+
+        const seatRes = await fetch(API_BASE_URL + `/api/performance/seat?performanceScheduleId=${performanceScheduleId}`);
+
+        if(!seatRes.ok){
+            throw new Error("좌석 정보를 불러오는데 실패했습니다.")
+        }
+
+        return await seatRes.json();
+    }
+
+    // 공연 정보 입력
     async function loadPerformanceDetail() {
         const r = await detailFunction(performanceId);
         console.log("DB 데이터 조회 r : ", r)
 
-        const infoTime = document.getElementById("infoTime");
-        const infoCaster = document.getElementById("infoCaster");
 
-        infoTime.innerText = `${r.schedules[0].performanceScheduleStartTime}`;
-
-        console.log(r.castMembers.length);
-        infoCaster.innerHTML = `<div class="info-caster"><p class="info-caster-list">출연진</p></div>`;
-        for(let i = 0; i < r.castMembers.length; i++){
-            infoCaster.innerHTML += `
-        <div class="info-caster">${r.castMembers[i].castMemberName}</div>`;
-        }
 
         const performanceImage = document.getElementById("performanceImage");
         const performanceTitle = document.getElementById("performanceTitle");
         const performanceDate = document.getElementById("performanceDate");
         const performanceAddress = document.getElementById("performanceAddress");
+        const performanceTabImage = document.getElementById("performanceTabImage");
 
         performanceImage.innerHTML = `<img src=${r.performanceImagePath} />`;
         performanceTitle.innerText = `${r.performanceTitle}`;
         performanceDate.innerText = `${r.schedules[0].performanceScheduleStartDate} ~`;
         performanceAddress.innerText = `${r.performanceAddress}`;
+
+        // 마지막 tab 에서 불러올 정보
+        performanceTabImage.innerHTML = `<img src=${r.performanceImagePath} />`;
+
     }
 
 
@@ -206,6 +266,8 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+
 
     async function updateSelectedSeats() {
         const display = selectedSeats.length ? selectedSeats.join(', ') : '좌석을 선택해주세요.';
@@ -269,6 +331,26 @@ window.addEventListener("DOMContentLoaded", () => {
             prevBtn.classList.add('active');
             nextBtn.style.width="";
         }
+
+        const reservationInfo = document.getElementById("reservationInfo");
+        const performanceImage = document.getElementById("performanceImage");
+
+        if (currentIndex === 3) {
+            reservationInfo.style.width = "500px";
+            performanceImage.style.display = "none";
+            prevBtn.onclick = () => {
+                window.close();
+            };
+
+            nextBtn.onclick = () => {
+                window.opener.location.href = "/user/myPage"; // 부모 창 이동
+                window.close(); // 현재 팝업 닫기
+            };
+
+        } else {
+            reservationInfo.style.width = "";
+            performanceImage.style.display = "block";
+        }
     }
 
     prevBtn.addEventListener('click', () => {
@@ -293,14 +375,19 @@ window.addEventListener("DOMContentLoaded", () => {
     nextBtn.addEventListener('click', () => {
         const currentIndex = getActiveTabIndex();
 
-        if (currentIndex >= tabContent.length - 1) {
-            alert('예약이 완료되었습니다!');
-            return;
+        if (currentIndex === 2) {
+
+            if(confirm('예약을 하시겠습니까?')){
+                alert('예약이 완료되었습니다!');
+            } else {
+                return;
+            }
         }
 
         if(!validateStep(currentIndex)) {
             return;
         }
+
         tabContent[currentIndex].classList.remove('active');
         tabContent[currentIndex + 1].classList.add('active');
         updateButtons();
@@ -362,6 +449,17 @@ window.addEventListener("DOMContentLoaded", () => {
             button.classList.add('active');
         })
     })
+
+    async function reservationInfo(performanceScheduleId, seatId, seatNumber) {
+
+        const r = await detailFunction(performanceId);
+
+        const psId = r.schedules[0].performanceScheduleId;
+
+
+        insertReservation(psId, seatId, seatNumber)
+    }
+
 
 
 }); // End of DOMContentLoaded
