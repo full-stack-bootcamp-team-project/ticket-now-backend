@@ -264,15 +264,6 @@ async function checkDuplicate(key, value) {
             showSuccess(el, key, true);
             return true;
         }
-
-        // if (exists)
-        //     return key === "email" ? alert("이메일이 이미 사용 중입니다.") :
-        //         key === "phone" ? alert("휴대폰 번호가 이미 사용 중입니다.") :
-        //             alert("주민등록번호가 이미 사용 중입니다.");
-        //
-        // return key === "email" ? alert("사용 가능한 이메일입니다.") :
-        //     key === "phone" ? alert("사용 가능한 휴대폰 번호입니다.") :
-        //         alert("사용 가능한 주민등록번호입니다.");
     } catch {
         alert("중복 확인 중 오류가 발생했습니다.");
         console.error(err);
@@ -293,19 +284,6 @@ function setupDuplicateButton(buttonId, key) {
         const value = getValue();
 
         await checkDuplicate(key, value);
-
-        // const msg = await checkDuplicate(key, value);
-        // console.log(msg,"msg????")
-        // if (msg) {
-        //     showError(errorEl, msg);
-        //     alert(msg);
-        //     return;
-        // }
-        // const valid = validators[key](value);
-        // if (valid !== true) return showError(errorEl, valid);
-        //
-        //
-        // showSuccess(errorEl, key);
     });
 
     button.disabled = true;
@@ -380,10 +358,7 @@ function daumPostCode(){
                 } else {
                     addr = data.jibunAddress;
                 }
-
-
                 els.postcode.value = data.zonecode;
-
                 els.address.value = addr;
                 els.detailAddress.focus();
             }
