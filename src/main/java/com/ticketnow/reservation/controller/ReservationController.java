@@ -38,9 +38,8 @@ public class ReservationController {
     // 예매 삭제
     @DeleteMapping("/delete")
     public void deleteReservation(@RequestParam String performanceScheduleId,
-                                  @RequestParam String userId,
                                   @RequestParam String seatId,
                                   @RequestParam String seatNumber) {
-        reservationService.deleteReservation(performanceScheduleId, userId, seatId, seatNumber);
+        reservationService.deleteReservation(performanceScheduleId, seatId, seatNumber);
     }
 }

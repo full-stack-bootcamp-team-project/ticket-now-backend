@@ -23,7 +23,6 @@
     <delete id="deleteReservation">
         DELETE FROM reservation
         WHERE performanceScheduleId = #{performanceScheduleId}
-        AND userId = #{userId}
         AND seatId = #{seatId}
         AND seatNumber = #{seatNumber}
     </delete>

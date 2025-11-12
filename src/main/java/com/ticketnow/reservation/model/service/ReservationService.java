@@ -14,5 +14,5 @@ public interface ReservationService {
     List<UserReservationViewDto> getReservation(HttpSession session);
 
     // 예매 삭제
-    void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);
+    void deleteReservation(String performanceScheduleId, String seatId, String seatNumber);
 }

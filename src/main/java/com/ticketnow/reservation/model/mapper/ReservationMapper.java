@@ -15,5 +15,5 @@ public interface ReservationMapper {
     List<UserReservationViewDto> getReservation(String userId);
 
     // 예매 삭제
-    void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber);
+    void deleteReservation(String performanceScheduleId, String seatId, String seatNumber);
 }

@@ -15,6 +15,9 @@ public class UserReservationViewDto {
     // 공연 제목
     private String performanceTitle;
 
+    // 공연 회차 ID
+    private String performanceScheduleId;
+
     // 공연 이미지
     private String performanceImagePath;
 
