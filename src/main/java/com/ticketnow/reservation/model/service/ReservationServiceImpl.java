@@ -29,7 +29,7 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public void deleteReservation(String performanceScheduleId, String userId, String seatId, String seatNumber) {
-        reservationMapper.deleteReservation(performanceScheduleId, userId, seatId, seatNumber);
+    public void deleteReservation(String performanceScheduleId, String seatId, String seatNumber) {
+        reservationMapper.deleteReservation(performanceScheduleId, seatId, seatNumber);
     }
 }
