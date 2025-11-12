@@ -158,7 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // Tab navigation
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
-    const tabs = document.querySelectorAll('.tab-content');
+    const tabContent = document.querySelectorAll('.tab-content');
 
     const buttonTexts = {
         0:{prev:"닫기", next:"다음단계"},
@@ -250,7 +250,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     function getActiveTabIndex() {
-        return Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
+        return Array.from(tabContent).findIndex(tab => tab.classList.contains('active'));
     }
 
     function updateButtons(){
@@ -285,15 +285,15 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        tabs[currentIndex].classList.remove('active');
-        tabs[currentIndex - 1].classList.add('active');
+        tabContent[currentIndex].classList.remove('active');
+        tabContent[currentIndex - 1].classList.add('active');
         updateButtons();
     })
 
     nextBtn.addEventListener('click', () => {
         const currentIndex = getActiveTabIndex();
 
-        if (currentIndex >= tabs.length - 1) {
+        if (currentIndex >= tabContent.length - 1) {
             alert('예약이 완료되었습니다!');
             return;
         }
@@ -301,8 +301,8 @@ window.addEventListener("DOMContentLoaded", () => {
         if(!validateStep(currentIndex)) {
             return;
         }
-        tabs[currentIndex].classList.remove('active');
-        tabs[currentIndex + 1].classList.add('active');
+        tabContent[currentIndex].classList.remove('active');
+        tabContent[currentIndex + 1].classList.add('active');
         updateButtons();
     });
 
@@ -346,6 +346,23 @@ window.addEventListener("DOMContentLoaded", () => {
     if (document.querySelector(".reservation-info")) {
         loadPerformanceDetail();
     }
+    
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const resultBtn = document.querySelectorAll(".tab-result");
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabId = button.dataset.tab;
+            const targetTab = document.getElementById(tabId);
+
+            tabButtons.forEach(tab => tab.classList.remove('active'));
+            resultBtn.forEach(tab => tab.classList.remove('active'));
+
+            targetTab.classList.add('active');
+            button.classList.add('active');
+        })
+    })
+
 
 }); // End of DOMContentLoaded
 

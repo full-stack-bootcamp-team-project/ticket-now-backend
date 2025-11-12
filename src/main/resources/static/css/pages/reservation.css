@@ -311,9 +311,9 @@
 
 .final-price-money {
     padding : 10px;
-    font-size : 18px;
+    font-size : 16px;
     font-weight: 500;
-    line-height: 22px;
+    line-height: 20px;
 }
 
 .choice-btn {
@@ -530,7 +530,7 @@
     justify-content: center;
     width: 100%;
     align-items: center;
-    padding : 20px;
+    padding : 15px;
     color : #757575;
     font-size: 18px;
     line-height: 22px;
@@ -579,7 +579,7 @@
 }
 
 .payment-list {
-    padding: 20px;
+    padding: 10px;
     font-size: 16px;
     line-height: 20px;
     border-top: 1px solid #BDBDBD;
@@ -595,12 +595,25 @@
     border-right: none;
 }
 
+.payment-list img {
+    max-width: 100px;
+    max-height: 40px;
+    object-fit: contain;
+}
+
+.payment-list-content {
+    margin-top : 5px;
+    color : #757575;
+    font-size: 14px;
+    line-height: 18px;
+}
+
 .check-ticketnow {
     background-color: #EEEEEE;
     margin-top: 30px;
     padding: 10px;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 18px;
 }
 
 .ticketnow-info {
@@ -613,14 +626,37 @@
     width: 100px;
 }
 
-.payment-bank-title {
+.pay-select {
+    width: 300px;
+    height: 30px;
+    margin: 20px 0;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #212121;
+    align-items: center;
+    border: 1px solid #BDBDBD;
+}
+
+.pay-select-title {
+    color : #212121;
+}
+.pay-select-choice {
+    color: #616161;
+}
+
+.pay-select-choice:hover {
+    color : #FD9620;
+    background: none;
+}
+
+.payment-banner-title {
     padding: 10px 0;
     font-size: 14px;
     line-height: 18px;
     color: #757575;
 }
 
-.payment-bank-content {
+.payment-banner-content {
     padding: 3px 0;
 }
 
