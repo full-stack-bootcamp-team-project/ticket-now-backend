@@ -49,6 +49,11 @@
     flex-direction: column;
     gap: 12px;
 }
+
+.address-input-wrap input{
+    background-color: var(--1-GRAY-0);
+}
+
 /* 주소 버튼 */
 .line-button {
     max-width: 97px;

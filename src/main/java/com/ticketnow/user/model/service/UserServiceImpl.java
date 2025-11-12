@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     // 회원가입
     @Override
     public void userSignup(User user) {
+        user.setUserId("U" + System.currentTimeMillis()); // id 값 생성
         userMapper.userSignup(user);
     }
 
@@ -79,13 +80,13 @@ public class UserServiceImpl implements UserService {
 
     // 유저 이메일 중복 확인
     @Override
-    public boolean checkEmail(String userId, String userEmail) {
-        return userMapper.checkEmail(userId, userEmail);
+    public boolean checkEmail(String userEmail) {
+        return userMapper.checkEmail(userEmail);
     }
 
     // 유저 핸드폰 번호 중복 확인
     @Override
-    public boolean checkPhone(String userId, String userPhone) {
-        return userMapper.checkPhone(userId, userPhone);
+    public boolean checkPhone(String userPhone) {
+        return userMapper.checkPhone(userPhone);
     }
 }

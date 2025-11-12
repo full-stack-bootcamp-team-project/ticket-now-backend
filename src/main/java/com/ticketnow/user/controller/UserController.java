@@ -142,17 +142,17 @@ public class UserController {
         userService.userUpdateInfo(user);
     }
 
-    // http://localhost:8080/api/user/checkEmail?userId=U001&userEmail=minsu@example.com
+    // http://localhost:8080/api/user/checkEmail?userEmail=minsu@example.com
     // 이메일 중복확인 기능
     @PostMapping("/checkEmail")
-    public boolean checkEmail(@RequestParam String userId, @RequestParam String userEmail) {
-        return userService.checkEmail(userId, userEmail);
+    public boolean checkEmail(@RequestParam String userEmail) {
+        return userService.checkEmail(userEmail);
     }
 
-    // http://localhost:8080/api/user/checkPhone?userId=U001&userPhone=010-1234-5678
+    // http://localhost:8080/api/user/checkPhone?userPhone=010-1234-5678
     // 전화번호 중복확인 기능
     @PostMapping("/checkPhone")
-    public boolean checkPhone(@RequestParam String userId, @RequestParam String userPhone) {
-        return userService.checkPhone(userId, userPhone);
+    public boolean checkPhone(@RequestParam String userPhone) {
+        return userService.checkPhone(userPhone);
     }
 }

@@ -193,8 +193,14 @@ input:-webkit-autofill:active {
 
 /* button all disabled */
 .default-button:disabled,
-.gray-button:disabled
-.line-button:disabled {
+.gray-button:disabled,
+.line-button:disabled,
+.default-button:hover:disabled,
+.gray-button:hover:disabled,
+.line-button:hover:disabled,
+.default-button:active:disabled,
+.gray-button:active:disabled,
+.line-button:active:disabled{
     background-color: var(--1-GRAY-400);
     border: 1px solid var(--1-GRAY-400);
 }
