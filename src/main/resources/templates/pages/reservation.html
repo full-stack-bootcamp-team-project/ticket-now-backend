@@ -132,16 +132,46 @@
                     <div class="tab-result active" id="bank">
                         <p class="payment-bank">입금하실 은행을 선택해주세요.</p>
                         <div class="choice-payment">
-                            <div class="payment-list">농협</div>
-                            <div class="payment-list">국민</div>
-                            <div class="payment-list">우리</div>
-                            <div class="payment-list">기업</div>
-                            <div class="payment-list">씨티</div>
-                            <div class="payment-list">신한</div>
-                            <div class="payment-list">하나</div>
-                            <div class="payment-list">sc</div>
-                            <div class="payment-list">토스</div>
-                            <div class="payment-list">카카오</div>
+                            <div class="payment-list">
+                                <img src="/images/nonghyupbank.png" alt="nonghyupbank"/>
+                                <p class="payment-list-content">농협(중앙)</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/kbbank.png" alt="kbbank"/>
+                                <p class="payment-list-content">국민은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/wooribank.png" alt="wooribank"/>
+                                <p class="payment-list-content">우리은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/ibkbank.png" alt="ibkbank"/>
+                                <p class="payment-list-content">기업은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/citibank.png" alt="citibank"/>
+                                <p class="payment-list-content">씨티은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/shinhanbank.png" alt="shinhanbank"/>
+                                <p class="payment-list-content">신한은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/hanabank.png" alt="hanabank"/>
+                                <p class="payment-list-content">하나은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/scbank.png" alt="scbank"/>
+                                <p class="payment-list-content">SC 제일은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/tossbank.png" alt="tossbank"/>
+                                <p class="payment-list-content">토스뱅크</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/kakaobank.png" alt="kakaobank"/>
+                                <p class="payment-list-content">카카오뱅크</p>
+                            </div>
                         </div>
                         <div class="check-ticketnow">
                             <div class="ticketnow-info">
@@ -153,23 +183,94 @@
                                 <div class="ticketnow-content" id="paymentTimeLimit">2025-10-22(수)23시 59분</div>
                             </div>
                         </div>
-                        <div class="payment-bank-title">
-                            <p class="payment-bank-content">은행에 따라 23시 30분 이후 온라인 입금이 제한될 수 있습니다.</p>
-                            <p class="payment-bank-content">ATM기기로는 가상계좌입금이 불가할 수 있습니다.</p>
+                        <div class="payment-banner-title">
+                            <p class="payment-banner-content">은행에 따라 23시 30분 이후 온라인 입금이 제한될 수 있습니다.</p>
+                            <p class="payment-banner-content">ATM기기로는 가상계좌입금이 불가할 수 있습니다.</p>
                         </div>
                     </div>
                     <div class="tab-result" id="card">
                         <p class="payment-card">결제하실 카드사를 선택해주세요.</p>
+                        <div class="choice-payment">
+                            <div class="payment-list">
+                                <img src="/images/kbbank.png" alt="kbcard"/>
+                                <p class="payment-list-content">국민</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/bccard.png" alt="bccard"/>
+                                <p class="payment-list-content">비씨</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/wooribank.png" alt="wooricard"/>
+                                <p class="payment-list-content">우리</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/samsungcard.png" alt="samsungcard"/>
+                                <p class="payment-list-content">삼성</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/hyundaicard.png" alt="hyundaicard"/>
+                                <p class="payment-list-content">현대</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/shinhanbank.png" alt="shinhancard"/>
+                                <p class="payment-list-content">신한</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/lottecard.png" alt="lottecard"/>
+                                <p class="payment-list-content">롯데</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/citibank.png" alt="citicard"/>
+                                <p class="payment-list-content">씨티</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/hanabank.png" alt="hanacard"/>
+                                <p class="payment-list-content">하나은행</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/nonghyupbank.png" alt="nonghyupcard"/>
+                                <p class="payment-list-content">NK</p>
+                            </div>
+                        </div>
                         <div>
-
+                            <label>
+                                <select class="pay-select" name="pay">
+                                    <option class="pay-select-title">일시불</option>
+                                    <option class="pay-select-choice">1개월</option>
+                                    <option class="pay-select-choice">2개월</option>
+                                    <option class="pay-select-choice">3개월</option>
+                                </select>
+                            </label>
                         </div>
                     </div>
                     <div class="tab-result" id="easy">
                         <p class="payment-easy">간편결제를 선택해주세요.</p>
-                        <div>
-
+                        <div class="choice-payment">
+                            <div class="payment-list">
+                                <img src="/images/kbbank.png" alt="kbpay"/>
+                                <p class="payment-list-content">KB pay</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/kakaopay.png" alt="kakaopay"/>
+                                <p class="payment-list-content">카카오페이</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/naverpay.png" alt="naverpay"/>
+                                <p class="payment-list-content">네이버</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/paycopay.png" alt="paycopay"/>
+                                <p class="payment-list-content">페이코</p>
+                            </div>
+                            <div class="payment-list">
+                                <img src="/images/tosspay.png" alt="tosspay"/>
+                                <p class="payment-list-content">토스페이</p>
+                            </div>
                         </div>
-
+                        <div class="payment-banner-title">
+                            <p class="payment-banner-content">100만원 이상 결제 시 추가 인증이 필요합니다.</p>
+                            <p class="payment-banner-content">등록된 카드의 서비스 및 제휴 혜택이 지원되지 않습니다.</p>
+                        </div>
                     </div>
 
                 </div>
