@@ -155,4 +155,11 @@ public class UserController {
     public boolean checkPhone(@RequestParam String userPhone) {
         return userService.checkPhone(userPhone);
     }
+
+    // http://localhost:8080/api/user/checkSSN?userSSN=900101-1234567
+    // 주민등록번호 중복확인 기능
+    @PostMapping("/checkSSN")
+    public boolean checkSSN(@RequestParam String userSSN) {
+        return userService.checkSSN(userSSN);
+    }
 }

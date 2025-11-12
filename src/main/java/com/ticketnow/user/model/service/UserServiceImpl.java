@@ -89,4 +89,10 @@ public class UserServiceImpl implements UserService {
     public boolean checkPhone(String userPhone) {
         return userMapper.checkPhone(userPhone);
     }
+
+    // 유저 주민등록번호 중복 확인
+    @Override
+    public boolean checkSSN(String userSSN) {
+        return userMapper.checkSSN(userSSN);
+    }
 }

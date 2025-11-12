@@ -20,6 +20,14 @@ const $ = (selector) => document.querySelector(selector);
 const els = Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, $(v)]));
 
 
+// ------------------------ debounce ------------------------
+function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
 
 // ------------------------ 유효성 검사 공통 - 주민등록번호, 휴대폰 번호 ------------------------
 const basicValidators = {
@@ -68,9 +76,9 @@ const showSuccess = (el,key,alertFlag=false) => {
     el.textContent = key === "email" || key === "phone" || key === "ssn" ? "사용 가능합니다." : "작성 완료";
     el.className = "input-validation input-validation-success";
 
-    if(alertFlag && (key === "email" || key === "phone")){ // 🔹 버튼 클릭 시만 alert
+    if(alertFlag && (key === "email" || key === "phone")){
         const label = key === "email" ? "이메일" : "휴대폰 번호";
-        alert(`${label} 사용 가능합니다!`);
+        alert(`${label} 사용 가능합니다`);
     }
 };
 
@@ -154,6 +162,62 @@ for (const [key, inputs] of Object.entries(eventMap)) {
         });
     });
 }
+
+// ------------------------ SSN 실시간 서버 체크 ------------------------
+const checkSSNRealtime = debounce(async () => {
+    const value = `${els.ssn1.value.trim()}-${els.ssn2.value.trim()}`;
+    const el = els.ssn2.closest(".default-input-wrap").querySelector(".input-validation");
+
+    const msg = validators.ssn(value);
+    if (msg !== true) {
+        showError(el, msg);
+        return;
+    }
+
+    try {
+        const res = await fetch("/api/user/checkSSN", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `userSSN=${encodeURIComponent(value)}`
+        });
+
+        if (!res.ok) {
+            console.error("서버 오류:", await res.text());
+            showError(el, "서버 응답 오류입니다.");
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data === true || data.exists === true) {
+            showError(el, "이미 사용 중인 주민등록번호입니다.");
+        } else {
+            showSuccess(el, "ssn");
+        }
+    } catch (err) {
+        showError(el, "중복 확인 중 오류가 발생했습니다.");
+    }
+}, 200);
+
+
+// ------------------------ 이벤트 등록 ------------------------
+[els.ssn1, els.ssn2].forEach(input => {
+    input.addEventListener("input", () => {
+        const value = `${els.ssn1.value.trim()}-${els.ssn2.value.trim()}`;
+        const el = els.ssn2.closest(".default-input-wrap").querySelector(".input-validation");
+        const msg = validators.ssn(value);
+
+        if (msg !== true) {
+            showError(el, msg);
+        } else {
+            el.textContent = "";  // 기존 메시지 제거
+            el.className = "input-validation";
+            checkSSNRealtime();
+        }
+    });
+});
 
 // ------------------------ 비밀번호 보기 토글 ------------------------
 document.querySelectorAll(".password-view-button").forEach((btn) => {
@@ -267,8 +331,8 @@ form.addEventListener("submit", async (e) => {
     const isValid = await validateForm();
 
     if (!isValid) {
-    alert("입력값을 다시 확인해주세요.");
-    return;
+        alert("입력값을 다시 확인해주세요.");
+        return;
     }
 
     // 폼 데이터 수집
