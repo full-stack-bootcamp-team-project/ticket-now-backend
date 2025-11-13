@@ -296,6 +296,7 @@ input:-webkit-autofill:active {
     height: 302px;
     transition: all 0.3s;
     object-fit: cover;
+    border: 1px solid var(--1-GRAY-100);
 }
 .performance-list .performance-item img:hover{
     transform: scale(1.08);
