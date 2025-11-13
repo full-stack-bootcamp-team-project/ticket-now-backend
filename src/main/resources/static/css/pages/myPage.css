@@ -58,17 +58,38 @@
 .content-area .myPage-container .tab-content-container .tab-content .user-info-area {
     display: flex;
     flex-direction: column;
-
 }
 
 .content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info {
     padding: 15px 15px;
     font-size: 20px;
-    line-height: 45px;
+    line-height: 35px;
     color: var(--1-GRAY-900);
     background-color: var(--1-GRAY-100);
     border-radius: 4px;
     border-left: 6px solid var(--1-MAIN);
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info input,
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info select {
+    padding: 5px 10px;
+    border: 1px solid var(--1-GRAY-400);
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 .content-area .myPage-container .tab-content-container .tab-content .button-area {

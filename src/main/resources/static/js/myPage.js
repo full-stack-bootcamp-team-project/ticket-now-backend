@@ -1,233 +1,577 @@
+// ---------------------- 전역 상수 & 변수 ----------------------//
 const API_BASE_URL = "http://localhost:8080/api";
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
+const ITEMS_PER_PAGE = 4;
+
+const GRADE_MAP = {
+    bronze: "동",
+    silver: "은",
+    gold: "금"
+};
 
 let userData = null;
 let reservationData = [];
+let validationFlags = {
+    emailChecked: false,
+    phoneChecked: false,
+    originalEmail: "",
+    originalPhone: ""
+};
 
-fetchUserData().then(user => {
-    userData = user;
-    renderUserInfo(userData);
-}).catch(err => console.error("유저 정보 로드 오류:", err));
+// ---------------------- 초기 데이터 로드 ----------------------//
+(function init() {
+    Promise.all([fetchUserData(), fetchReservationData()])
+        .then(([user, reservations]) => {
+            userData = user;
+            reservationData = reservations;
+            renderUserInfo(userData);
+            setupPagination(reservationData, ITEMS_PER_PAGE);
+        })
+        .catch(err => {
+            console.error("초기 데이터 로드 오류:", err);
+            showError("데이터를 불러오는데 실패했습니다.");
+        });
+})();
 
-fetchReservationData().then(data => {
-    reservationData = data;
-    setupPagination(reservationData, 4);
-}).catch(err => console.error("예약 정보 로드 오류:", err));
+// ---------------------- 유효성 규칙 ----------------------//
+const validationRules = {
+    email: (v) => {
+        if (!v) return "이메일을 입력해주세요.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "이메일 형식이 올바르지 않습니다.";
+        return true;
+    },
+    pw: (v) => {
+        if (!v) return "비밀번호를 입력해주세요.";
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/.test(v)) {
+            return "비밀번호는 8자 이상, 영문/숫자/특수문자를 포함해야 합니다.";
+        }
+        return true;
+    },
+    pwCheck: (v, pw) => {
+        if (!v) return "비밀번호 확인을 입력해주세요.";
+        if (v !== pw) return "비밀번호가 일치하지 않습니다.";
+        return true;
+    },
+    name: (v) => {
+        if (!v) return "이름을 입력해주세요.";
+        if (!/^[가-힣a-zA-Z]{2,10}$/.test(v)) return "이름은 2~10자, 한글 또는 영문만 가능합니다.";
+        return true;
+    },
+    nickname: (v) => {
+        if (!v) return "닉네임을 입력해주세요.";
+        if (!/^[가-힣a-zA-Z]{2,10}$/.test(v)) return "닉네임은 2~10자, 한글 또는 영문만 가능합니다.";
+        return true;
+    },
+    phone: (v) => {
+        if (!v) return "전화번호를 입력해주세요.";
+        const parts = v.split("-");
+        if (parts.length !== 3) return "휴대폰 번호 형식이 올바르지 않습니다. (예: 010-1234-5678)";
 
-function fetchUserData() {
-    return fetch(`${API_BASE_URL}/user/myPage`, {
-        method: "GET",
-        credentials: "include"
-    }).then(res => res.json());
+        const [t1, t2, t3] = parts;
+        if (!/^\d+$/.test(t1) || !/^\d+$/.test(t2) || !/^\d+$/.test(t3)) {
+            return "숫자만 입력 가능합니다.";
+        }
+        if (t1.length !== 3 || (t2.length !== 3 && t2.length !== 4) || t3.length !== 4) {
+            return "휴대폰 번호 형식이 올바르지 않습니다. (예: 010-1234-5678)";
+        }
+        return true;
+    },
+    gender: (v) => v ? true : "성별을 선택해주세요."
+};
+
+// ---------------------- 유효성 함수 ----------------------//
+function validateField(key, value, extra) {
+    const rule = validationRules[key];
+    if (!rule) return true;
+    return key === "pwCheck" ? rule(value, extra) : rule(value);
 }
 
-function fetchReservationData() {
-    return fetch(`${API_BASE_URL}/reservation/get`, {
-        method: "GET",
-        credentials: "include"
-    }).then(res => res.json());
+function validateForm(data) {
+    const errors = {};
+    let isValid = true;
+
+    for (const key in data) {
+        if (!data.hasOwnProperty(key)) continue;
+        const value = data[key];
+        const extra = key === "pwCheck" ? data.pw : "";
+        const result = validateField(key, value, extra);
+
+        if (result !== true) {
+            isValid = false;
+            errors[key] = result;
+        }
+    }
+
+    return {isValid: isValid, errors: errors};
 }
 
+// ---------------------- 탭 전환 ----------------------//
+document.querySelectorAll(".tab-button").forEach(function(button) {
+    button.addEventListener("click", function() {
+        document.querySelectorAll(".tab-button, .tab-content").forEach(function(el) {
+            el.classList.remove("active");
+        });
+        button.classList.add("active");
+        document.getElementById(button.dataset.tab).classList.add("active");
+    });
+});
+
+// ---------------------- 이벤트 위임 ----------------------//
+document.addEventListener("click", function(e) {
+    const target = e.target;
+    const id = target.id;
+    const classList = target.classList;
+
+    const handlers = {
+        updateUserInfo: function() { renderUserInfoForm(userData); },
+        cancelUpdate: function() {
+            resetValidationFlags();
+            renderUserInfo(userData);
+        },
+        saveUserInfo: handleSaveUserInfo,
+        updatePassword: handleUpdatePassword,
+        checkEmail: handleCheckEmail,
+        checkPhone: handleCheckPhone
+    };
+
+    if (handlers[id]) {
+        handlers[id]();
+        return;
+    }
+
+    if (classList.contains("delete-button")) {
+        handleDeleteReservation(target);
+    }
+});
+
+document.addEventListener("input", function(e) {
+    const target = e.target;
+
+    if (target.id === "inputUserEmail") {
+        if (target.value !== validationFlags.originalEmail) {
+            validationFlags.emailChecked = false;
+        }
+    }
+
+    if (target.id === "inputUserPhone") {
+        if (target.value !== validationFlags.originalPhone) {
+            validationFlags.phoneChecked = false;
+        }
+    }
+});
+
+// ---------------------- 렌더링 함수 ----------------------//
 function renderUserInfo(user) {
-    const userInfoArea = document.getElementById("userInfo");
-    userInfoArea.innerHTML = ` 
- <div class="user-info-area">
-    <div class="user-info">
-        <div>이름: ${user.userName}</div>
-        <div>이메일: ${user.userEmail}</div>
-        <div>성별: ${user.userGender}</div>
-        <div>닉네임: ${user.userNickname}</div>
-        <div>주소: ${user.userAddress}</div>
-        <div>전화번호: ${user.userPhone}</div>
-        <div>등급: ${user.grade} 등급 회원</div>
-    </div>
-   </div>
-    <div class="button-area">
-        <button class="update-button" id="updateUserInfo">개인정보 수정</button>
-        <button class="update-button" id="updatePassword">비밀번호 변경</button>
-    </div>
-`
+    const grade = GRADE_MAP[user.grade] || "일반";
+    const gender = user.userGender === "M" ? "남성" : "여성";
+
+    document.getElementById("userInfo").innerHTML = `
+        <div class="user-info-area">
+            <div class="user-info">
+                <div>이름: ${escapeHtml(user.userName)}</div>
+                <div>이메일: ${escapeHtml(user.userEmail)}</div>
+                <div>성별: ${gender}</div>
+                <div>닉네임: ${escapeHtml(user.userNickname)}</div>
+                <div>주소: ${escapeHtml(user.userAddress)}</div>
+                <div>전화번호: ${escapeHtml(user.userPhone)}</div>
+                <div>등급: ${grade} 등급 회원</div>
+            </div>
+        </div>
+        <div class="button-area">
+            <button class="update-button" id="updateUserInfo">개인정보 수정</button>
+            <button class="update-button" id="updatePassword">비밀번호 변경</button>
+        </div>`;
 }
 
 function renderUserInfoForm(user) {
-    const userInfoArea = document.getElementById("userInfo");
-    userInfoArea.innerHTML = `
- <div class="user-info-area">
-    <div class="user-info">
-        <div>
-            이름: <input type="text" id="Name" value="${user.userName}">
+    const grade = GRADE_MAP[user.grade] || "일반";
+    const isMale = user.userGender === "M";
+
+    validationFlags.originalEmail = user.userEmail;
+    validationFlags.originalPhone = user.userPhone;
+    validationFlags.emailChecked = true;
+    validationFlags.phoneChecked = true;
+
+    document.getElementById("userInfo").innerHTML = `
+        <div class="user-info-area">
+            <div class="user-info">
+                <div>이름: <input id="inputUserName" value="${escapeHtml(user.userName)}" /></div>
+                <div>이메일: 
+                    <input id="inputUserEmail" type="email" value="${escapeHtml(user.userEmail)}" />
+                    <button id="checkEmail">중복 확인</button>
+                </div>
+                <div>
+                    성별:
+                    <label><input type="radio" name="userGender" value="M" ${isMale ? "checked" : ""}>남성</label>
+                    <label><input type="radio" name="userGender" value="F" ${!isMale ? "checked" : ""}>여성</label>
+                </div>
+                <div>닉네임: <input id="inputUserNickname" value="${escapeHtml(user.userNickname)}" /></div>
+                <div>주소: <input id="inputUserAddress" value="${escapeHtml(user.userAddress)}" /></div>
+                <div>전화번호: 
+                    <input id="inputUserPhone" value="${escapeHtml(user.userPhone)}" />
+                    <button id="checkPhone">중복 확인</button>
+                </div>
+                <div>등급: ${grade} 등급 회원</div>
+            </div>
         </div>
-        <div>
-            이메일: 
-            <input type="email" id="Email" value="${user.userEmail}">
-            <button type="button" id="checkEmail">중복 확인</button>
-        </div>
-        <div>
-            성별: 
-                <input type="radio">남자</input>
-                <input type="radio">여자</input>
-        </div>
-        <div>
-            닉네임: <input type="text" id="Nickname" value="${user.userNickname}">
-        </div>
-        <div>
-            주소: <input type="text" id="Address" value="${user.userAddress}">
-        </div>
-        <div>
-            전화번호: 
-            <input type="text" id="Phone" value="${user.userPhone}">
-            <button type="button" id="checkPhone">중복 확인</button>
-        </div>
-        <div>
-            등급: ${user.grade} 등급 회원
-        </div>
-    </div>
-   </div>
-    <div class="button-area">
-        <button class="update-button" id="saveUserInfo">저장</button>
-        <button class="update-button" id="cancelUpdate">취소</button>
-    </div>
-`
+        <div class="button-area">
+            <button class="update-button" id="saveUserInfo">저장</button>
+            <button class="update-button" id="cancelUpdate">취소</button>
+        </div>`;
 }
 
-
 function setupPagination(items, itemsPerPage) {
+    const area = document.querySelector(".reservation-info-area");
     const pagination = document.getElementById("reservationPagination");
-    const reservationInfoArea = document.querySelector(".reservation-info-area");
-
-    if (!reservationInfoArea || !pagination) return;
 
     if (!items || items.length === 0) {
-        reservationInfoArea.innerHTML = `<p>예매 내역이 없습니다.</p>`;
-        pagination.innerHTML = '';
+        area.innerHTML = `<p>예매 내역이 없습니다.</p>`;
+        pagination.innerHTML = "";
         return;
     }
 
     const totalPages = Math.ceil(items.length / itemsPerPage);
 
-    const renderPage = (page) => {
-        const startIndex = (page - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const pageItems = items.slice(startIndex, endIndex);
+    function renderPage(page) {
+        const start = (page - 1) * itemsPerPage;
+        const currentItems = items.slice(start, start + itemsPerPage);
+        area.innerHTML = currentItems.map(renderReservation).join("");
 
-        reservationInfoArea.innerHTML = pageItems.map(renderReservation).join('');
+        const buttons = [];
+        for (let i = 1; i <= totalPages; i++) {
+            const isActive = i === page ? "active" : "";
+            buttons.push(`<button class="${isActive}" data-page="${i}">${i}</button>`);
+        }
+        pagination.innerHTML = buttons.join("");
 
-        pagination.innerHTML = Array.from({length: totalPages}, (_, i) => {
-            const pageNum = i + 1;
-            return `<button class="${pageNum === page ? 'active' : ''}" data-page="${pageNum}">${pageNum}</button>`;
-        }).join('');
-
-        pagination.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', () => {
-                const pageNum = parseInt(button.dataset.page);
-                renderPage(pageNum);
+        pagination.querySelectorAll("button").forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                renderPage(parseInt(btn.dataset.page, 10));
             });
         });
-    };
+    }
+
     renderPage(1);
 }
 
-function renderReservation(reservation) {
-    return `        
+function renderReservation(r) {
+    return `
         <div class="reservation-info" 
-             data-schedule="${reservation.performanceScheduleId}" 
-             data-seat-id="${reservation.seatId}" 
-             data-seat-number="${reservation.seatNumber}">
-            <img src="${reservation.performanceImagePath}" 
-                 alt="${reservation.performanceTitle}" 
-                 class="performance-img"/>
+             data-schedule="${r.performanceScheduleId}" 
+             data-seat-id="${r.seatId}" 
+             data-seat-number="${r.seatNumber}">
+            <img src="${escapeHtml(r.performanceImagePath)}" alt="${escapeHtml(r.performanceTitle)}" class="performance-img" />
             <div class="performance-info">
-                <div>${reservation.performanceTitle}</div>
-                <div>좌석: ${reservation.seatNumber}열 (${reservation.seatId})번</div>
-                <div>공연 일시: ${reservation.performanceScheduleStartDate} ${reservation.performanceScheduleStartTime}</div>
-                <div>예약 일시: ${reservation.reservationDate}</div>
+                <div>${escapeHtml(r.performanceTitle)}</div>
+                <div>좌석: ${escapeHtml(r.seatId)}열 ${escapeHtml(r.seatNumber)}번</div>
+                <div>공연 일시: ${escapeHtml(r.performanceScheduleStartDate)} ${escapeHtml(r.performanceScheduleStartTime)}</div>
+                <div>예약 일시: ${escapeHtml(r.reservationDate)}</div>
             </div>
             <div class="button-area">
-                <button type="button" class="delete-button">예매 취소</button>
+                <button class="delete-button">예매 취소</button>
             </div>
-        </div>
-    `;
+        </div>`;
 }
 
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(tab => tab.classList.remove('active'));
+// ---------------------- 이벤트 핸들러 ----------------------//
+function handleSaveUserInfo() {
+    const formData = {
+        userName: valueOf("inputUserName"),
+        userEmail: valueOf("inputUserEmail"),
+        userGender: getSelectedRadio("userGender"),
+        userNickname: valueOf("inputUserNickname"),
+        userAddress: valueOf("inputUserAddress"),
+        userPhone: valueOf("inputUserPhone")
+    };
 
-        const tabId = button.dataset.tab;
-        const targetTab = document.getElementById(tabId);
+    // 변경된 필드만 검증
+    const changedFields = {};
+    const validationData = {};
 
-        targetTab.classList.add('active');
-        button.classList.add('active');
-    });
-});
-
-document.addEventListener('click', (e) => {
-    const target = e.target;
-
-
-    if (target.id === "updateUserInfo") {
-        renderUserInfoForm(userData);
+    if (formData.userName !== userData.userName) {
+        changedFields.userName = formData.userName;
+        validationData.name = formData.userName;
     }
-    if (target.id === "cancelUpdate") {
-        renderUserInfo(userData);
-    }
-    if (target.id === "saveUserInfo") {
-        const updatedUser = {
-            userName: document.getElementById("inputUserName").value,
-            userEmail: document.getElementById("inputUserEmail").value,
-            userGender: document.getElementById("inputUserGender").value,
-            userNickname: document.getElementById("inputUserNickname").value,
-            userAddress: document.getElementById("inputUserAddress").value,
-            userPhone: document.getElementById("inputUserPhone").value
-        };
 
-        // 서버로 업데이트
-        fetch(`${API_BASE_URL}/api/user/update`, {
-            method: "PUT",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(updatedUser)
-        })
-            .then(res => res.json())
-            .then(data => {
-                userData = data;
-                renderUserInfo(userData);
-                alert("정보가 수정되었습니다.");
-            })
-            .catch(err => console.error("수정 오류:", err));
-    } else if (target.id === "updatePassword") {
-        updatePassword();
-    } else if (target.classList.contains('delete-button')) {
-        const reservationDiv = target.closest('.reservation-info');
-        const scheduleId = reservationDiv.dataset.schedule;
-        const seatId = reservationDiv.dataset.seatId;
-        const seatNumber = reservationDiv.dataset.seatNumber;
+    if (formData.userEmail !== userData.userEmail) {
+        changedFields.userEmail = formData.userEmail;
+        validationData.email = formData.userEmail;
 
-        if (confirm("정말로 예매를 취소하시겠습니까?")) {
-            reservationDiv.remove();
-            reservationData = reservationData.filter(r => !(r.performanceScheduleId == scheduleId && r.seatId == seatId && r.seatNumber == seatNumber));
-            deleteReservation(scheduleId, seatId, seatNumber);
+        if (!validationFlags.emailChecked) {
+            showError("변경된 이메일의 중복 확인을 해주세요.");
+            return;
         }
     }
-});
 
-function updateUserInfo() {
-    // 유저 정보 수정 로직
+    if (formData.userGender !== userData.userGender) {
+        changedFields.userGender = formData.userGender;
+        validationData.gender = formData.userGender;
+    }
+
+    if (formData.userNickname !== userData.userNickname) {
+        changedFields.userNickname = formData.userNickname;
+        validationData.nickname = formData.userNickname;
+    }
+
+    if (formData.userAddress !== userData.userAddress) {
+        changedFields.userAddress = formData.userAddress;
+    }
+
+    if (formData.userPhone !== userData.userPhone) {
+        changedFields.userPhone = formData.userPhone;
+        validationData.phone = formData.userPhone;
+
+        if (!validationFlags.phoneChecked) {
+            showError("변경된 전화번호의 중복 확인을 해주세요.");
+            return;
+        }
+    }
+
+    if (Object.keys(changedFields).length === 0) {
+        showError("변경된 정보가 없습니다.");
+        return;
+    }
+
+    const validation = validateForm(validationData);
+    if (!validation.isValid) {
+        showError(Object.values(validation.errors)[0]);
+        return;
+    }
+
+    updateUserInfo(formData)
+        .then(function(response) {
+            userData = Object.assign({}, userData, formData);
+            renderUserInfo(userData);
+            showSuccess("회원 정보가 수정되었습니다.");
+            resetValidationFlags();
+        })
+        .catch(function(err) {
+            console.error("회원 정보 수정 오류:", err);
+            showError("회원 정보 수정에 실패했습니다.");
+        });
 }
 
-function updatePassword() {
-    // 비밀번호 변경 로직
+function handleCheckEmail() {
+    const email = valueOf("inputUserEmail");
+    const validation = validateField("email", email);
+
+    if (validation !== true) {
+        showError(validation);
+        return;
+    }
+
+    checkEmailDuplicate(email)
+        .then(function(isDuplicate) {
+            if (isDuplicate) {
+                showError("이미 사용 중인 이메일입니다.");
+                validationFlags.emailChecked = false;
+            } else {
+                showSuccess("사용 가능한 이메일입니다.");
+                validationFlags.emailChecked = true;
+                validationFlags.originalEmail = email;
+            }
+        })
+        .catch(function(err) {
+            console.error("이메일 확인 오류:", err);
+            showError("이메일 확인에 실패했습니다.");
+        });
+}
+
+function handleCheckPhone() {
+    const phone = valueOf("inputUserPhone");
+    const validation = validateField("phone", phone);
+
+    if (validation !== true) {
+        showError(validation);
+        return;
+    }
+
+    checkPhoneDuplicate(phone)
+        .then(function(isDuplicate) {
+            if (isDuplicate) {
+                showError("이미 사용 중인 전화번호입니다.");
+                validationFlags.phoneChecked = false;
+            } else {
+                showSuccess("사용 가능한 전화번호입니다.");
+                validationFlags.phoneChecked = true;
+                validationFlags.originalPhone = phone;
+            }
+        })
+        .catch(function(err) {
+            console.error("전화번호 확인 오류:", err);
+            showError("전화번호 확인에 실패했습니다.");
+        });
+}
+
+function handleUpdatePassword() {
+    const newPassword = prompt("새 비밀번호를 입력하세요:");
+    if (!newPassword) return;
+
+    const validation = validateField("pw", newPassword);
+    if (validation !== true) {
+        showError(validation);
+        return;
+    }
+
+    updatePassword(newPassword)
+        .then(function() {
+            showSuccess("비밀번호가 변경되었습니다.");
+        })
+        .catch(function(err) {
+            console.error("비밀번호 변경 오류:", err);
+            showError("비밀번호 변경에 실패했습니다.");
+        });
+}
+
+function handleDeleteReservation(target) {
+    const reservationEl = target.closest(".reservation-info");
+    if (!reservationEl) return;
+
+    if (!confirm("정말로 예매를 취소하시겠습니까?")) return;
+
+    const scheduleId = reservationEl.dataset.schedule;
+    const seatId = reservationEl.dataset.seatId;
+    const seatNumber = reservationEl.dataset.seatNumber;
+
+    deleteReservation(scheduleId, seatId, seatNumber)
+        .then(function() {
+            reservationData = reservationData.filter(function(item) {
+                return !(
+                    item.performanceScheduleId == scheduleId &&
+                    item.seatId == seatId &&
+                    item.seatNumber == seatNumber
+                );
+            });
+            setupPagination(reservationData, ITEMS_PER_PAGE);
+            showSuccess("예매가 취소되었습니다.");
+        })
+        .catch(function(err) {
+            console.error("예매 취소 오류:", err);
+            showError("예매 취소에 실패했습니다.");
+        });
+}
+
+// ---------------------- API 함수 ----------------------//
+function fetchUserData() {
+    return fetch(`${API_BASE_URL}/user/myPage`, {
+        credentials: "include"
+    })
+        .then(handleResponse)
+        .then(function(data) {
+            return data;
+        });
+}
+
+function fetchReservationData() {
+    return fetch(`${API_BASE_URL}/reservation/get`, {
+        credentials: "include"
+    })
+        .then(handleResponse)
+        .then(function(data) {
+            return data;
+        });
+}
+
+function updateUserInfo(user) {
+    return fetch(`${API_BASE_URL}/user/myPage/updateInfo`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+    })
+        .then(handleResponse);
+}
+
+function checkEmailDuplicate(email) {
+    return fetch(`${API_BASE_URL}/user/checkEmail?userEmail=${encodeURIComponent(email)}`, {
+        method: "POST",
+        credentials: "include"
+    })
+        .then(handleResponse);
+}
+
+function checkPhoneDuplicate(phone) {
+    return fetch(`${API_BASE_URL}/user/checkPhone?userPhone=${encodeURIComponent(phone)}`, {
+        method: "POST",
+        credentials: "include"
+    })
+        .then(handleResponse);
+}
+
+function updatePassword(newPassword) {
+    return fetch(`${API_BASE_URL}/user/myPage/updatePassword`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({newPassword: newPassword})
+    })
+        .then(handleResponse);
 }
 
 function deleteReservation(scheduleId, seatId, seatNumber) {
-    const url = `${API_BASE_URL}/reservation/delete?performanceScheduleId=${encodeURIComponent(scheduleId)}&seatId=${encodeURIComponent(seatId)}&seatNumber=${encodeURIComponent(seatNumber)}`;
+    const params = new URLSearchParams({
+        performanceScheduleId: scheduleId,
+        seatId: seatId,
+        seatNumber: seatNumber
+    });
 
-    fetch(url, {
+    return fetch(`${API_BASE_URL}/reservation/delete?${params}`, {
         method: "DELETE",
         credentials: "include"
-    }).then(res => console.log("삭제완료", res.json())).catch(err => console.error("삭제 요청 오류:", err));
+    })
+        .then(handleResponse);
+}
+
+// ---------------------- 유틸리티 함수 ----------------------//
+function handleResponse(response) {
+    if (!response.ok) {
+        return response.text().then(function(text) {
+            throw new Error(`HTTP ${response.status}: ${text}`);
+        });
+    }
+
+    return response.text().then(function(text) {
+        if (!text || text.trim() === "") {
+            return null;
+        }
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            return text;
+        }
+    });
+}
+
+function valueOf(id) {
+    const el = document.getElementById(id);
+    return el && el.value ? el.value.trim() : "";
+}
+
+function getSelectedRadio(name) {
+    const selected = document.querySelector(`input[name="${name}"]:checked`);
+    return selected ? selected.value : "";
+}
+
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function showError(message) {
+    alert(message);
+}
+
+function showSuccess(message) {
+    alert(message);
+}
+
+function resetValidationFlags() {
+    validationFlags.emailChecked = false;
+    validationFlags.phoneChecked = false;
+    validationFlags.originalEmail = "";
+    validationFlags.originalPhone = "";
 }

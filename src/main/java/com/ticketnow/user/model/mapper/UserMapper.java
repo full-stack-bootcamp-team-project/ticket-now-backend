@@ -21,7 +21,7 @@ public interface UserMapper {
 
     // 비밀번호 찾기 -> 비밀번호 변경
     void userUpdatePassword(String userId, String newPassword);
-    
+
     // 유저 정보 조회 -> 마이페이지
     User userGetInfo(String userId);
 
@@ -32,7 +32,7 @@ public interface UserMapper {
     void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword);
 
     // 유저 정보 업데이트
-    void userUpdateInfo(User user);
+    void userUpdateInfo(User user, String userId);
 
     // 유저 이메일 중복 확인
     boolean checkEmail(String userEmail);
