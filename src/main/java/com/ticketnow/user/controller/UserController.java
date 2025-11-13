@@ -24,6 +24,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserServiceImpl userService;
+
     // http://localhost:8080/api/user/signup
     /*
     {
@@ -71,7 +72,6 @@ public class UserController {
             response.sendRedirect("/"); // 없으면 홈
         }
     }
-
 
 
     // http://localhost:8080/api/user/logout
@@ -137,9 +137,9 @@ public class UserController {
     }
     */
     // 개인정보 변경 기능
-    @PutMapping("myPage/updateInfo")
-    public void userUpdateInfo(@RequestBody User user) {
-        userService.userUpdateInfo(user);
+    @PutMapping("/myPage/updateInfo")
+    public void userUpdateInfo(@RequestBody User user, HttpSession session) {
+        userService.userUpdateInfo(user, session);
     }
 
     // http://localhost:8080/api/user/checkEmail?userEmail=minsu@example.com

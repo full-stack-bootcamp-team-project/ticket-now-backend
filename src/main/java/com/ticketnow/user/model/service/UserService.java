@@ -31,7 +31,7 @@ public interface UserService {
     void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword);
 
     // 유저 정보 업데이트
-    void userUpdateInfo(User user);
+    void userUpdateInfo(User user, HttpSession session);
 
     // 유저 이메일 중복 확인
     boolean checkEmail(String userEmail);

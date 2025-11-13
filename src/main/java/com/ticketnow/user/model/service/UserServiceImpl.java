@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     // 유저 로그인
     @Override
     public User userLogin(String userEmail, String userPw) {
-        return  userMapper.userLogin(userEmail, userPw);
+        return userMapper.userLogin(userEmail, userPw);
     }
 
     // 유저 아이디 찾기
@@ -74,8 +74,11 @@ public class UserServiceImpl implements UserService {
 
     // 유저 정보 업데이트
     @Override
-    public void userUpdateInfo(User user) {
-        userMapper.userUpdateInfo(user);
+    public void userUpdateInfo(User user, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        String userId = loginUser.getUserId();
+
+        userMapper.userUpdateInfo(user, userId);
     }
 
     // 유저 이메일 중복 확인
