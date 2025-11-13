@@ -1,7 +1,13 @@
+/***************************************
+메인 container
+***************************************/
 .performance-container {
     width: 1200px;
 }
 
+/***************************************
+performance header
+***************************************/
 .performance-header {
     border-bottom: 1px solid black;
     padding-bottom: 10px;
@@ -10,21 +16,24 @@
 .performance-header-title {
     font-size: 24px;
     font-weight: bold;
-    margin: 30px 20px 15px 20px;
+    padding: 30px 20px 15px 20px;
 }
 
 .performance-header-ranking {
     font-size: 15px;
     line-height: 18px;
-    margin-left: 10px;
+    padding-left: 10px;
 }
 
+/***************************************
+performance info
+***************************************/
 .performance-info {
-    margin: 20px;
+    padding: 30px 20px 20px;
     display: flex;
 }
 
-.load-image {
+.performance-image {
     border: 1px solid black;
     min-width : 450px;
     max-width : 450px;
@@ -32,13 +41,14 @@
     max-height : 600px;
     margin-right: 100px;
 }
-.performance-body-image  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+.load-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
 }
 
-.performance-info-detail{
+.performance-info-detail {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -46,7 +56,6 @@
 
 .performance-info-detail-main {
     border-bottom: 1px solid black;
-    margin-bottom: 20px;
     padding-bottom: 10px;
 }
 
@@ -71,16 +80,16 @@
 }
 
 .ticket-info-title {
-    margin: 15px 0 15px 20px;
+    padding: 15px 0 15px 20px;
 }
 
 .ticket-info-content {
-    margin-left: 20px;
+    padding-left: 20px;
 }
 
 .performance-info-caster {
     display: flex;
-    margin : 15px 10px
+    padding : 15px 10px
 }
 
 .performance-info-caster-data {
@@ -90,7 +99,7 @@
     margin-left: 10px;
 }
 
-.performance-info button{
+.reservation-btn {
     padding: 15px 20px;
     width: 200px;
     background-color: #FD9620;
@@ -101,9 +110,9 @@
     border-radius: 12px;
 }
 
-
-
-
+/***************************************
+performance detail info
+***************************************/
 .performance-check-btn-box {
     display: flex;
     justify-content: center;
@@ -111,7 +120,7 @@
     margin-bottom: 50px;
 }
 
-.performance-check-btn-box button {
+.performance-check-btn {
     padding: 10px 200px;
     font-size: 20px;
     line-height: 24px;
@@ -120,13 +129,13 @@
 
 .performance-check-info {
     display: none;
-    margin-left: 20px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    padding-left: 20px;
+    padding-top: 30px;
+    padding-bottom: 50px;
 }
 
 .performance-check-info-top {
-    padding: 20px 0 10px;
+    padding: 20px 0 10px 20px;
     border-bottom: 2px solid black;
 }
 
@@ -141,13 +150,9 @@
 
 }
 
-.performance-check-info-note {
-
-}
-
 .performance-check-info-note-main,
 .performance-check-info-note-import {
-    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 
 .performance-check-info-note-main-content {
@@ -168,7 +173,7 @@
 .performance-check-info-map-title {
     font-size: 30px;
     line-height: 36px;
-    margin: 40px 20px 20px;
+    padding: 40px 20px 20px;
 }
 
 .performance-check-info-title-content {
@@ -176,7 +181,7 @@
     line-height: 32px;
     font-weight: 600;
     color: #FD9620;
-    margin: 20px 20px 40px;
+    padding: 0 20px 40px;
 }
 
 .performance-check-info-casting {
@@ -205,20 +210,19 @@
     line-height: 24px;
 }
 
-
-
 .performance-check-info-map {
     font-size: 16px;
     line-height: 20px;
 }
 
 .performance-check-info-map-detail {
-
+    padding-bottom: 10px;
 }
 
 #map {
     width: 600px;
     height: 400px;
-    margin: 20px auto 0;
+    padding-top: 20px;
+    margin: 0 auto;
 }
 
