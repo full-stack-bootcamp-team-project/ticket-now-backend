@@ -1,6 +1,6 @@
 <header class="element-header">
     <div class="menu-top">
-        <nav class="menu-top-nav" >
+        <nav class="menu-top-nav" id="headerLoginMenu">
             <a href="/user/login">로그인</a>
             <a href="/user/myPage">마이페이지</a>
         </nav>
@@ -49,5 +49,7 @@
         </div>
     </div>
 </header>
-
+<script>
+    let loginUserEmail = '<%= session.getAttribute("loginUser") != null ? ((User)session.getAttribute("loginUser")).getUserEmail() : "" %>';
+</script>
 <script src="/js/header.js"></script>

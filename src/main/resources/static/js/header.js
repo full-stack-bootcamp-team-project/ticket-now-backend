@@ -1,12 +1,4 @@
-/**
- * header.js - 헤더 공통 기능
- * 모든 페이지에서 로드됨
- */
-
-/**
- * API 기본 URL 설정
- * @constant {string}
- */
+// API 기본 URL 설정
 if (typeof API_BASE_URL === 'undefined') {
     var API_BASE_URL = "http://localhost:8080";
 }
@@ -14,16 +6,65 @@ if (typeof API_BASE_URL === 'undefined') {
 // 검색 타입 관리
 let currentSearchType = 'total';
 let autocompleteTimeout = null;
-
 document.addEventListener('DOMContentLoaded', () => {
+    // 로그인 상태 메뉴 업데이트
+    updateHeaderLoginMenu();
+
+    // 기존 검색 초기화
     initHeaderSearch();
     createAutocompleteContainer();
     searchTypeChange();
 });
 
-/**
- * 헤더 검색 기능 초기화
- */
+// 로그인 상태 메뉴 업데이트
+function updateHeaderLoginMenu() {
+    const menuContainer = document.getElementById('headerLoginMenu');
+    if (!menuContainer) return;
+
+    const isLogin = loginUserEmail && loginUserEmail.trim() !== '';
+
+    if (isLogin) {
+        menuContainer.innerHTML = `
+            <a href="#" id="logoutLink">로그아웃</a>
+            <a href="/user/myPage">마이페이지</a>
+        `;
+
+        const logoutLink = document.getElementById('logoutLink');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                try {
+                    // 서버 로그아웃 호출
+                    const res = await fetch('/user/logout', { method: 'POST' });
+                    if (res.ok) {
+                        // 로그인 상태 변수 초기화
+                        loginUserEmail = "";
+
+                        // 메뉴 즉시 갱신
+                        updateHeaderLoginMenu();
+
+                        // 홈으로 이동
+                        window.location.href = "/";
+                    } else {
+                        alert('로그아웃에 실패했습니다.');
+                    }
+                } catch (err) {
+                    console.error('로그아웃 오류:', err);
+                    alert('서버 오류로 로그아웃에 실패했습니다.');
+                }
+            });
+        }
+
+    } else {
+        menuContainer.innerHTML = `
+            <a href="/user/login">로그인</a>
+            <a href="/user/signup">회원가입</a>
+        `;
+    }
+}
+
+// 헤더 검색 기능 초기화
 function initHeaderSearch() {
     const searchInput = document.getElementById('site-search');
     const searchButton = document.querySelector('.search-icon-button');
@@ -77,9 +118,7 @@ function initHeaderSearch() {
     });
 }
 
-/**
- * 자동완성 컨테이너 생성
- */
+// 자동완성 컨테이너 생성
 function createAutocompleteContainer() {
     const searchBar = document.querySelector('.search-bar');
     if (!searchBar || document.querySelector('.search-autocomplete')) {
@@ -92,9 +131,7 @@ function createAutocompleteContainer() {
     searchBar.appendChild(autocompleteDiv);
 }
 
-/**
- * 자동완성 처리
- */
+// 자동완성 처리
 function handleAutocomplete(keyword) {
     // 이전 타이머 취소
     if (autocompleteTimeout) {
@@ -113,9 +150,7 @@ function handleAutocomplete(keyword) {
     }, 300);
 }
 
-/**
- * 자동완성 결과 가져오기
- */
+// 자동완성 결과 가져오기
 async function fetchAutocompleteResults(keyword) {
     try {
         const response = await fetch(
@@ -136,9 +171,7 @@ async function fetchAutocompleteResults(keyword) {
     }
 }
 
-/**
- * 자동완성 결과 표시
- */
+// 자동완성 결과 표시
 function displayAutocompleteResults(results, keyword) {
     const autocompleteContainer = document.querySelector('.search-autocomplete');
 
@@ -175,9 +208,7 @@ function displayAutocompleteResults(results, keyword) {
     autocompleteContainer.style.display = 'block';
 }
 
-/**
- * 자동완성 항목 선택
- */
+// 자동완성 항목 선택
 function selectAutocomplete(title) {
     const searchInput = document.getElementById('site-search');
     if (searchInput) {
@@ -187,9 +218,7 @@ function selectAutocomplete(title) {
     }
 }
 
-/**
- * 자동완성 숨김
- */
+// 자동완성 숨김
 function hideAutocomplete() {
     const autocompleteContainer = document.querySelector('.search-autocomplete');
     if (autocompleteContainer) {
@@ -197,9 +226,7 @@ function hideAutocomplete() {
     }
 }
 
-/**
- * 검색어 하이라이트
- */
+// 검색어 하이라이트
 function highlightKeyword(text, keyword) {
     if (!keyword) return escapeHtml(text);
 
@@ -210,18 +237,14 @@ function highlightKeyword(text, keyword) {
     return escapedText.replace(regex, '<strong>$1</strong>');
 }
 
-/**
- * HTML 이스케이프
- */
+// HTML 이스케이프
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-/**
- * 헤더에서 검색 실행
- */
+// 헤더에서 검색 실행
 function performHeaderSearch() {
     const searchInput = document.getElementById('site-search');
     const keyword = searchInput.value.trim();
@@ -234,13 +257,8 @@ function performHeaderSearch() {
 
     hideAutocomplete();
 
-    const typeLink =  currentSearchType === "category" ? "keyword" : currentSearchType;
-
     // 검색 페이지로 이동
     window.location.href = `/performance/search?searchType=${currentSearchType}&keyword=${encodeURIComponent(keyword)}`;
-
-
-    // window.location.href = `/performance/search/${typeLink}?searchType=${currentSearchType}&keyword=${encodeURIComponent(keyword)}`;
 }
 
 /**
@@ -291,9 +309,7 @@ function searchTypeChange (){
     });
 }
 
-/**
- * 드롭다운 열기/닫기
- */
+// 드롭다운 열기/닫기
 function toggleDropdown(forceClose = null) {
     const dropdown = document.querySelector('.search-select-list');
     const selectButton = document.querySelector('.select-button');
