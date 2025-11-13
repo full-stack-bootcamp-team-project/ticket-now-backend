@@ -94,6 +94,7 @@
     font-weight: 600;
     color:var(--1-GRAY-900);
     text-align: center;
+    margin-bottom: 3px;
 }
 .modal .id-result span.result-text-point {
     color: var(--1-MAIN);

@@ -14,7 +14,7 @@ public interface UserMapper {
     User userLogin(String userEmail, String userPw);
 
     // 유저 아이디 찾기
-    User userFindId(String userName, String userSSN);
+    String userFindId(String userName, String userSSN);
 
     // 비밀번호 찾기
     boolean userFindPassword(String userEmail, String userPhone);

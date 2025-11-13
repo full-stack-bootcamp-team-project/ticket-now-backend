@@ -21,7 +21,7 @@
     </select>
 
     <!-- 아이디 찾기 -->
-    <select id="userFindId" resultType="User">
+    <select id="userFindId" >
         SELECT userEmail
         FROM user
         WHERE userName = #{userName}
