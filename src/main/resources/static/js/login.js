@@ -17,6 +17,14 @@ if (window.innerWidth <= 1300) {
     loginContainer.style.padding = "0";
 }
 
+document.querySelectorAll(".password-view-button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+        const input = btn.previousElementSibling;
+        const isHidden = input.type === "password";
+        input.type = isHidden ? "text" : "password";
+        btn.classList.toggle("password-off", !isHidden);
+    });
+});
 
 if(loginForm != null){
     loginForm.addEventListener("submit",e=>{
