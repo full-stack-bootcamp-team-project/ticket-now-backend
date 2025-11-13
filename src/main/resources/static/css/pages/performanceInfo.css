@@ -100,3 +100,81 @@
     color : white;
     border-radius: 12px;
 }
+
+
+.performance-check-info {
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.performance-check-info-top {
+    padding: 20px 0 10px;
+    border-bottom: 2px solid black;
+}
+
+.performance-check-info-top-content {
+    font-size: 22px;
+    line-height: 26px;
+}
+
+.performance-check-info-detail {
+    text-align: center;
+    padding: 20px;
+
+}
+
+.performance-check-info-note {
+
+}
+
+.performance-check-info-note-main,
+.performance-check-info-note-import {
+    margin-bottom: 20px;
+}
+
+.performance-check-info-note-main-content {
+    padding: 10px;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.performance-check-info-note-import-content {
+    padding: 10px;
+    font-size: 20px;
+    line-height: 24px;
+    color: red;
+}
+
+.performance-check-info-title,
+.performance-check-info-casting-title,
+.performance-check-info-map-title {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 20px;
+}
+
+.performance-check-info-title-content {
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #FD9620;
+    margin: 20px 20px 40px;
+}
+
+.performance-check-info-casting {
+
+}
+
+.performance-check-info-casting-member {
+
+}
+
+.performance-check-info-map {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.performance-check-info-map-detail {
+
+}

@@ -42,7 +42,10 @@ async function loadPerformanceDetail() {
     const performanceScheduleStartTime = document.getElementById("performanceScheduleStartTime");
     const performancePrice = document.getElementById("performancePrice");
     const performanceInfo = document.getElementById("performanceInfo");
-
+    const performanceCheckInfoTitle = document.getElementById("performanceCheckInfoTitle");
+    const performanceCheckInfoTitleContent = document.getElementById("performanceCheckInfoTitleContent");
+    const performanceCheckInfoCastingMember = document.getElementById("performanceCheckInfoCastingMember");
+    const performanceCheckInfoMapDetail = document.getElementById("performanceCheckInfoMapDetail");
 
     headerTitle.innerText = p.performanceTitle;
     image.innerHTML = `
@@ -58,6 +61,11 @@ async function loadPerformanceDetail() {
     performanceScheduleStartTime.innerText = `${p.schedules[0].performanceScheduleStartTime}`;
     performancePrice.innerText = `${Number(p.performancePrice).toLocaleString()}원`;
     performanceInfo.innerText = `${p.performanceInfo}`;
+    performanceCheckInfoTitle.innerText = `${p.performanceTitle}`;
+    performanceCheckInfoTitleContent.innerText = `${p.performanceInfo}`;
+    performanceCheckInfoMapDetail.innerText = `장소 : ${p.performanceAddress}`;
+
+
 
     const reservationBtn = document.getElementById("reservationBtn");
 
