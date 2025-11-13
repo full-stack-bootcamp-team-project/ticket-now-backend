@@ -439,7 +439,7 @@
 .section-flex-gap {
     display: flex;
     justify-content: flex-start;
-    gap: 44px;
+    gap: 22px;
 }
 
 .section-seat-num {
