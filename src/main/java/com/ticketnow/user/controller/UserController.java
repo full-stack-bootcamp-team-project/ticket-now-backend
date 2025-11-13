@@ -84,7 +84,7 @@ public class UserController {
     // http://localhost:8080/api/user/login/findId?userName=김민수&userSSN=900101-1234567
     // 아이디 찾기 기능
     @PostMapping("/login/findId")
-    public User userFindId(@RequestParam String userName, @RequestParam String userSSN) {
+    public String userFindId(@RequestParam String userName, @RequestParam String userSSN) {
         return userService.userFindId(userName, userSSN);
     }
 

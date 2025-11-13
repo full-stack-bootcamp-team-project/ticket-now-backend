@@ -5,10 +5,10 @@
     <form class="modal-form">
         <!-- 이름 입력 -->
         <div class="default-input-wrap">
-            <label for="name" class="input-label">이름<span class="essential">*</span></label>
+            <label for="checkName" class="input-label">이름</label>
 
             <div class="default-input">
-                <input type="text" id="name" name="name" placeholder="이름 입력">
+                <input type="text" id="checkName" name="checkName" placeholder="이름 입력" minlength="2" maxlength="10">
             </div>
 
             <p class="input-validation"></p>
@@ -16,15 +16,15 @@
 
         <!-- 주민번호 입력 -->
         <div class="default-input-wrap ssn-wrap">
-            <p class="input-label">주민등록번호<span class="essential">*</span></p>
+            <p class="input-label">주민등록번호</p>
 
             <div class="default-input-flex">
                 <div class="default-input">
-                    <input type="text" id="ssn1" name="ssn1">
+                    <input type="text" id="checkSSN1" name="checkSSN1" maxlength="6">
                 </div>
                 <span>-</span>
                 <div class="default-input">
-                    <input type="text" id="ssn2" name="ssn2">
+                    <input type="text" id="checkSSN2" name="checkSSN2" maxlength="7">
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
         </div>
     </form>
 
-    <div class="id-result">
+    <div class="id-result" id="idResultBox">
         <!--
         <p class="id-result-text error">
             존재하지 않는 아이디입니다.
@@ -47,6 +47,6 @@
     <!-- 버튼 -->
     <div class="modal-buttons">
         <button class="gray-button cancel-button">닫기</button>
-        <button class="default-button" id="submitIdBtn">아이디 찾기</button>
+        <button class="default-button" id="submitIdButton">아이디 찾기</button>
     </div>
 </div>

@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     // 유저 아이디 찾기
     @Override
-    public User userFindId(String userName, String userSSN) {
+    public String userFindId(String userName, String userSSN) {
         return userMapper.userFindId(userName, userSSN);
     }
 
