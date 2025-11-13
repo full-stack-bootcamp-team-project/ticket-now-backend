@@ -295,12 +295,15 @@ function searchTypeChange (){
  */
 function toggleDropdown(forceClose = null) {
     const dropdown = document.querySelector('.search-select-list');
+    const selectButton = document.querySelector('.select-button');
     if (!dropdown) return;
 
     if (forceClose === false) {
         dropdown.classList.remove('show');
+        selectButton.classList.remove('open-select-button');
         return;
     }
 
     dropdown.classList.toggle('show');
+    selectButton.classList.toggle('open-select-button');
 }
