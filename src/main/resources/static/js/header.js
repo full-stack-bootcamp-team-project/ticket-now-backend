@@ -237,7 +237,8 @@ function performHeaderSearch() {
     const typeLink =  currentSearchType === "category" ? "keyword" : currentSearchType;
 
     // 검색 페이지로 이동
-    window.location.href = `/search?searchType=${currentSearchType}&keyword=${encodeURIComponent(keyword)}`;
+    window.location.href = `/performance/search?searchType=${currentSearchType}&keyword=${encodeURIComponent(keyword)}`;
+
 
     // window.location.href = `/performance/search/${typeLink}?searchType=${currentSearchType}&keyword=${encodeURIComponent(keyword)}`;
 }

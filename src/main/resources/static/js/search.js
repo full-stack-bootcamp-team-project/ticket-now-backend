@@ -19,7 +19,7 @@ async function performSearch(type, keyword) {
         showLoading();
 
         // 검색 타이틀 업데이트
-        updateSearchTitle(keyword);
+        updateSearchTitle(type, keyword);
 
         // API 엔드포인트 결정
         let apiUrl = '';
@@ -51,7 +51,7 @@ async function performSearch(type, keyword) {
         const performances = await response.json();
 
         // 결과 표시
-        displaySearchResults(performances);
+        displaySearchResults(performances, keyword);
 
     } catch (error) {
         console.error('Search error:', error);
@@ -60,7 +60,7 @@ async function performSearch(type, keyword) {
 }
 
 // 검색 결과 표시
-function displaySearchResults(performances) {
+function displaySearchResults(performances, keyword) {
     const listContainer = document.getElementById('popularList');
 
     if (!performances || performances.length === 0) {
@@ -68,19 +68,24 @@ function displaySearchResults(performances) {
         return;
     }
 
-    listContainer.innerHTML = performances.map(performance => `
-        <div class="performance-card" onclick="goToDetail('${performance.performanceId}')">
+    listContainer.innerHTML = performances.map(performance => {
+
+        const highlightedTitle = highlightKeyword(performance.performanceTitle, keyword);
+
+        return `
+        <div class="performance-item" onclick="goToDetail('${performance.performanceId}')">
             <div class="performance-image">
                 <img src="${performance.performanceImagePath || '/images/default-performance.jpg'}" 
                      alt="${performance.performanceTitle}"
                      onerror="this.src='/images/default-performance.jpg'">
             </div>
             <div class="performance-info">
-                <h4 class="performance-title">${performance.performanceTitle}</h4>
                 ${performance.performanceRanking ? `<span class="ranking">랭킹 ${performance.performanceRanking}위</span>` : ''}
+                <h4 class="performance-title">${highlightedTitle}</h4>
             </div>
         </div>
-    `).join('');
+    `
+    }).join('');
 }
 
 // 검색 결과 없음 표시
@@ -114,10 +119,19 @@ function showLoading() {
 }
 
 // 검색 타이틀 업데이트
-function updateSearchTitle(keyword) {
-    const titleElement = document.querySelector('.container-title');
+function updateSearchTitle(type,keyword) {
+    const titleElement = document.getElementById('searchTitle');
+
+    const typeNames = {
+        total: '통합 검색 결과',
+        keyword: '키워드 검색 결과',
+        category: '카테고리 검색 결과',
+        title: '제목 검색 결과',
+        cast: '출연자 검색 결과'
+    };
+
     if (titleElement) {
-        titleElement.textContent = `'${keyword}' 검색 결과`;
+        titleElement.innerHTML = `'${keyword}' ${typeNames[type]}`;
     }
 }
 
