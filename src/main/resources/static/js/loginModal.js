@@ -37,60 +37,56 @@ cancelButton.forEach(btn => {
 
 // 확인 버튼 클릭 - 아이디
 submitIdButton.addEventListener("click", async () => {
-const checkName = document.getElementById("checkName").value.trim();
-const checkSSN1 = document.getElementById("checkSSN1").value.trim();
-const checkSSN2 = document.getElementById("checkSSN2").value.trim();
+    const checkName = document.getElementById("checkName").value.trim();
+    const checkSSN1 = document.getElementById("checkSSN1").value.trim();
+    const checkSSN2 = document.getElementById("checkSSN2").value.trim();
 
-const idResultBox = document.getElementById("idResultBox");
+    const idResultBox = document.getElementById("idResultBox");
 
     if (!checkName || !checkSSN1 || !checkSSN2) {
         alert("모든 항목을 입력해주세요.");
         return;
     }
 
-    alert(`입력 확인!\n이름: ${checkName}\n주민번호: ${checkSSN1}-${checkSSN2}`);
-
     let ssn = `${checkSSN1}-${checkSSN2}`;
 
     try {
-        const res = fetch("/api/user/login/findId", {
+        const res = await fetch("/api/user/login/findId", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `userName=${encodeURIComponent(checkName)}&userSSN=${encodeURIComponent(ssn)}`
-        }).then(
-            res => {
-                const data = res.json();
+        });
 
-                if (data) {
-                    // 성공 시 -> 이메일 가져와서 넣기
-                    idResultBox.innerHTML =
-                        `
-                        <p class="id-result-text">
-                            <span>${checkName}</span> 님의 아이디는<br>
-                            <span class="result-text-point">testEmail@email.com</span> 입니다.
-                        </p>
-                        `
-                } else {
-                    // 실패 시
-                    idResultBox.innerHTML =
-                        `
-                        <p class="id-result-text error">
-                            아이디가 존재하지 않습니다.
-                        </p>
-                        `
-                }
-            }
-        )
+        const data = await res.text();
+
+        idResultBox.classList.add("id-result");
+        if (res.ok && data) {
+            // 성공 시 -> 이메일 가져와서 넣기
+            idResultBox.innerHTML =
+                `
+                <p class="id-result-text">
+                    <span>${checkName}</span> 님의 아이디는<br>
+                    <span class="result-text-point">${data}</span> 입니다.
+                </p>
+                `
+            submitIdButton.remove();
+        } else {
+            // 실패 시
+            idResultBox.innerHTML =
+                `
+                <p class="id-result-text error">
+                    아이디가 존재하지 않습니다.
+                </p>
+                `
+        }
     } catch (err) {
         console.error("아이디 찾기 오류:", err);
-        resultBox.innerHTML = `
+        idResultBox.innerHTML = `
                 <p class="id-result-text error">
                     서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.
                 </p>
             `;
     }
-
-    // closeModal();
 });
 
 // 확인 버튼 클릭
