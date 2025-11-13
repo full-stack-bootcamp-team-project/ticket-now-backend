@@ -46,7 +46,7 @@ async function checkLoginStatus() {
             // 로그아웃 상태 (401, 403 등)
             headerLoginMenu.innerHTML = `
                 <a href="/user/login">로그인</a>
-                <a href="/user/myPage">마이페이지</a>
+                <a href="/user/signup">회원가입</a>
             `;
         }
     } catch (error) {
