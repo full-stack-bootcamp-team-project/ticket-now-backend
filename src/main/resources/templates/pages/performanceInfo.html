@@ -19,45 +19,44 @@
                id="performanceHeaderCategory">콘서트 > 페스티벌 주간 순위 1위</p>
         </div>
         <div class="performance-info">
-            <div class="performance-image" id="performanceBodyImage">이미지</div>
+            <div class="performance-image" id="performanceBodyImage"></div>
             <div class="performance-info-detail">
                 <div>
                     <div class="performance-info-detail-main">
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">카테고리</p>
                             <p class="performance-info-detail-content"
-                               id="performanceCategory">페스티벌</p>
+                               id="performanceCategory"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">공연명</p>
                             <p class="performance-info-detail-content"
-                               id="performanceTitle">COUNTDOWN FANTASY 2025-2026</p>
+                               id="performanceTitle"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">장소</p>
                             <p class="performance-info-detail-content"
-                               id="performanceAddress">서울특별시 종로구 관수동 수표로 96 2F 국일관</p>
+                               id="performanceAddress"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">공연 날짜</p>
                             <p class="performance-info-detail-content"
-                               id="performanceScheduleStartDate">2025년 12월 30일 ~ 2026년 10월 31일</p>
+                               id="performanceScheduleStartDate"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">공연 시간</p>
                             <p class="performance-info-detail-content"
-                               id="performanceScheduleStartTime">14:00 ~</p>
+                               id="performanceScheduleStartTime"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">가격</p>
                             <p class="performance-info-detail-content"
-                               id="performancePrice">110,000 원</p>
+                               id="performancePrice"></p>
                         </div>
                         <div class="performance-info-detail-title">
                             <p class="performance-info-detail-content">공연 정보</p>
                             <p class="performance-info-detail-content"
-                               id="performanceInfo">세계 클래식 음악계를 대표하는 이 ‘황금 조합’은 오는 11월 19일과 20일,
-                                양일간 예술의전당 콘서트홀에서 또 한 번 한국 관객을 매료시킬 예정입니다.</p>
+                               id="performanceInfo"></p>
                         </div>
                     </div>
                     <div class="ticket-info">
@@ -74,6 +73,9 @@
                 </div>
                 <button type="button" id="reservationBtn">예매하기</button>
             </div>
+        </div>
+        <div class="performance-check-btn-box">
+            <button id="detailInfo">상세 보기</button>
         </div>
         <div class="performance-check-info">
             <div class="performance-check-info-top">
@@ -92,21 +94,27 @@
                     <p class="performance-check-info-note-import-content">* 지원이 중단 된 IE(Internet Explorer) 브라우저 또는 다수의 브라우저로 동시 예매 진행 시 원할하지 않을 수 있습니다.</p>
                     </div>
                 </div>
+                <!-- 상세보기 공연 제목 -->
                 <div class="performance-check-info-title"
-                    id="performanceCheckInfoTitle">공연 제목</div>
+                    id="performanceCheckInfoTitle"></div>
                 <div class="performance-check-info-title-content"
-                    id="performanceCheckInfoTitleContent">공연 상세정보</div>
+                    id="performanceCheckInfoTitleContent"></div>
+                <!-- 상세보기 출안자 장보 -->
                 <div class="performance-check-info-casting">
                     <p class="performance-check-info-casting-title">출연자 정보</p>
                     <div class="performance-check-info-casting-member"
                         id="performanceCheckInfoCastingMember">
-                         출연자 이미지 + 이름
                     </div>
                 </div>
+                <!-- 상세보기 공연장 위치 -->
                 <div class="performance-check-info-map">
                     <p class="performance-check-info-map-title">공연장 위치</p>
                     <div class="performance-check-info-map-detail"
                         id="performanceCheckInfoMapDetail"></div>
+
+                    <div id="map"></div>
+                    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a3b54fc3e9edec36f043d2eaf2622b17&libraries=services"></script>
+
                 </div>
             </div>
         </div>
@@ -116,5 +124,6 @@
 </div>
 <th:block th:replace="~{footer}"></th:block>
 <script src="/js/performanceInfo.js"></script>
+
 </body>
 </html>
