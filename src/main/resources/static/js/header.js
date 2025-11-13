@@ -7,8 +7,8 @@ if (typeof API_BASE_URL === 'undefined') {
 let currentSearchType = 'total';
 let autocompleteTimeout = null;
 document.addEventListener('DOMContentLoaded', () => {
-    // 로그인 상태 메뉴 업데이트
-    updateHeaderLoginMenu();
+    // 로그아웃 이벤트만 등록
+    checkLoginStatus();
 
     // 기존 검색 초기화
     initHeaderSearch();
@@ -16,51 +16,68 @@ document.addEventListener('DOMContentLoaded', () => {
     searchTypeChange();
 });
 
-// 로그인 상태 메뉴 업데이트
-function updateHeaderLoginMenu() {
-    const menuContainer = document.getElementById('headerLoginMenu');
-    if (!menuContainer) return;
 
-    const isLogin = loginUserEmail && loginUserEmail.trim() !== '';
+// 로그인 상태 확인
+async function checkLoginStatus() {
+    const headerLoginMenu = document.getElementById('headerLoginMenu');
+    if (!headerLoginMenu) return;
 
-    if (isLogin) {
-        menuContainer.innerHTML = `
-            <a href="#" id="logoutLink">로그아웃</a>
+    try {
+        // 기존 마이페이지 API 활용 (로그인 필요한 API)
+        const response = await fetch(`${API_BASE_URL}/api/user/myPage`, {
+            method: 'GET',
+            credentials: 'include' // 세션 쿠키 포함
+        });
+
+        if (response.ok) {
+            // 로그인된 상태 (200 OK)
+            const userData = await response.json();
+            headerLoginMenu.innerHTML = `
+                <a href="#" id="logoutLink">로그아웃</a>
+                <a href="/user/myPage">마이페이지</a>
+            `;
+
+            // 로그아웃 이벤트 등록
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', handleLogout);
+            }
+        } else {
+            // 로그아웃 상태 (401, 403 등)
+            headerLoginMenu.innerHTML = `
+                <a href="/user/login">로그인</a>
+                <a href="/user/myPage">마이페이지</a>
+            `;
+        }
+    } catch (error) {
+        // 에러 발생 시 로그아웃 상태로 처리
+        console.error('로그인 상태 확인 오류:', error);
+        headerLoginMenu.innerHTML = `
+            <a href="/user/login">로그인</a>
             <a href="/user/myPage">마이페이지</a>
         `;
+    }
+}
 
-        const logoutLink = document.getElementById('logoutLink');
-        if (logoutLink) {
-            logoutLink.addEventListener('click', async (e) => {
-                e.preventDefault();
+// 로그아웃 처리
+async function handleLogout(e) {
+    e.preventDefault();
 
-                try {
-                    // 서버 로그아웃 호출
-                    const res = await fetch('/user/logout', { method: 'POST' });
-                    if (res.ok) {
-                        // 로그인 상태 변수 초기화
-                        loginUserEmail = "";
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/user/logout`, {
+            method: 'POST',
+            credentials: 'include'
+        });
 
-                        // 메뉴 즉시 갱신
-                        updateHeaderLoginMenu();
-
-                        // 홈으로 이동
-                        window.location.href = "/";
-                    } else {
-                        alert('로그아웃에 실패했습니다.');
-                    }
-                } catch (err) {
-                    console.error('로그아웃 오류:', err);
-                    alert('서버 오류로 로그아웃에 실패했습니다.');
-                }
-            });
+        if (response.ok) {
+            alert('로그아웃되었습니다.');
+            window.location.href = "/";
+        } else {
+            alert('로그아웃에 실패했습니다.');
         }
-
-    } else {
-        menuContainer.innerHTML = `
-            <a href="/user/login">로그인</a>
-            <a href="/user/signup">회원가입</a>
-        `;
+    } catch (error) {
+        console.error('로그아웃 오류:', error);
+        alert('서버 오류로 로그아웃에 실패했습니다.');
     }
 }
 
