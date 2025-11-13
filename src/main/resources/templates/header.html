@@ -50,6 +50,25 @@
     </div>
 </header>
 <script>
-    let loginUserEmail = '<%= session.getAttribute("loginUser") != null ? ((User)session.getAttribute("loginUser")).getUserEmail() : "" %>';
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const logoutLink = document.getElementById('logoutLink');
+    //     if (logoutLink) {
+    //         logoutLink.addEventListener('click', async (e) => {
+    //             e.preventDefault();
+    //             try {
+    //                 const res = await fetch('/api/user/logout', { method: 'POST' });
+    //                 if (res.ok) {
+    //                     // 서버에서 세션 삭제 후 홈으로 이동
+    //                     window.location.href = "/";
+    //                 } else {
+    //                     alert('로그아웃 실패');
+    //                 }
+    //             } catch (err) {
+    //                 console.error('로그아웃 오류:', err);
+    //                 alert('서버 오류로 로그아웃 실패');
+    //             }
+    //         });
+    //     }
+    // });
 </script>
 <script src="/js/header.js"></script>

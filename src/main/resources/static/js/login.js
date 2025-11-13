@@ -45,7 +45,8 @@ if(loginForm != null){
 }
 
 signupBtn.addEventListener("click", () => {
-    window.open("/user/signup","_self")
+    // window.open("/user/signup","_self")
+    window.open("/","_self")
 })
 
 
