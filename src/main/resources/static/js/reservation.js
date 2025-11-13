@@ -8,6 +8,8 @@ const performanceId = urlParams.get("performanceId");
 let selectedScheduleId = null;
 let selectedSeats = [];
 
+let performanceDates = [];
+
 // Wait for DOM to be fully loaded
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -46,11 +48,16 @@ window.addEventListener("DOMContentLoaded", () => {
         // Current month dates
         for (let date = 1; date <= daysInMonth; date++) {
             const day = new Date(year, month, date).getDay();
+            const formattedMonth = String(month + 1).padStart(2, '0');
+            const formattedDate = String(date).padStart(2, '0');
+            const fullDate = `${year}-${formattedMonth}-${formattedDate}`;
+            const hasPerformance = performanceDates.includes(fullDate);
+
             let classes = 'date-area';
 
             if (day === 0) classes += ' sunday';
             else if (day === 6) classes += ' saturday';
-
+            if (hasPerformance) classes += ' has-performance';
             if (
                 date === today.getDate() &&
                 month === today.getMonth() &&
@@ -58,9 +65,10 @@ window.addEventListener("DOMContentLoaded", () => {
             ) {
                 classes += ' today';
             }
-            const formattedMonth = String(month + 1).padStart(2, '0');
-            const formattedDate = String(date).padStart(2, '0');
-            html += `<div class="${classes}" data-date="${year}-${formattedMonth}-${formattedDate}"><p class="date">${date}</p></div>`;
+            html += `
+              <div class="${classes}" data-date="${fullDate}">
+                <p class="date">${date}</p>
+              </div>`;
         }
 
         // Next month dates
@@ -96,18 +104,18 @@ window.addEventListener("DOMContentLoaded", () => {
         const infoTime = document.getElementById("infoTime");
         const infoCaster = document.getElementById("infoCaster");
 
-        let found = false; // 날짜 존재 여부 표시
+        let found = false;
 
         for (let i = 0; i < d.schedules.length; i++) {
             const date = d.schedules[i].performanceScheduleStartDate;
-            console.log("DB 날짜:", date);
+            // console.log("DB 날짜:", date);
 
             if (date === selectedDate) {
-                console.log("선택한 날짜의 스케줄:", d.schedules[i]);
-                const scheduleId = d.schedules[i].performanceScheduleId;
+                // console.log("선택한 날짜의 스케줄:", d.schedules[i]);
                 selectedScheduleId = d.schedules[i].performanceScheduleId;
-                console.log("scheduleId:", scheduleId);
                 found = true;
+
+                await loadSeat();
 
                 infoTime.style.display = "block";
                 infoCaster.style.display = "flex";
@@ -120,10 +128,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 <div class="info-caster">${d.castMembers[j].castMemberName}</div>`;
                 }
 
-                // sendScheduleIdToServer(scheduleId); DB 보내는 방법
+                console.log("selectedDate : ", selectedDate);
+                console.log("selectedScheduleId : ", selectedScheduleId);
 
                 break;
             }
+
         }
 
         if (!found) {
@@ -139,7 +149,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const [year, month, day] = selectedDate.split('-');
         reservationDate.innerText = `${year}년 ${month}월 ${day}일`;
         reservationTime.innerText = `${d.schedules[0].performanceScheduleStartTime}`;
-
 
 
     });
@@ -166,6 +175,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
     renderCalendar(currentYear, currentMonth);
 
+    detailFunction(performanceId).then(detail => {
+        const datesWithPerformance = detail.schedules.map(s => s.performanceScheduleStartDate);
+
+        datesWithPerformance.forEach(fullDate => {
+            const dateEl = document.querySelector(`.date-area[data-date="${fullDate}"] .date`);
+            if (dateEl) {
+                dateEl.parentElement.classList.add('has-performance');
+            }
+        });
+    });
+
 
     // Data fetching functions
     // 공연 정보 JSON 형식으로 변환
@@ -191,12 +211,29 @@ window.addEventListener("DOMContentLoaded", () => {
         return await seatRes.json();
     }
 
+    // 좌석 정보 입력
+    async function loadSeat() {
+        if(!selectedScheduleId) return;
+
+        const seatsData = await seatFunction(selectedScheduleId);
+
+        const reservedSeats = seatsData.filter(s => s.reserved)
+            .map(s => `${s.seatId}-1열 ${s.seatNumber}번`);
+
+        reservedSeats.forEach(seatId => {
+            const checkbox = document.getElementById(seatId);
+            if(checkbox) {
+                checkbox.disabled = true;
+                const label = checkbox.parentElement;
+                label.classList.add('reserved');
+            }
+        })
+    }
+
     // 공연 정보 입력
     async function loadPerformanceDetail() {
         const r = await detailFunction(performanceId);
         console.log("DB 데이터 조회 r : ", r)
-
-
 
         const performanceImage = document.getElementById("performanceImage");
         const performanceTitle = document.getElementById("performanceTitle");
@@ -235,11 +272,14 @@ window.addEventListener("DOMContentLoaded", () => {
         D: { rows: 8, cols: 5 },
         E: { rows: 8, cols: 10 },
         F: { rows: 8, cols: 5 },
+        G: { rows: 8, cols: 5 },
+        H: { rows: 8, cols: 5 },
     };
 
     let selectedSeats = [];
 
     function createSeats() {
+
         for (const [section, size] of Object.entries(sections)) {
             const container = document.getElementById(section);
             if (!container) continue;
@@ -343,8 +383,8 @@ window.addEventListener("DOMContentLoaded", () => {
             };
 
             nextBtn.onclick = () => {
-                window.opener.location.href = "/user/myPage"; // 부모 창 이동
-                window.close(); // 현재 팝업 닫기
+                window.opener.location.href = "/user/myPage";
+                window.close();
             };
 
         } else {
@@ -401,12 +441,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     return false;
                 }
                 break;
-                // const selectedTime = document.querySelector(".time-selected");
-                // if(!selectedTime) {
-                //     alert("시간을 선택해주세요.")
-                //     return false;
-                // }
-                // break;
             case 1:
                 if(selectedSeats.length === 0) {
                     alert("좌석을 선택해주세요.")
@@ -449,17 +483,6 @@ window.addEventListener("DOMContentLoaded", () => {
             button.classList.add('active');
         })
     })
-
-    async function reservationInfo(performanceScheduleId, seatId, seatNumber) {
-
-        const r = await detailFunction(performanceId);
-
-        const psId = r.schedules[0].performanceScheduleId;
-
-
-        insertReservation(psId, seatId, seatNumber)
-    }
-
 
 
 }); // End of DOMContentLoaded
