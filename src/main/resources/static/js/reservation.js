@@ -7,14 +7,16 @@ const performanceId = urlParams.get("performanceId");
 
 let selectedScheduleId = null;
 let selectedSeats = [];
-
 let performanceDates = [];
 
 // Wait for DOM to be fully loaded
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+
+    // 인터셉터가 이미 로그인 체크를 했으므로
+    // 이 페이지에 접근했다면 세션이 있는 상태
+    console.log('예약 페이지 로드 - 로그인 상태 확인됨');
 
     // Calendar setup
-    // 달력
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
     const calendarPrev = document.getElementById('calendarPrev');
@@ -39,13 +41,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
         let html = '';
 
-        // Previous month dates
         for (let i = startDay - 1; i >= 0; i--) {
             const date = prevMonthDays - i;
             html += `<div class="date-area inactive"><p class="date">${date}</p></div>`;
         }
 
-        // Current month dates
         for (let date = 1; date <= daysInMonth; date++) {
             const day = new Date(year, month, date).getDay();
             const formattedMonth = String(month + 1).padStart(2, '0');
@@ -71,7 +71,6 @@ window.addEventListener("DOMContentLoaded", () => {
               </div>`;
         }
 
-        // Next month dates
         const totalCells = startDay + daysInMonth;
         const nextDays = 7 - (totalCells % 7);
         if (nextDays < 7) {
@@ -83,8 +82,19 @@ window.addEventListener("DOMContentLoaded", () => {
         dates.innerHTML = html;
     }
 
-    // Date click event
-    // 달력 클릭 이벤트
+    function resetSeats() {
+        selectedSeats = [];
+
+        document.querySelectorAll('.seat-input').forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.disabled = false;
+            const label = checkbox.parentElement;
+            label.classList.remove('reserved');
+        });
+
+        updateSelectedSeats();
+    }
+
     dates.addEventListener('click', async (e) => {
         const target = e.target.closest('.date-area');
         if (!target || target.classList.contains('inactive')) return;
@@ -106,12 +116,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         let found = false;
 
+        resetSeats();
+
         for (let i = 0; i < d.schedules.length; i++) {
             const date = d.schedules[i].performanceScheduleStartDate;
-            // console.log("DB 날짜:", date);
 
             if (date === selectedDate) {
-                // console.log("선택한 날짜의 스케줄:", d.schedules[i]);
                 selectedScheduleId = d.schedules[i].performanceScheduleId;
                 found = true;
 
@@ -133,27 +143,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 break;
             }
-
         }
 
         if (!found) {
             alert("해당하는 날짜에 공연이 없습니다.");
             infoTime.style.display = "none";
             infoCaster.style.display = "none";
+            selectedScheduleId = null;
         }
-
 
         const reservationDate = document.getElementById("reservationDate");
         const reservationTime = document.getElementById("reservationTime");
 
         const [year, month, day] = selectedDate.split('-');
         reservationDate.innerText = `${year}년 ${month}월 ${day}일`;
-        reservationTime.innerText = `${d.schedules[0].performanceScheduleStartTime}`;
 
-
+        if (found) {
+            const schedule = d.schedules.find(s => s.performanceScheduleStartDate === selectedDate);
+            reservationTime.innerText = schedule ? schedule.performanceScheduleStartTime : '';
+        }
     });
 
-    // 달력 이전 버튼 클릭
     calendarPrev.addEventListener('click', () => {
         currentMonth--;
         if (currentMonth < 0) {
@@ -163,7 +173,6 @@ window.addEventListener("DOMContentLoaded", () => {
         renderCalendar(currentYear, currentMonth);
     });
 
-    // 달력 다음 버튼 클릭
     calendarNext.addEventListener('click', () => {
         currentMonth++;
         if (currentMonth > 11) {
@@ -177,6 +186,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     detailFunction(performanceId).then(detail => {
         const datesWithPerformance = detail.schedules.map(s => s.performanceScheduleStartDate);
+        performanceDates = datesWithPerformance;
 
         datesWithPerformance.forEach(fullDate => {
             const dateEl = document.querySelector(`.date-area[data-date="${fullDate}"] .date`);
@@ -186,9 +196,6 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
-    // Data fetching functions
-    // 공연 정보 JSON 형식으로 변환
     async function detailFunction(performanceId) {
         const res = await fetch(API_BASE_URL + `/api/performance/detail?performanceId=${performanceId}`);
 
@@ -199,9 +206,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return await res.json();
     }
 
-    // 좌석 정보 JSON 형식으로 변환
     async function seatFunction(performanceScheduleId){
-
         const seatRes = await fetch(API_BASE_URL + `/api/performance/seat?performanceScheduleId=${performanceScheduleId}`);
 
         if(!seatRes.ok){
@@ -211,26 +216,37 @@ window.addEventListener("DOMContentLoaded", () => {
         return await seatRes.json();
     }
 
-    // 좌석 정보 입력
     async function loadSeat() {
         if(!selectedScheduleId) return;
 
         const seatsData = await seatFunction(selectedScheduleId);
 
-        const reservedSeats = seatsData.filter(s => s.reserved)
-            .map(s => `${s.seatId}-1열 ${s.seatNumber}번`);
+        document.querySelectorAll('.seat-input').forEach(checkbox => {
+            checkbox.disabled = false;
+            checkbox.checked = false;
+            const label = checkbox.parentElement;
+            label.classList.remove('reserved');
+        });
 
-        reservedSeats.forEach(seatId => {
-            const checkbox = document.getElementById(seatId);
-            if(checkbox) {
+        const reservedSeatsSet = new Set(
+            seatsData
+                .filter(s => s.reserved)
+                .map(s => `${s.seatId}-${s.seatNumber}`)
+        );
+
+        console.log('예약된 좌석:', Array.from(reservedSeatsSet));
+
+        document.querySelectorAll('.seat-input').forEach(checkbox => {
+            const seatId = checkbox.dataset.seatId;
+            if (reservedSeatsSet.has(seatId)) {
                 checkbox.disabled = true;
+                checkbox.checked = false;
                 const label = checkbox.parentElement;
                 label.classList.add('reserved');
             }
-        })
+        });
     }
 
-    // 공연 정보 입력
     async function loadPerformanceDetail() {
         const r = await detailFunction(performanceId);
         console.log("DB 데이터 조회 r : ", r)
@@ -246,13 +262,9 @@ window.addEventListener("DOMContentLoaded", () => {
         performanceDate.innerText = `${r.schedules[0].performanceScheduleStartDate} ~`;
         performanceAddress.innerText = `${r.performanceAddress}`;
 
-        // 마지막 tab 에서 불러올 정보
         performanceTabImage.innerHTML = `<img src=${r.performanceImagePath} />`;
-
     }
 
-
-// Tab navigation
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const tabContent = document.querySelectorAll('.tab-content');
@@ -264,41 +276,54 @@ window.addEventListener("DOMContentLoaded", () => {
         3:{prev:"닫기", next:"마이페이지 이동"}
     }
 
-// Seat selection
     const sections = {
-        A: { rows: 8, cols: 5 },
-        B: { rows: 8, cols: 10 },
-        C: { rows: 8, cols: 5 },
-        D: { rows: 8, cols: 5 },
-        E: { rows: 8, cols: 10 },
-        F: { rows: 8, cols: 5 },
-        G: { rows: 8, cols: 5 },
-        H: { rows: 8, cols: 5 },
+        A: { totalSeats: 20 },
+        B: { totalSeats: 20 },
+        C: { totalSeats: 20 },
+        D: { totalSeats: 20 },
+        E: { totalSeats: 20 },
+        F: { totalSeats: 20 },
+        G: { totalSeats: 20 },
+        H: { totalSeats: 20 },
     };
 
-    let selectedSeats = [];
+    const sectionCols = {
+        A: 5, B: 5, C: 5, D: 5, E: 5, F: 5, G: 5, H: 5
+    };
 
     function createSeats() {
-
-        for (const [section, size] of Object.entries(sections)) {
+        for (const [section, config] of Object.entries(sections)) {
             const container = document.getElementById(section);
             if (!container) continue;
 
-            container.style.gridTemplateColumns = `repeat(${size.cols}, 20px)`;
+            const cols = sectionCols[section];
+            const rows = Math.ceil(config.totalSeats / cols);
 
-            for (let r = 1; r <= size.rows; r++) {
-                for (let c = 1; c <= size.cols; c++) {
-                    const seatId = `${section}-${r}열 ${c}번`;
+            container.style.display = 'grid';
+            container.style.gridTemplateColumns = `repeat(${cols}, 20px)`;
+            container.style.gap = '4px';
+            container.innerHTML = '';
+
+            for (let row = 1; row <= rows; row++) {
+                for (let col = 1; col <= cols; col++) {
+                    const seatNum = (row - 1) * cols + col;
+                    if (seatNum > config.totalSeats) break;
+
+                    const seatId = `${section}-${seatNum}`;
+                    const uniqueId = `seat-${section}-${seatNum}`;
 
                     const input = document.createElement('input');
                     input.type = 'checkbox';
-                    input.id = seatId;
+                    input.id = uniqueId;
                     input.className = 'seat-input';
+                    input.dataset.seatId = seatId;
+                    input.dataset.section = section;
+                    input.dataset.number = seatNum;
+                    input.setAttribute('data-seat-id', seatId);
 
                     const label = document.createElement('label');
                     label.className = 'seat';
-                    label.htmlFor = seatId;
-                    label.dataset.seat = seatId;
+                    label.htmlFor = uniqueId;
 
                     label.appendChild(input);
                     container.appendChild(label);
@@ -306,8 +331,6 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-
-
 
     async function updateSelectedSeats() {
         const display = selectedSeats.length ? selectedSeats.join(', ') : '좌석을 선택해주세요.';
@@ -334,20 +357,27 @@ window.addEventListener("DOMContentLoaded", () => {
             reservationTotalPrice.innerText = `${Number(selectedSeats.length * p.performancePrice + 4000).toLocaleString() + " 원"}`;
             finalPrice.innerText = `${Number(selectedSeats.length * p.performancePrice + 4000).toLocaleString() + " 원"}`;
         }
-
     }
 
     document.addEventListener('change', (e) => {
-        const checkbox = e.target.closest('.seat-input');
-        if (!checkbox) return;
+        if (!e.target.classList.contains('seat-input')) return;
 
-        const seatId = checkbox.parentElement.dataset.seat;
+        const checkbox = e.target;
+        const seatId = checkbox.dataset.seatId;
 
         if (checkbox.checked) {
-            selectedSeats.push(seatId);
+            if (!selectedSeats.includes(seatId)) {
+                selectedSeats.push(seatId);
+                console.log('좌석 추가:', seatId, '현재 선택:', selectedSeats);
+            }
         } else {
-            selectedSeats = selectedSeats.filter(s => s !== seatId);
+            const index = selectedSeats.indexOf(seatId);
+            if (index > -1) {
+                selectedSeats.splice(index, 1);
+                console.log('좌석 제거:', seatId, '현재 선택:', selectedSeats);
+            }
         }
+
         updateSelectedSeats();
     });
 
@@ -412,25 +442,68 @@ window.addEventListener("DOMContentLoaded", () => {
         updateButtons();
     })
 
-    nextBtn.addEventListener('click', () => {
+    async function processReservation() {
+        try {
+            for (let seat of selectedSeats) {
+                const [seatId, seatNumber] = seat.split('-');
+
+                const params = new URLSearchParams({
+                    performanceScheduleId: selectedScheduleId,
+                    seatId: seatId,
+                    seatNumber: seatNumber
+                });
+
+                const response = await fetch(`${API_BASE_URL}/api/reservation/insert?${params}`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401 || response.status === 302) {
+                        alert('로그인 세션이 만료되었습니다.');
+                        window.location.href = '/user/login';
+                        return false;
+                    }
+                    throw new Error(`좌석 ${seat} 예약에 실패했습니다.`);
+                }
+            }
+
+            console.log('모든 좌석 예약 완료');
+            return true;
+        } catch (error) {
+            console.error('예약 처리 중 오류:', error);
+            alert('예약 처리 중 오류가 발생했습니다.');
+            return false;
+        }
+    }
+
+    nextBtn.addEventListener('click', async () => {
         const currentIndex = getActiveTabIndex();
 
         if (currentIndex === 2) {
-
             if(confirm('예약을 하시겠습니까?')){
-                alert('예약이 완료되었습니다!');
-            } else {
-                return;
+                const success = await processReservation();
+
+                if(success) {
+                    alert('예약이 완료되었습니다!');
+                    await loadSeat();
+                    tabContent[currentIndex].classList.remove('active');
+                    tabContent[currentIndex + 1].classList.add('active');
+                    updateButtons();
+                }
             }
+            return;
         }
 
         if(!validateStep(currentIndex)) {
             return;
         }
 
-        tabContent[currentIndex].classList.remove('active');
-        tabContent[currentIndex + 1].classList.add('active');
-        updateButtons();
+        if(currentIndex < tabContent.length - 1) {
+            tabContent[currentIndex].classList.remove('active');
+            tabContent[currentIndex + 1].classList.add('active');
+            updateButtons();
+        }
     });
 
     function validateStep(stepIndex) {
@@ -438,6 +511,10 @@ window.addEventListener("DOMContentLoaded", () => {
             case 0:
                 if(!selectedDate) {
                     alert("날짜를 선택해주세요.");
+                    return false;
+                }
+                if(!selectedScheduleId) {
+                    alert("공연 일정을 선택해주세요.");
                     return false;
                 }
                 break;
@@ -448,16 +525,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
                 break;
             case 2:
-                // Payment verification
                 break;
             case 3:
-
                 break;
         }
         return true;
     }
 
-// Initialize
     updateButtons();
 
     if(document.getElementById('A')){
@@ -467,7 +541,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (document.querySelector(".reservation-info")) {
         loadPerformanceDetail();
     }
-    
+
     const tabButtons = document.querySelectorAll(".tab-button");
     const resultBtn = document.querySelectorAll(".tab-result");
 
@@ -484,6 +558,4 @@ window.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-
-}); // End of DOMContentLoaded
-
+});
