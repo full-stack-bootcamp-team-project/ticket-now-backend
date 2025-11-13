@@ -1,9 +1,16 @@
+const urlParams = new URLSearchParams(window.location.search);
+
+const performanceId = urlParams.get("performanceId");
+
+
+// 자동 시작
 window.addEventListener("DOMContentLoaded", () => {
     if(document.querySelector(".performance-info")){
         loadPerformanceDetail();
     }
 });
 
+// performanceId 을 기준으로 JSON 형태로 변환 로직
 async function detailFunction(performanceId) {
 
     const res = await fetch(API_BASE_URL + `/api/performance/detail?performanceId=${performanceId}`);
@@ -18,9 +25,6 @@ async function detailFunction(performanceId) {
 
 // 1. 페이지 로드 시 공연 상세 정보 가져오기
 async function loadPerformanceDetail() {
-    const urlParams = new URLSearchParams(window.location.search);
-
-    const performanceId = urlParams.get("performanceId");
 
     if (!performanceId) {
         alert("잘못된 공연 정보입니다.")
@@ -94,32 +98,47 @@ async function loadPerformanceDetail() {
             `;
         }
     } else {
+        // performanceSchedule 테이블에 정보가 없을 경우
         performanceCheckInfoCastingMember.innerHTML = `<p>등록된 정보가 없습니다.</p>`;
     }
 
+    // 공연 위치
     performanceCheckInfoMapDetail.innerText = `장소 : ${p.performanceAddress}`;
+    // console.log("위치 : ", p.performanceAddress);
 
-    // console.log("스케줄 확인 : ", p.schedules.length);
+    loadKakaoMap(p.performanceAddress);
 
     const reservationBtn = document.getElementById("reservationBtn");
 
+    // 예매하기 버튼 클릭했을 때
+    reservationBtn.addEventListener("click", () =>{
+        if(p.schedules.length === 0){
+            alert("해당 공연은 예약할 수 없습니다.");
+        } else {
+            goToReservation(p.performanceId)
+        }
+    })
+}
+
+function loadKakaoMap(performanceAddress) {
+    // 카카오 지도 생성 및 위치 찾기
     const mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
 
-    // console.log("위치 : ", p.performanceAddress);
+    console.log("performanceAddress : ", performanceAddress);
 
-    // 지도를 생성합니다
+    // 지도 생성
     const map = new kakao.maps.Map(mapContainer, mapOption);
 
-    // 주소-좌표 변환 객체를 생성합니다
+    // 주소-좌표 변환 객체 생성
     const geocoder = new kakao.maps.services.Geocoder();
 
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(p.performanceAddress , function(result, status) {
+    // 주소로 좌표 검색
+    geocoder.addressSearch(performanceAddress , function(result, status) {
 
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
@@ -132,45 +151,35 @@ async function loadPerformanceDetail() {
                 position: coords
             });
 
-            // const mapAddress = p.performanceAddress.match(/\(([^)]+)\)/)?.[1] || p.performanceAddress;
-
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
-            // const infowindow = new kakao.maps.window();({
-            //     content: `<div class="map-box" style="display: none">
-            //                 <p class="map-box-title">${p.performanceTitle}</p>
-            //                 <p class="map-box-address">${mapAddress}</p>
-            //                 </div>`
-            // });
-            // infowindow.open(map, marker);
-
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
         }
     });
-
-    reservationBtn.addEventListener("click", () =>{
-        if(p.schedules.length === 0){
-            alert("해당 공연은 예약할 수 없습니다.");
-        } else {
-            goToReservation(p.performanceId)
-        }
-    })
 }
 
+
+// 상세 정보 보기 숨기기
 const detailInfo = document.getElementById("detailInfo");
 
-detailInfo.addEventListener('click', () => {
-    loadPerformanceDetail();
+// 버튼 클릭 시 상세 정보 보이도록 설정
+detailInfo.addEventListener('click', async () => {
+
+    const r = await detailFunction(performanceId);
+
+    setTimeout(() => {
+        loadKakaoMap(r.performanceAddress);
+
+    },50)
     const performanceCheckInfo = document.querySelector('.performance-check-info');
 
     performanceCheckInfo.style.display = "block";
     detailInfo.style.display = "none";
 
     // 지도가 깨질 경우, map.relayout() 호출
-    setTimeout(() => {
-        map.relayout(); // 지도가 div 크기를 다시 계산
-        map.setCenter(coords); // 중심 좌표 재설정
-    }, 3000); // 100ms 정도 지연을 주면 안전
+    // setTimeout(() => {
+    //     map.relayout(); // 지도가 div 크기를 다시 계산
+    //     map.setCenter(coords); // 중심 좌표 재설정
+    // }, 50); // 100ms 정도 지연을 주면 안전
 })
 
 
