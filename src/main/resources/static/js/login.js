@@ -4,6 +4,20 @@ const loginForm = document.getElementById("loginForm");
 const loginPw= document.querySelector("#loginForm input[name='userPw']");
 const signupBtn = document.getElementById("signupBtn");
 
+if (window.innerWidth <= 1300) {
+    // header/footer 숨기기
+    const header = document.querySelector("header");
+    const footer = document.querySelector("footer");
+    if (header) header.style.display = "none";
+    if (footer) footer.style.display = "none";
+
+    const loginContainer = document.querySelector('.login-container.content-area');
+
+    loginContainer.style.height = "100svh";
+    loginContainer.style.padding = "0";
+}
+
+
 if(loginForm != null){
     loginForm.addEventListener("submit",e=>{
         if (loginEmail.value.trim()===0){
@@ -25,3 +39,5 @@ if(loginForm != null){
 signupBtn.addEventListener("click", () => {
     window.open("/user/signup","_self")
 })
+
+
