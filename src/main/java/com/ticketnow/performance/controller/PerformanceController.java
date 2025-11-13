@@ -75,4 +75,10 @@ public class PerformanceController {
     public List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(@RequestParam String performanceScheduleId){
         return performanceService.getSeatByPerformanceScheduleId(performanceScheduleId);
     }
+
+    // 자동완성 검색
+    @GetMapping("/search/autocomplete")
+    public List<Performance> autocompletePerformance(@RequestParam String keyword) {
+        return performanceService.autocompletePerformance(keyword);
+    }
 }

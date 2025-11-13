@@ -32,4 +32,6 @@ public interface PerformanceService {
     // 공연 회차별 좌석 조회
     List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId);
 
+    // 자동완성 검색
+    List<Performance> autocompletePerformance(String keyword);
 }

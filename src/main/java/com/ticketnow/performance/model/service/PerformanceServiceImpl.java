@@ -66,4 +66,9 @@ public class PerformanceServiceImpl implements PerformanceService{
     public List<PerformanceScheduleSeatViewDto> getSeatByPerformanceScheduleId(String performanceScheduleId) {
         return performanceMapper.getSeatByPerformanceScheduleId(performanceScheduleId);
     }
+
+    @Override
+    public List<Performance> autocompletePerformance(String keyword) {
+        return performanceMapper.autocompletePerformance(keyword);
+    }
 }

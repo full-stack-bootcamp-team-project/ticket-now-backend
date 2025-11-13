@@ -21,39 +21,43 @@
 
     <!-- 통합 검색 -->
     <select id="searchTotalPerformance" resultType="Performance">
-        SELECT p.performanceTitle, p.performanceImagePath, p.performanceId
+        SELECT DISTINCT p.performanceTitle, p.performanceImagePath, p.performanceId, p.performanceRanking
         FROM performance p
-        JOIN performancecastmember pc ON p.performanceId = pc.performanceId
-        JOIN castmember c ON pc.castMemberId = c.castMemberId
+                 LEFT JOIN performancecastmember pc ON p.performanceId = pc.performanceId
+                 LEFT JOIN castmember c ON pc.castMemberId = c.castMemberId
         WHERE p.performanceCategory LIKE CONCAT('%', #{keyword}, '%')
-        OR p.performanceTitle LIKE CONCAT('%', #{keyword}, '%')
-        OR c.castMemberName LIKE CONCAT('%', #{keyword}, '%')
+           OR p.performanceTitle LIKE CONCAT('%', #{keyword}, '%')
+           OR c.castMemberName LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY p.performanceRanking ASC
     </select>
 
     <!-- 키워드 검색 -->
     <select id="searchKeywordPerformance" resultType="Performance">
-        SELECT performanceImagePath,
-        performanceTitle
+        SELECT performanceImagePath, performanceTitle, performanceId, performanceRanking
         FROM performance
         WHERE performanceCategory LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY performanceRanking ASC
     </select>
 
     <!-- 제목 검색 -->
     <select id="searchTitlePerformance" resultType="Performance">
-        SELECT performanceImagePath, performanceTitle
+        SELECT performanceImagePath, performanceTitle, performanceId, performanceRanking
         FROM performance
-        WHERE performanceTitle LIKE CONCAT('%' ,#{keyword}, '%')
+        WHERE performanceTitle LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY performanceRanking ASC
     </select>
 
     <!-- 출연자 검색 -->
     <select id="searchCastPerformance" resultType="Performance">
-        SELECT p.performanceTitle, p.performanceImagePath
+        SELECT DISTINCT p.performanceTitle, p.performanceImagePath, p.performanceId, p.performanceRanking
         FROM performance p
-        JOIN performancecastmember pc ON p.performanceId = pc.performanceId
-        JOIN castmember c ON pc.castMemberId = c.castMemberId
-        WHERE c.castMemberName LIKE CONCAT('%' ,#{keyword}, '%')
+                 INNER JOIN performancecastmember pc ON p.performanceId = pc.performanceId
+                 INNER JOIN castmember c ON pc.castMemberId = c.castMemberId
+        WHERE c.castMemberName LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY p.performanceRanking ASC
     </select>
 
+    <!-- 공연 기본 정보 -->
     <select id="getPerformanceBasicInfo" resultType="PerformanceDetailResponseDto">
         SELECT
             performanceId,
@@ -68,6 +72,7 @@
         WHERE performanceId = #{performanceId}
     </select>
 
+    <!-- 공연 정보 -->
     <select id="getPerformanceSchedules" resultType="PerformanceSchedule">
         SELECT
             performanceScheduleId,
@@ -78,6 +83,7 @@
         WHERE performanceId = #{performanceId}
     </select>
 
+    <!-- 출연자 정보 -->
     <select id="getCastMembers" resultType="CastMember">
         SELECT
             cm.castMemberId,
@@ -98,5 +104,24 @@
             isReserved
         FROM PerformanceScheduleSeatViewDto
         WHERE performanceScheduleId = #{performanceScheduleId}
+    </select>
+
+    <!-- 자동완성 검색 - 제목만 검색, 최대 10개 -->
+    <select id="autocompletePerformance" resultType="Performance">
+        SELECT DISTINCT
+            performanceId,
+            performanceTitle,
+            performanceImagePath,
+            performanceCategory,
+            performanceRanking
+        FROM performance
+        WHERE performanceTitle LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY
+            CASE
+                WHEN performanceTitle LIKE CONCAT(#{keyword}, '%') THEN 1
+                ELSE 2
+                END,
+            performanceRanking ASC
+            LIMIT 10
     </select>
 </mapper>
