@@ -286,31 +286,36 @@ input:-webkit-autofill:active {
 .performance-list .performance-item {
     min-width: 216px;
     width: 216px;
-    /*border: 1px solid var(--1-GRAY-300);*/
-    box-sizing: border-box;
     cursor: pointer;
 }
 /* performance item image */
-.performance-list .performance-item img {
+.performance-list .performance-item .performance-image {
     width: 100%;
     height: 302px;
+    border: 1px solid var(--1-GRAY-100);
+    box-sizing: border-box;
     transition: all 0.3s;
     object-fit: cover;
-    border: 1px solid var(--1-GRAY-100);
 }
-.performance-list .performance-item img:hover{
+.performance-list .performance-item .performance-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.performance-list .performance-item .performance-image:hover{
     transform: scale(1.08);
 }
 
 /* performance item textbox */
-.performance-list .performance-item .performance-title-area {
-    height: 90px;
+.performance-list .performance-item .performance-info {
+    min-height: 90px;
     max-height: 90px;
     padding: 24px 10px;
     box-sizing: border-box;
 }
 /* performance item text */
-.performance-list .performance-item .performance-title-area .performance-title {
+.performance-list .performance-item .performance-info .performance-title {
     font-size: 16px;
     font-size: 18px; /*TODO*/
     line-height: 22px;

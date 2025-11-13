@@ -1,73 +1,30 @@
-.search-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 40px;
-}
-
 .category-section {
-    margin-bottom: 60px;
+    padding: 50px 0;
 }
 
-.container-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #000;
+.performance-list .performance-item .performance-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 130px;
+    max-height: 130px;
+    gap: 10px;
 }
 
-.performance-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 30px 20px;
-}
-
-.performance-card {
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.performance-card:hover {
-    transform: translateY(-8px);
-}
-
-.performance-image {
-    width: 100%;
-    aspect-ratio: 3/4;
-    background-color: #d3d3d3;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.performance-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.performance-info {
+.performance-list .performance-item .performance-info .performance-title strong  {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+    color: var(--1-MAIN);
     text-align: center;
-}
-
-.performance-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #000;
-    line-height: 1.4;
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 40px;
-}
-
-.ranking {
+    vertical-align: middle;
     display: inline-block;
-    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.performance-list .performance-item .performance-info .ranking {
+    display: inline-block;
+    width: fit-content;
     background: #ff6b6b;
     color: white;
     padding: 4px 10px;
@@ -79,6 +36,7 @@
 .no-results,
 .error-message,
 .loading {
+    width: 100%;
     text-align: center;
     padding: 100px 20px;
     font-size: 16px;

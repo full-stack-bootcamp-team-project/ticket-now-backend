@@ -236,11 +236,13 @@ function renderPerformanceList(container, dataList, emptyMessage) {
     dataList.forEach(performance => {
         const itemHTML = `
             <div class="performance-item" onclick="gotoPerformanceDetail('${performance.performanceId}')">
-                <img src="${performance.performanceImagePath}" 
-                     alt="${performance.performanceCategory}" 
-                     class="performance_image" />
-                <div class="performance-title-area">
-                    <p class="performance-title">${performance.performanceTitle}</p>
+                <div class="performance-image">
+                    <img src="${performance.performanceImagePath}" 
+                         alt="${performance.performanceCategory}" 
+                         class="performance_image" />
+                </div>
+                <div class="performance-info">
+                    <h4 class="performance-title">${performance.performanceTitle}</h4>
                 </div>
             </div> 
         `;
