@@ -38,7 +38,7 @@ public class MainController {
 
     // 공연 검색 페이지
     @GetMapping("/performance/search")
-    public String search() {
+    public String search(@RequestParam String searchType, @RequestParam String keyword) {
         return "pages/search";
     }
 
@@ -46,18 +46,6 @@ public class MainController {
     @GetMapping("/user/myPage")
     public String myPage(){
         return "pages/myPage";
-    }
-
-    // 아이디 찾기 페이지
-    @GetMapping("/user/findId")
-    public String findId(){
-        return "pages/findId";
-    }
-
-    // 비밀번호 변경 페이지
-    @GetMapping("/user/findPassword")
-    public String updatePassword(){
-        return "pages/findPassword";
     }
 
     // 공연 상세 페이지
