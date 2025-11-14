@@ -1,39 +1,51 @@
+/***************************************
+Reservation container
+***************************************/
 .reservation-container {
     display: flex;
     justify-content: space-between;
     min-width: 1200px;
     max-width : 1200px;
-    min-height: 800px;
-    max-height : 800px;
 }
 
+
+/***************************************
+tab-content
+***************************************/
+/* 기본 tab 숨김 처리 */
+.tab-content {
+    display: none;
+}
+
+/* tab active 효과 */
 .tab-content.active {
     padding-left: 100px;
     display: block;
 }
 
-.tab-content {
-    display: none;
+
+/***************************************
+tab-content calendar
+***************************************/
+/* 영역 */
+.date-wrap {
+    padding: 30px 30px 30px 50px;
 }
-
-
+/* step */
 .info {
     display: flex;
     justify-content: left;
     color : #9E9E9E;
     font-size: 18px;
     line-height: 25px;
-    margin : 50px 0 20px 0;
+    padding : 50px 0 20px 0;
 }
 
+/* step text */
 .date-wrap .info span {
-    color : #FF3B30;
+    color : var(--1-ERROR);
     font-weight: bold;
     margin : 0 10px 0 0;
-}
-
-.date-wrap {
-    margin: 30px 30px 30px 50px;
 }
 
 /* 달력 css */
@@ -42,6 +54,7 @@
     overflow: hidden;
 }
 
+/* 달력 header */
 .calendar-header {
     display: flex;
     justify-content: space-between;
@@ -54,6 +67,7 @@
     margin-bottom: 42px;
 }
 
+/* 달력 perv / next 버튼 */
 .calendar-header .calendar-header-prev,
 .calendar-header .calendar-header-next {
     padding: 0;
@@ -61,10 +75,12 @@
     height: 31px;
     cursor: pointer;
 }
+
 .calendar-header .calendar-header-prev:hover,
 .calendar-header .calendar-header-next:hover {
     opacity: 0.8;
 }
+/* 버튼 이미지 */
 .calendar-header .calendar-header-prev {
     background: url("../../images/calendar-prev-disabled.png") no-repeat center/100%;
 }
@@ -78,15 +94,18 @@
     background-image: url("../../images/calendar-next-disabled.png");
 }
 
+/* 달력 내용 */
 .calendar-body {
 }
 
+/* 요일 영역 */
 .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     margin-bottom: 12px;
 }
 
+/* 요일 */
 .days .day {
     width: 72px;
     font-size: 18px;
@@ -96,12 +115,15 @@
     text-align: center;
 }
 
+/* 날짜 영역 */
 .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
     margin-top: 10px;
 }
+
+/* 날짜 */
 .dates .date-area {
     display: flex;
     justify-content: center;
@@ -112,6 +134,7 @@
     transition: background 0.2s, color 0.2s;
     cursor: pointer;
 }
+
 .dates .date-area:after {
     display: none;
     content: '';
@@ -162,12 +185,26 @@
     color: var(--1-GRAY-0) !important;
     font-weight: bold;
 }
-/*****************************************/
 
+.date-area.has-performance .date {
+    position: relative;
+}
 
-/* 날짜 선택 입력 값 */
+.date-area.has-performance .date::after {
+    content: '';
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #ff6600;
+    border-radius: 50%;
+}
+
+/* 날짜 선택 시 입력 값 영역 */
 .choice-date {
-    border : 1px solid black;
+    border : 1px solid var(--1-GRAY-900);
     border-radius: 10px;
     width: 470px;
     padding-left: 20px;
@@ -184,220 +221,23 @@
     padding: 10px 0;
     font-size: 18px;
     margin-right: 10px;
-    color: black;
+    color: var(--1-GRAY-900);
 }
 
 .info-caster-list {
-    color : #616161;
-}
-
-.seat.reserved {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.seat.reserved input {
-    display: none;
+    color : var(--1-GRAY-700);
 }
 
 
-/*****************************************/
-
-
-/* 공연 정보*/
-.reservation-info {
-    border-left: 1px solid #BDBDBD;
-    margin : 30px 30px 50px 0;
-    width: 350px;
-}
-/* 예약 확정 시*/
-.reservation-info.final {
-    width: 500px;
-}
-
-.performance-info {
-    border-bottom : 1px solid #BDBDBD;
-    display: flex;
-    margin: 20px;
-}
-
-.performance-info-img {
-    min-width : 100px;
-    max-width:  100px;
-    min-height : 150px;
-    max-height:  150px;
-    margin: 0 20px 20px 0;
-}
-
-.performance-info-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.performance-info-content {
-    margin-bottom : 20px;
-}
-
-.performance-info-content-title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.performance-info-content-text {
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 19px;
-    color : #757575;
-    margin : 20px 0;
-}
-
-.reservation-detail {
-    border-bottom : 1px solid #BDBDBD;
-    margin: 0 20px 20px 20px;
-
-}
-
-.reservation-choice {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-}
-
-.reservation-choice-detail {
-    display: flex;
-    margin: 10px 0;
-}
-
-.reservation-choice-detail-title {
-    font-size: 16px;
-    line-height: 19px;
-    color : #757575;
-}
-
-.reservation-choice-detail-content {
-    font-size: 16px;
-    line-height: 19px;
-    margin-left: 20px;
-}
-
-.reservation-price {
-    border-bottom : 1px solid #BDBDBD;
-    margin: 0 20px 20px 20px;
-}
-
-.reservation-price-title {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-}
-
-.reservation-price-detail {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-}
-
-.reservation-price-detail-title {
-    font-size: 16px;
-    line-height: 19px;
-    color : #757575;
-}
-
-.reservation-price-detail-content {
-    font-size: 16px;
-    line-height: 19px;
-    margin-left: 20px;
-}
-
-.final-price {
-    margin : 0 20px;
-}
-
-.final-price-detail {
-    height: 50px;
-    border: 1px solid #BDBDBD;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.final-price-money {
-    padding : 10px;
-    font-size : 16px;
-    font-weight: 500;
-    line-height: 20px;
-}
-
-.choice-btn {
-    display: flex;
-    justify-content: space-between;
-    padding : 20px;
-    gap : 20px;
-}
-
-.prev-btn {
-    width: 50%;
-    height: 50px;
-    background-color: #757575;
-    color: white;
-    border-radius: 10px;
-    font-size: 18px;
-    line-height: 22px;
-    font-weight: 500;
-    display: none;
-    cursor: pointer;
-    border: none;
-}
-
-.prev-btn:hover{
-    background-color: #616161;
-}
-
-
-.prev-btn.active{
-    display: block;
-}
-
-
-.next-btn {
-    width: 50%;
-    height: 50px;
-    background-color: #FD9620;
-    color: white;
-    border-radius: 10px;
-    font-size: 18px;
-    line-height: 22px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-}
-
-
-.next-btn:hover{
-    background-color: #E88619;
-}
-
-
-.choice-btn .next-btn:only-child,
-.choice-btn.next-btn[style*="width:100%"] {
-    width: 100% !important;}
-
-.tab-content {
-    display: none;
-}
-
-
-.tab-content.active{
-    padding-left: 100px;
-    display: block;
-}
-
-
+/***************************************
+tab-content seat
+***************************************/
+/* seat 전체 영역 */
 .stage-wrap {
     width: 574px;
 }
+
+/* seta 스테이지 영역 */
 .stage-title {
     display: flex;
     justify-content: center;
@@ -414,6 +254,7 @@
     margin-bottom: 12px;
 }
 
+/* 층 구분 */
 .floor-title {
     justify-content: center;
     align-items: center;
@@ -429,6 +270,7 @@
     margin-bottom: 20px;
 }
 
+/* 좌석 전체 영역 */
 .section-flex {
     display: flex;
     justify-content: flex-start;
@@ -436,12 +278,7 @@
     margin-bottom: 50px;
 }
 
-.section-flex-gap {
-    display: flex;
-    justify-content: flex-start;
-    gap: 22px;
-}
-
+/* 좌석 좌측 번호 영역 */
 .section-seat-num {
     display: flex;
     flex-direction: column;
@@ -452,6 +289,7 @@
     padding-top: 23px;
 }
 
+/* 좌석 좌측 번호 */
 .seat-num {
     height: 14px;
     font-size: 12px;
@@ -461,9 +299,18 @@
     text-align: center;
 }
 
+/* 좌석 영역 */
+.section-flex-gap {
+    display: flex;
+    justify-content: flex-start;
+    gap: 22px;
+}
+
 .section-wrap{
 
 }
+
+/* 구역 (A, B..) */
 .section-wrap .section-name {
     font-size: 12px;
     line-height: 14px;
@@ -472,6 +319,8 @@
     text-align: center;
     margin-bottom: 8px;
 }
+
+/* 좌석 */
 .section-wrap .seat {
     display: inline-block;
     min-width: 20px;
@@ -502,12 +351,14 @@
     width: 100%;
     max-width: 116px;
 }
+
 .seats-big {
     max-width: 236px;
 }
+
 .selected-seats{
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 22px;
     font-weight: 700;
     color: var(--1-GRAY-900);
     padding: 15px 30px;
@@ -515,14 +366,28 @@
     border: 1px solid var(--1-GRAY-900);
 }
 
-/* 결제 수단 css */
+.seat.reserved {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.seat.reserved input {
+    display: none;
+}
+
+
+/***************************************
+tab-content payment
+***************************************/
+/* 결제 header text */
 .payment-info {
-    color: #757575;
+    color: var(--1-GRAY-600);
     font-size: 16px;
     line-height: 20px;
     margin-bottom: 30px;
 }
 
+/* 결제 수단 text */
 .payment-title {
     font-size: 18px;
     line-height: 22px;
@@ -530,8 +395,9 @@
     margin-bottom: 20px;
 }
 
+/* 세그먼트 버튼 영역 */
 .tab-button-container {
-    border: 1px solid #BDBDBD;
+    border: 1px solid var(--1-GRAY-400);
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
@@ -539,33 +405,31 @@
     cursor: pointer;
 }
 
+/* 세그먼트 버튼 */
 .tab-button {
     display: flex;
     justify-content: center;
     width: 100%;
     align-items: center;
     padding : 15px;
-    color : #757575;
+    color : var(--1-GRAY-600);
     font-size: 18px;
     line-height: 22px;
     box-sizing: border-box;
 }
 
-#tabBank {
-    border-right: 1px solid #BDBDBD;
-}
-
+#tabBank,
 #tabEasy {
-    border-left: 1px solid #BDBDBD;
+    border-right: 1px solid var(--1-GRAY-400);
 }
-
 
 .tab-button.active {
-    background-color: #FF3B30;
-    color: white;
+    background-color: var(--1-ERROR);
+    color: var(--1-GRAY-0);
     font-weight: bold;
 }
 
+/* 세그먼트 내용 숨김, 보임 처리 */
 .tab-result {
     display: none;
 }
@@ -574,6 +438,7 @@
     display: block;
 }
 
+/* 결제 관련 정보 text */
 .payment-bank,
 .payment-card,
 .payment-easy {
@@ -583,21 +448,23 @@
     font-weight: 500;
 }
 
+/* 결제 선택 영역 */
 .choice-payment {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, auto);
-    border-top: 1px solid #BDBDBD;
-    border-bottom: 1px solid #BDBDBD;
+    border-top: 1px solid var(--1-GRAY-400);
+    border-bottom: 1px solid var(--1-GRAY-400);
     text-align: center;
 }
 
+/* 결제 list */
 .payment-list {
     padding: 10px;
     font-size: 16px;
     line-height: 20px;
-    border-top: 1px solid #BDBDBD;
-    border-right: 1px solid #BDBDBD;
+    border-top: 1px solid var(--1-GRAY-400);
+    border-right: 1px solid var(--1-GRAY-400);
     cursor: pointer;
 }
 
@@ -609,21 +476,24 @@
     border-right: none;
 }
 
+/* 결제 관련 이미지 */
 .payment-list img {
     max-width: 100px;
     max-height: 40px;
     object-fit: contain;
 }
 
+/* 결제 관련 text */
 .payment-list-content {
     margin-top : 5px;
-    color : #757575;
+    color : var(--1-GRAY-600);
     font-size: 14px;
     line-height: 18px;
 }
 
+/* 무통장 - ticketnow 결제 정보 */
 .check-ticketnow {
-    background-color: #EEEEEE;
+    background-color: var(--1-GRAY-200);
     margin-top: 30px;
     padding: 10px;
     font-size: 14px;
@@ -636,44 +506,50 @@
 }
 
 .ticketnow-title {
-    color: #757575;
+    color: var(--1-GRAY-600);
     width: 100px;
 }
-
+/* 카드 - 할부 */
 .pay-select {
     width: 300px;
     height: 30px;
     margin: 20px 0;
     padding-left: 10px;
     font-size: 14px;
-    color: #212121;
+    color: var(--1-GRAY-900);
     align-items: center;
-    border: 1px solid #BDBDBD;
+    border: 1px solid var(--1-GRAY-400);
 }
 
 .pay-select-title {
-    color : #212121;
+    color : var(--1-GRAY-900);
 }
 .pay-select-choice {
-    color: #616161;
+    color: var(--1-GRAY-700);
 }
 
 .pay-select-choice:hover {
-    color : #FD9620;
+    color : var(--1-MAIN);
     background: none;
 }
 
+/* 결제 관련 배너 */
 .payment-banner-title {
     padding: 10px 0;
     font-size: 14px;
     line-height: 18px;
-    color: #757575;
+    color: var(--1-GRAY-600);
 }
 
 .payment-banner-content {
     padding: 3px 0;
 }
 
+
+/***************************************
+tab-content final
+***************************************/
+/* 공연 이미지 확대 */
 .performance-tab-image {
     margin-top: 60px;
     width: 450px;
@@ -685,18 +561,197 @@
     object-fit: cover;
 }
 
-.date-area.has-performance .date {
-    position: relative;
+
+/* 예약 확정 시 공연 정보 넓힘 */
+.reservation-info.final {
+    width: 500px;
 }
 
-.date-area.has-performance .date::after {
-    content: '';
-    position: absolute;
-    bottom: 20px;
-    left: 15px;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background-color: #ff6600;
-    border-radius: 50%;
+
+/***************************************
+Reservation info
+***************************************/
+/* 예약 정보 영역 */
+.reservation-info {
+    border-left: 1px solid #BDBDBD;
+    padding : 30px 30px 50px 0;
+    width: 350px;
+    margin-top: 10px;
 }
+
+/* 공연 정보 영역 */
+.performance-info {
+    border-bottom : 1px solid #BDBDBD;
+    display: flex;
+    margin: 20px;
+}
+
+/* 공연 이미지 */
+.performance-info-img {
+    min-width : 100px;
+    max-width:  100px;
+    min-height : 150px;
+    max-height:  150px;
+    padding: 0 20px 20px 0;
+}
+
+.performance-info-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 공연 정보 */
+.performance-info-content {
+    padding-bottom : 20px;
+}
+
+/* 공연 제목 */
+.performance-info-content-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 공연 날짜, 장소 */
+.performance-info-content-text {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 19px;
+    color : #757575;
+    margin : 20px 0;
+}
+
+/* 선택사항 영역 */
+.reservation-detail {
+    border-bottom : 1px solid #BDBDBD;
+    margin: 0 20px 20px 20px;
+}
+
+/* 선택내역 text */
+.reservation-choice {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+}
+
+/* 선택내역 영역 */
+.reservation-choice-detail {
+    display: flex;
+    margin: 10px 0;
+}
+.reservation-choice-detail-title {
+    font-size: 16px;
+    line-height: 19px;
+    color : var(--1-GRAY-600);
+}
+.reservation-choice-detail-content {
+    font-size: 16px;
+    line-height: 19px;
+    padding-left: 20px;
+}
+
+/* 비용 관련 영역 */
+.reservation-price {
+    border-bottom : 1px solid var(--1-GRAY-400);
+    margin: 0 20px 20px 20px;
+}
+
+/* 결제내역 text */
+.reservation-price-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+}
+
+/* 결제 내역 영역 */
+.reservation-price-detail {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.reservation-price-detail-title {
+    font-size: 16px;
+    line-height: 19px;
+    color : var(--1-GRAY-600);
+}
+
+.reservation-price-detail-content {
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 20px;
+}
+
+/* 최종 결제 금액 영역 */
+.final-price {
+    padding : 0 20px;
+}
+
+.final-price-detail {
+    height: 50px;
+    border: 1px solid var(--1-GRAY-400);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.final-price-money {
+    padding : 10px;
+    font-size : 16px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+/* 버튼 선택 영역 */
+.choice-btn {
+    display: flex;
+    justify-content: space-between;
+    padding : 20px;
+    gap : 20px;
+}
+
+/* 이전 버튼 */
+.prev-btn {
+    width: 50%;
+    height: 50px;
+    background-color: var(--1-GRAY-600);
+    color: var(--1-GRAY-0);
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    display: none;
+    cursor: pointer;
+    border: none;
+}
+
+.prev-btn:hover{
+    background-color: var(--1-GRAY-700);
+}
+
+.prev-btn.active{
+    display: block;
+}
+
+/* 다음 버튼 */
+.next-btn {
+    width: 50%;
+    height: 50px;
+    background-color: var(--1-MAIN);
+    color: var(--1-GRAY-0);
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+
+.next-btn:hover{
+    background-color: var(--1-MAIN-HOVER);
+}
+
+.choice-btn .next-btn:only-child,
+.choice-btn.next-btn[style*="width:100%"] {
+    width: 100% !important;}
