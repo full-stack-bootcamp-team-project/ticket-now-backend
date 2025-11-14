@@ -45,14 +45,6 @@ public class UserController {
         userService.userSignup(user);
     }
 
-    @GetMapping("/login/check")
-    public boolean checkLogin(HttpSession session) {
-        if (session.getAttribute("user") != null) {
-            return true;
-        }
-        return false;
-    }
-
     // http://localhost:8080/api/user/login?userEmail=minsu@example.com&userPw=pw1234
     // 로그인 기능
     @PostMapping("/login")
@@ -81,6 +73,11 @@ public class UserController {
         }
     }
 
+    // 로그인 체크
+    @GetMapping("/login/check")
+    public boolean checkLogin(HttpSession session) {
+        return SessionUtil.isLoginUser(session); // loginUser 세션 확인
+    }
 
     // http://localhost:8080/api/user/logout
     // 로그아웃 기능

@@ -23,27 +23,23 @@ async function checkLoginStatus() {
     if (!headerLoginMenu) return;
 
     try {
-        // 기존 마이페이지 API 활용 (로그인 필요한 API)
-        const response = await fetch(`${API_BASE_URL}/api/user/myPage`, {
+        const response = await fetch(`${API_BASE_URL}/api/user/login/check`, {
             method: 'GET',
-            credentials: 'include' // 세션 쿠키 포함
+            credentials: 'include'
         });
 
-        if (response.ok) {
-            // 로그인된 상태 (200 OK)
-            const userData = await response.json();
+        const isLoggedIn = await response.json();
+
+        if (isLoggedIn === true) {
             headerLoginMenu.innerHTML = `
                 <a href="#" id="logoutLink">로그아웃</a>
                 <a href="/user/myPage">마이페이지</a>
             `;
 
-            // 로그아웃 이벤트 등록
             const logoutLink = document.getElementById('logoutLink');
-            if (logoutLink) {
-                logoutLink.addEventListener('click', handleLogout);
-            }
+            if (logoutLink) logoutLink.addEventListener('click', handleLogout);
+
         } else {
-            // 로그아웃 상태 (401, 403 등)
             headerLoginMenu.innerHTML = `
                 <a href="/user/login">로그인</a>
                 <a href="/user/signup">회원가입</a>
@@ -65,16 +61,18 @@ async function handleLogout(e) {
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/user/logout`, {
-            method: 'POST',
+            method: 'POST',      // ⚠ POST로 로그아웃 API 호출
             credentials: 'include'
         });
 
         if (response.ok) {
             alert('로그아웃되었습니다.');
+            // 로그아웃 후 헤더 UI 갱신 또는 홈으로 이동
             window.location.href = "/";
         } else {
             alert('로그아웃에 실패했습니다.');
         }
+
     } catch (error) {
         console.error('로그아웃 오류:', error);
         alert('서버 오류로 로그아웃에 실패했습니다.');
