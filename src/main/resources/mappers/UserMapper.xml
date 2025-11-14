@@ -52,14 +52,14 @@
 
     <!-- 비밀번호 찾기 -> 마이페이지 -->
     <select id="userConfirmPassword" resultType="boolean">
-        SELECT count(*) > 0
+        SELECT count(*)
         FROM user
         WHERE userId = #{userId}
           AND userPw = #{currentPassword}
     </select>
 
     <!-- 마이페이지 -> 비밀번호 변경 -->
-    <update id="userUpdatePasswordMypage">
+    <update id="userUpdatePasswordMyPage">
         UPDATE user
         SET userPw = #{newPassword}
         WHERE userId = #{userId}

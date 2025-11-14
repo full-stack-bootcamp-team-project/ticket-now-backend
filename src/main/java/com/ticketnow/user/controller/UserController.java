@@ -120,14 +120,14 @@ public class UserController {
     // http://localhost:8080/api/user/myPage/confirmPassword?currentPassword=pw1234
     // 마이페이지 현재 비밀번호 확인 기능
     @PostMapping("/myPage/confirmPassword")
-    public boolean userConfirmPassword(HttpSession session, @RequestParam String currentPassword) {
+    public boolean userConfirmPassword(@RequestParam String currentPassword, HttpSession session) {
         return userService.userConfirmPassword(session, currentPassword);
     }
 
     // http://localhost:8080/api/user/myPage/updatePassword?currentPassword=pw1234&newPassword=test1234
     // 마이페이지 비밀번호 변경 기능
     @PatchMapping("/myPage/updatePassword")
-    public void userUpdatePasswordMyPage(HttpSession session, @RequestParam String currentPassword, @RequestParam String newPassword) {
+    public void userUpdatePasswordMyPage(@RequestParam String currentPassword, @RequestParam String newPassword, HttpSession session) {
         userService.userUpdatePasswordMyPage(session, currentPassword, newPassword);
     }
 
