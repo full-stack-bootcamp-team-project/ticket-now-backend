@@ -268,6 +268,20 @@ input:-webkit-autofill:active {
     margin: 0 auto;
     padding: 36px 0;
 }
+
+.category-section.data-none-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 36px - 36px);
+}
+
+.category-section .data-none {
+    text-align: center;
+    padding: 40px;
+    color: var(--1-GRAY-600);
+}
+
 /* default title */
 .category-section .container-title {
     text-align: center;

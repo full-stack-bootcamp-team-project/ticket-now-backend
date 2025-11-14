@@ -83,8 +83,11 @@ async function fetchPerformanceData() {
         }
 
     } catch (err) {
-        console.error("공연 데이터를 불러오는 중 오류 발생:", err);
-        mainContainer.innerHTML += '<p style="text-align: center; padding: 40px;">공연 데이터를 불러올 수 없습니다.</p>';
+        console.error("공연 데이터를 불러오는 중 오류 data-none-section 발생:", err);
+
+        const mainContainer = document.querySelector('.category-section');
+        mainContainer.className = 'category-section data-none-section';
+        mainContainer.innerHTML += '<p class="data-none">공연 데이터를 불러올 수 없습니다.</p>';
     }
 }
 
@@ -171,8 +174,8 @@ function renderSingleCategorySection(performances, category) {
 
     if (performances.length === 0) {
         const emptySection = document.createElement('div');
-        emptySection.className = 'category-section';
-        emptySection.innerHTML = `<p style="text-align: center; padding: 40px;">등록된 ${category} 공연이 없습니다.</p>`;
+        emptySection.className = 'category-section data-none-section';
+        emptySection.innerHTML = `<p class="data-none">등록된 ${category} 공연이 없습니다.</p>`;
         mainContainer.appendChild(emptySection);
         return;
     }
@@ -345,6 +348,8 @@ function renderMainBanner(performances) {
     bannerContainer.innerHTML = "";
 
     if (!performances || performances.length === 0) {
+        const mainBanner = document.querySelector('.main-banner-wrap');
+        mainBanner?.remove();
         bannerContainer.innerHTML = "<p>등록된 공연이 없습니다.</p>";
         return;
     }
