@@ -1,7 +1,19 @@
-// const API_BASE_URL = "http://localhost:8080";
+let currentCategory = 'all';
 
 // 돔이 생성된 후 작업
 document.addEventListener("DOMContentLoaded", () => {
+    // URL에서 카테고리 파라미터 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+
+    if (categoryParam) {
+        currentCategory = categoryParam;
+    }
+
+    // 헤더 메뉴 활성화 상태 업데이트
+    updateHeaderMenuState();
+
+    // 공연 데이터 로드
     fetchPerformanceData()
         .then(() => {
             console.log("공연 데이터 로드 완료");
@@ -11,42 +23,153 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+// 헤더 메뉴의 활성화 상태 업데이트
+function updateHeaderMenuState() {
+    const navLinks = document.querySelectorAll('.nav-bar a');
+
+    navLinks.forEach(link => {
+        link.classList.remove('select');
+
+        const linkHref = link.getAttribute('href');
+
+        // 전체 메뉴
+        if (linkHref === '/' && currentCategory === 'all') {
+            link.classList.add('select');
+        }
+        // 카테고리 메뉴
+        else if (linkHref.includes('category=')) {
+            const linkCategory = linkHref.split('category=')[1];
+            if (linkCategory === currentCategory) {
+                link.classList.add('select');
+            }
+        }
+    });
+}
+
 // 전체 공연 데이터, 배너 초기화
 async function fetchPerformanceData() {
-    const popularList = document.getElementById("popularList");
-    const recentList = document.getElementById("recentList");
+    const mainContainer = document.querySelector('.main-container');
 
     try {
-        const res = await fetch(`${API_BASE_URL}/api/performance/all`);
-        if (!res.ok) throw new Error(`서버 응답 오류 : ${res.status}`);
+        let performances;
 
-        const performances = await res.json();
+        // 전체 또는 특정 카테고리 조회
+        if (currentCategory === 'all') {
+            const res = await fetch(`${API_BASE_URL}/api/performance/all`);
+            if (!res.ok) throw new Error(`서버 응답 오류 : ${res.status}`);
+            performances = await res.json();
+        } else {
+            const res = await fetch(`${API_BASE_URL}/api/performance/category?category=${encodeURIComponent(currentCategory)}`);
+            if (!res.ok) throw new Error(`서버 응답 오류 : ${res.status}`);
+            performances = await res.json();
+        }
+
         console.log("공연 데이터 확인 :", performances);
 
-        // 기본 - 최신순 정렬
-        const defaultPerformances = [...performances].sort((a, b) => new Date(b.performanceDate) - new Date(a.performanceDate));
+        // 메인 배너용 (최신순 상위 10개)
+        const bannerPerformances = [...performances]
+            .sort((a, b) => new Date(b.performanceDate) - new Date(a.performanceDate))
+            .slice(0, 10);
 
-        // 메인 배너용
-        renderMainBanner(defaultPerformances.slice(0, 10));
+        renderMainBanner(bannerPerformances);
         initMainBanner();
 
-        // 인기순 정렬
-        const popularPerformances = [...performances].sort((a, b) => a.performanceRanking - b.performanceRanking);
-
-        // 최신순 정렬
-        const recentPerformances = [...performances].sort((a, b) => new Date(b.performanceDate) - new Date(a.performanceDate));
-
-        // 인기 공연 섹션
-        renderPerformanceList(popularList, popularPerformances.slice(0, 10), "등록된 공연이 없습니다.");
-
-        // 최신 공연 섹션
-        renderPerformanceList(recentList, recentPerformances.slice(0, 10), "등록된 공연이 없습니다.");
+        // 카테고리별 섹션 렌더링
+        if (currentCategory === 'all') {
+            renderAllCategorySections(performances);
+        } else {
+            renderSingleCategorySection(performances, currentCategory);
+        }
 
     } catch (err) {
         console.error("공연 데이터를 불러오는 중 오류 발생:", err);
-        popularList.innerText = "공연 데이터를 불러올 수 없습니다.";
-        recentList.innerText = "공연 데이터를 불러올 수 없습니다.";
+        mainContainer.innerHTML += '<p style="text-align: center; padding: 40px;">공연 데이터를 불러올 수 없습니다.</p>';
     }
+}
+
+// 전체 카테고리, 콘서트, 뮤지컬, 연극, 클래식 각각의 인기 공연 섹션을 생성
+function renderAllCategorySections(performances) {
+    const mainContainer = document.querySelector('.main-container');
+    const categories = ['콘서트', '뮤지컬', '연극', '클래식'];
+
+    // 기존 카테고리 섹션 제거
+    const existingSections = mainContainer.querySelectorAll('.category-section');
+    existingSections.forEach(section => section.remove());
+
+    categories.forEach(category => {
+        // 해당 카테고리 공연만 필터링
+        const categoryPerformances = performances.filter(p => p.performanceCategory === category);
+
+        if (categoryPerformances.length === 0) return;
+
+        // 인기순 정렬 (performanceRanking 오름차순)
+        const popularPerformances = [...categoryPerformances]
+            .sort((a, b) => a.performanceRanking - b.performanceRanking)
+            .slice(0, 10);
+
+        // 섹션 생성
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        section.innerHTML = `
+            <h3 class="container-title">인기 ${category}</h3>
+            <div class="performance-list" id="popular${category}List"></div>
+        `;
+
+        mainContainer.appendChild(section);
+
+        // 공연 리스트 렌더링
+        const listContainer = document.getElementById(`popular${category}List`);
+        renderPerformanceList(listContainer, popularPerformances, `등록된 ${category} 공연이 없습니다.`);
+    });
+}
+
+// 선택된 카테고리의 인기 공연과 최신 공연 섹션을 생성
+function renderSingleCategorySection(performances, category) {
+    const mainContainer = document.querySelector('.main-container');
+
+    // 기존 카테고리 섹션 제거
+    const existingSections = mainContainer.querySelectorAll('.category-section');
+    existingSections.forEach(section => section.remove());
+
+    if (performances.length === 0) {
+        const emptySection = document.createElement('div');
+        emptySection.className = 'category-section';
+        emptySection.innerHTML = `<p style="text-align: center; padding: 40px;">등록된 ${category} 공연이 없습니다.</p>`;
+        mainContainer.appendChild(emptySection);
+        return;
+    }
+
+    // 인기 {카테고리} 섹션
+    const popularPerformances = [...performances]
+        .sort((a, b) => a.performanceRanking - b.performanceRanking)
+        .slice(0, 10);
+
+    const popularSection = document.createElement('div');
+    popularSection.className = 'category-section';
+    popularSection.innerHTML = `
+        <h3 class="container-title">인기 ${category}</h3>
+        <div class="performance-list" id="popularList"></div>
+    `;
+    mainContainer.appendChild(popularSection);
+
+    const popularList = document.getElementById('popularList');
+    renderPerformanceList(popularList, popularPerformances, `등록된 ${category} 공연이 없습니다.`);
+
+    // 최신 {카테고리} 섹션
+    const recentPerformances = [...performances]
+        .sort((a, b) => new Date(b.performanceDate) - new Date(a.performanceDate))
+        .slice(0, 10);
+
+    const recentSection = document.createElement('div');
+    recentSection.className = 'category-section';
+    recentSection.innerHTML = `
+        <h3 class="container-title">최신 ${category}</h3>
+        <div class="performance-list" id="recentList"></div>
+    `;
+    mainContainer.appendChild(recentSection);
+
+    const recentList = document.getElementById('recentList');
+    renderPerformanceList(recentList, recentPerformances, `등록된 ${category} 공연이 없습니다.`);
 }
 
 // 메인 배너 무한 캐러셀 초기화 함수
@@ -109,7 +232,6 @@ function initMainBanner() {
         nextSlide();
         slideInterval = setInterval(nextSlide, 3000);
     });
-
 
     // 이전 슬라이드로 이동
     function prevSlide() {

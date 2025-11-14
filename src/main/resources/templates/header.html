@@ -10,10 +10,10 @@
             <a href="/" class="logo"><img class="logo-icon" src="/images/logo.png"/></a>
             <nav class="nav-bar">
                 <a href="/">전체</a>
-                <a href="/performance?category=콘서트">콘서트</a>
-                <a href="/performance?category=뮤지컬">뮤지컬</a>
-                <a href="/performance?category=연극">연극</a>
-                <a href="/performance?category=클래식">클래식</a>
+                <a href="/?category=콘서트">콘서트</a>
+                <a href="/?category=뮤지컬">뮤지컬</a>
+                <a href="/?category=연극">연극</a>
+                <a href="/?category=클래식">클래식</a>
             </nav>
         </div>
         <div class="search-bar">
@@ -49,26 +49,4 @@
         </div>
     </div>
 </header>
-<script>
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     const logoutLink = document.getElementById('logoutLink');
-    //     if (logoutLink) {
-    //         logoutLink.addEventListener('click', async (e) => {
-    //             e.preventDefault();
-    //             try {
-    //                 const res = await fetch('/api/user/logout', { method: 'POST' });
-    //                 if (res.ok) {
-    //                     // 서버에서 세션 삭제 후 홈으로 이동
-    //                     window.location.href = "/";
-    //                 } else {
-    //                     alert('로그아웃 실패');
-    //                 }
-    //             } catch (err) {
-    //                 console.error('로그아웃 오류:', err);
-    //                 alert('서버 오류로 로그아웃 실패');
-    //             }
-    //         });
-    //     }
-    // });
-</script>
 <script src="/js/header.js"></script>
