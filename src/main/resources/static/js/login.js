@@ -2,7 +2,8 @@
 const loginEmail = document.querySelector("#loginForm input[name='userEmail']")
 const loginForm = document.getElementById("loginForm");
 const loginPw= document.querySelector("#loginForm input[name='userPw']");
-const signupBtn = document.getElementById("signupBtn");
+const loginButton = document.getElementById("loginButton");
+const signupButton = document.getElementById("signupButton");
 
 if (window.innerWidth <= 1300) {
     // header/footer 숨기기
@@ -27,24 +28,49 @@ document.querySelectorAll(".password-view-button").forEach((btn) => {
 });
 
 if(loginForm != null){
-    loginForm.addEventListener("submit",e=>{
-        if (loginEmail.value.trim()===0){
-            alert("이메일 미작성");
-            e.preventDefault(); // 기본 제출 막기
-            loginEmail.focus(); // 작성 안된 곳으로 초점 이동
+    loginForm.addEventListener("submit",async (e)=>{
+        e.preventDefault();
+
+        // 유효성 검증
+        if (loginEmail.value.trim().length === 0){
+            alert("이메일을 입력해주세요");
+            loginEmail.focus();
             return;
         }
 
-        if (loginPw.value.trim()===0){
-            alert("비밀번호 미작성");
-            e.preventDefault(); // 기본 제출 막기
-            loginPw.focus(); // 작성 안된 곳으로 초점 이동
+        if (loginPw.value.trim().length === 0){
+            alert("비밀번호를 입력해주세요");
+            loginPw.focus();
             return;
+        }
+
+        // API 호출
+        try {
+            const res = await fetch("/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userEmail: loginEmail.value,
+                    userPw: loginPw.value
+                })
+            });
+
+            if (res.ok) {
+                alert("로그인 성공!");
+                window.location.href = "/";
+            } else {
+                alert("로그인 정보가 일치하지 않습니다.");
+            }
+        } catch (error) {
+            console.error("로그인 오류:", error);
+            alert("서버 오류로 로그인에 실패했습니다.");
         }
     })
 }
 
-signupBtn.addEventListener("click", () => {
+signupButton.addEventListener("click", () => {
     window.open("/user/signup","_self")
 })
 

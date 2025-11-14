@@ -280,17 +280,3 @@ async function handlePasswordChangeStep2() {
         alert("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
 }
-
-/**
- * 비밀번호 보기/숨기기 토글 기능
- * 모든 password-view-button에 대해 클릭 이벤트 등록
- */
-document.querySelectorAll(".password-view-button").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const input = btn.previousElementSibling;
-        const isHidden = input.type === "password";
-        input.type = isHidden ? "text" : "password";
-        btn.classList.toggle("password-off", !isHidden);
-    });
-});

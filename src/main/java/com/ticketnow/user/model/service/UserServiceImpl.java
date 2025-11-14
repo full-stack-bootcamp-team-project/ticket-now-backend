@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void userSignup(User user) {
         user.setUserId("U" + System.currentTimeMillis()); // id 값 생성
-        userMapper.userSignup(user);
+//        String originPwd = user.getUserPw();
+//        String newPwd = bCryptPasswordEncoder.encode(originPwd);
+//        user.setUserPw(newPwd);
+//        user.setUserPw(bCryptPasswordEncoder.encode(user.getUserPw()));
+//        userMapper.userSignup(user);
     }
 
     // 유저 로그인

@@ -59,23 +59,25 @@ async function checkLoginStatus() {
 async function handleLogout(e) {
     e.preventDefault();
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/user/logout`, {
-            method: 'POST',      // ⚠ POST로 로그아웃 API 호출
-            credentials: 'include'
-        });
+    if (!confirm("로그아웃 하시겠습니까?")) {} else {
+       try {
+            const response = await fetch(`${API_BASE_URL}/api/user/logout`, {
+                method: 'POST',      // ⚠ POST로 로그아웃 API 호출
+                credentials: 'include'
+            });
 
-        if (response.ok) {
-            alert('로그아웃되었습니다.');
-            // 로그아웃 후 헤더 UI 갱신 또는 홈으로 이동
-            window.location.href = "/";
-        } else {
-            alert('로그아웃에 실패했습니다.');
+            if (response.ok) {
+                alert('로그아웃되었습니다.');
+                // 로그아웃 후 헤더 UI 갱신 또는 홈으로 이동
+                window.location.href = "/";
+            } else {
+                alert('로그아웃에 실패했습니다.');
+            }
+
+        } catch (error) {
+            console.error('로그아웃 오류:', error);
+            alert('서버 오류로 로그아웃에 실패했습니다.');
         }
-
-    } catch (error) {
-        console.error('로그아웃 오류:', error);
-        alert('서버 오류로 로그아웃에 실패했습니다.');
     }
 }
 
