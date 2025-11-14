@@ -206,7 +206,7 @@ function renderUserInfoForm(user) {
                     <input id="inputUserPhone" value="${escapeHtml(user.userPhone)}" />
                     <button id="checkPhone">중복 확인</button>
                 </div>
-                 <div>
+                <div>
                     성별:
                     <label><input type="radio" name="userGender" value="M" ${user.userGender === "M" ? "checked" : ""}>남성</label>
                     <label><input type="radio" name="userGender" value="F" ${user.userGender !== "M" ? "checked" : ""}>여성</label>
@@ -221,25 +221,26 @@ function renderUserInfoForm(user) {
 
 function renderUserPasswordForm(user) {
     document.getElementById("userInfo").innerHTML = `
-        <div class="password-form">
-            <div class="form-group">
-                <label for="inputCurrentPassword">현재 비밀번호</label>
+        <div class="user-info-area">
+            <div class="user-info">
+            <div>
+                현재 비밀번호
                 <input id="inputCurrentPassword" type="password" />
                 <button id="checkCurrentPassword">비밀번호 확인</button>
             </div>
-            <div class="form-group">
-                <label for="inputNewPassword">새 비밀번호</label>
+               <div id="passwordMessage" class="message"></div>
+            <div>
+                새 비밀번호
                 <input id="inputNewPassword" type="password" disabled />
             </div>
-            <div class="button-area">
-                <button class="update-button" id="updatePassword" disabled>비밀번호 변경</button>
-                <button class="update-button" id="cancelUpdate">취소</button>
             </div>
-            <div id="passwordMessage" class="message"></div>
+        </div>            
+        <div class="button-area">
+            <button class="update-button" id="updatePasswordBtn" disabled>비밀번호 변경</button>
+            <button class="update-button" id="cancelUpdate">취소</button>
         </div>
+     
     `;
-
-
 }
 
 function setupPagination(items, itemsPerPage) {
@@ -406,7 +407,7 @@ function handleSaveUserInfo() {
     }
 
     updateUserInfo(formData)
-        .then(function (response) {
+        .then(function () {
             userData = Object.assign({}, userData, formData);
             renderUserInfo(userData);
             showSuccess("회원 정보가 수정되었습니다.");
@@ -532,9 +533,9 @@ function handleDeleteReservation(target) {
         .then(function () {
             reservationData = reservationData.filter(function (item) {
                 return !(
-                    item.performanceScheduleId == scheduleId &&
-                    item.seatId == seatId &&
-                    item.seatNumber == seatNumber
+                    item.performanceScheduleId === scheduleId &&
+                    item.seatId === seatId &&
+                    item.seatNumber === seatNumber
                 );
             });
             setupPagination(reservationData, ITEMS_PER_PAGE);
@@ -600,17 +601,13 @@ function confirmPassword(currentPassword) {
         method: "POST",
         credentials: "include"
     })
-        .then(res => res.json());
+        .then(handleResponse);
 }
 
 function updatePassword(currentPassword, newPassword) {
-    return fetch(`${API_BASE_URL}/api/user/myPage/updatePassword`, {
+    return fetch(`${API_BASE_URL}/api/user/myPage/updatePassword?currentPassword=${encodeURIComponent(currentPassword)}&&newPassword=${encodeURIComponent(newPassword)}`, {
         method: "PATCH",
         credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({currentPassword, newPassword})
     })
         .then(handleResponse);
 }
