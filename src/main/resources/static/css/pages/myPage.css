@@ -77,19 +77,36 @@
     margin-bottom: 10px;
 }
 
-.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-}
-
-.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info input,
-.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info select {
-    padding: 5px 10px;
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info input {
+    flex: 1;
+    padding: 7px 12px;
     border: 1px solid var(--1-GRAY-400);
     border-radius: 4px;
     font-size: 16px;
+    transition: all 0.3s;
+    background-color: var(--1-GRAY-0);
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info input:focus {
+    outline: none;
+    border-color: var(--1-MAIN);
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info button {
+    background-color: var(--1-GRAY-200);
+    color: var(--1-GRAY-900);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+    transition: background-color 0.3s;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .user-info-area .user-info button:hover {
+    color: var(--1-GRAY-0);
+    background-color: var(--1-MAIN-HOVER);
 }
 
 .content-area .myPage-container .tab-content-container .tab-content .button-area {
@@ -176,6 +193,13 @@
     background-color: #8a0e08;
 }
 
+.content-area .myPage-container .tab-content-container .tab-content .reservation-info-area p {
+    text-align: center;
+    font-size: 16px;
+    color: var(--1-GRAY-600);
+    padding: 40px 0;
+}
+
 .content-area .myPage-container .tab-content-container .tab-content .pagination {
     display: flex;
     justify-content: center;
@@ -207,15 +231,67 @@
     font-weight: 700;
 }
 
-/* 빈 상태 메시지 */
-.content-area .myPage-container .tab-content-container .tab-content .reservation-info-area p {
-    text-align: center;
-    font-size: 16px;
-    color: var(--1-GRAY-600);
-    padding: 40px 0;
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area {
+    display: flex;
+    background-color: var(--1-GRAY-200);
+    padding: 20px;
+    gap: 20px;
+    border-radius: 10px;
 }
 
-/* 애니메이션 */
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info .text-area {
+    display: flex;
+    width: 100%;
+    margin-left: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 20px;
+    gap: 10px;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info .text-area .grade-graph {
+    margin-top: 10px;
+    height: 20px;
+    width: 100%;
+    background-color: var(--1-GRAY-400);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info .text-area .grade-graph .progress {
+    height: 100%;
+    background-color: var(--1-MAIN);
+    width: 100%;
+}
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-info-area .grade-info .text-area .grade-range {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.content-area .myPage-container .tab-content-container .tab-content .grade-description {
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--1-GRAY-400);
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

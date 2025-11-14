@@ -62,14 +62,18 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 찾기 -> 마이페이지
     @Override
-    public boolean userConfirmPassword(String userId, String currentPassword) {
+    public boolean userConfirmPassword(HttpSession session, String currentPassword) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        String userId = loginUser.getUserId();
         return userMapper.userConfirmPassword(userId, currentPassword);
     }
 
     // 비밀번호 변경 -> 마이페이지
     @Override
-    public void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword) {
-        userMapper.userUpdatePasswordMypage(userId, currentPassword, newPassword);
+    public void userUpdatePasswordMyPage(HttpSession session, String currentPassword, String newPassword) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        String userId = loginUser.getUserId();
+        userMapper.userUpdatePasswordMyPage(userId, currentPassword, newPassword);
     }
 
     // 유저 정보 업데이트
