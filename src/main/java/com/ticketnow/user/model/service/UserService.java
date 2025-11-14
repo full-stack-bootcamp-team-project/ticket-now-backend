@@ -25,10 +25,10 @@ public interface UserService {
     User userGetInfo(HttpSession session);
 
     // 비밀번호 찾기 -> 마이페이지
-    boolean userConfirmPassword(String userId, String currentPassword);
+    boolean userConfirmPassword(HttpSession session, String currentPassword);
 
     // 비밀번호 변경 -> 마이페이지
-    void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword);
+    void userUpdatePasswordMyPage(HttpSession session, String currentPassword, String newPassword);
 
     // 유저 정보 업데이트
     void userUpdateInfo(User user, HttpSession session);

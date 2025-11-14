@@ -45,6 +45,14 @@ public class UserController {
         userService.userSignup(user);
     }
 
+    @GetMapping("/login/check")
+    public boolean checkLogin(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return true;
+        }
+        return false;
+    }
+
     // http://localhost:8080/api/user/login?userEmail=minsu@example.com&userPw=pw1234
     // 로그인 기능
     @PostMapping("/login")
@@ -109,18 +117,18 @@ public class UserController {
         return userService.userGetInfo(session);
     }
 
-    // http://localhost:8080/api/user/myPage/confirmPassword?userId=U001&currentPassword=pw1234
+    // http://localhost:8080/api/user/myPage/confirmPassword?currentPassword=pw1234
     // 마이페이지 현재 비밀번호 확인 기능
     @PostMapping("/myPage/confirmPassword")
-    public boolean userConfirmPassword(@RequestParam String userId, @RequestParam String currentPassword) {
-        return userService.userConfirmPassword(userId, currentPassword);
+    public boolean userConfirmPassword(HttpSession session, @RequestParam String currentPassword) {
+        return userService.userConfirmPassword(session, currentPassword);
     }
 
-    // http://localhost:8080/api/user/myPage/updatePassword?userId=U001&currentPassword=pw1234&newPassword=test1234
+    // http://localhost:8080/api/user/myPage/updatePassword?currentPassword=pw1234&newPassword=test1234
     // 마이페이지 비밀번호 변경 기능
     @PatchMapping("/myPage/updatePassword")
-    public void userUpdatePasswordMypage(@RequestParam String userId, @RequestParam String currentPassword, @RequestParam String newPassword) {
-        userService.userUpdatePasswordMypage(userId, currentPassword, newPassword);
+    public void userUpdatePasswordMyPage(HttpSession session, @RequestParam String currentPassword, @RequestParam String newPassword) {
+        userService.userUpdatePasswordMyPage(session, currentPassword, newPassword);
     }
 
     // U001,pw1234,900101-1234567,김민수,밍밍,010-1234-5678,minsu@example.com,서울 강남구,M,bronze,0

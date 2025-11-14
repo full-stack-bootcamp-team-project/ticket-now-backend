@@ -25,11 +25,11 @@ public interface UserMapper {
     // 유저 정보 조회 -> 마이페이지
     User userGetInfo(String userId);
 
-    // 비밀번호 찾기 -> 마이페이지
+    // 비밀번호 확인 -> 마이페이지
     boolean userConfirmPassword(String userId, String currentPassword);
 
     // 비밀번호 변경 -> 마이페이지
-    void userUpdatePasswordMypage(String userId, String currentPassword, String newPassword);
+    void userUpdatePasswordMyPage(String userId, String currentPassword, String newPassword);
 
     // 유저 정보 업데이트
     void userUpdateInfo(User user, String userId);
