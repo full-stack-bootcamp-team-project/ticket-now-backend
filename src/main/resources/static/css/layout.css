@@ -293,6 +293,8 @@ HEADER BASE
     font-weight: 700;
     background-color: #e3f2fd;
     padding: 0 2px;
+    margin-bottom: 9px;
+    display: inline-block;
 }
 
 .autocomplete-category {
