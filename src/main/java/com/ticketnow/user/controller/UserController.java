@@ -56,12 +56,14 @@ public class UserController {
 
         User user = userService.userLogin(userEmail, userPw);
         if (user == null) {
-            response.sendRedirect("/user/login?error=true");
+//            response.sendRedirect("/user/login?error=true");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
         request.changeSessionId();
         SessionUtil.setLoginUser(session, user);
+        response.setStatus(HttpServletResponse.SC_OK); // 200
 
         // 세션에 저장된 이전 페이지 가져오기
         String prevPage = (String) session.getAttribute("prevPage");

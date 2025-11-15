@@ -27,7 +27,7 @@ document.querySelectorAll(".password-view-button").forEach((btn) => {
     });
 });
 
-if(loginForm != null){
+if(loginForm){
     loginForm.addEventListener("submit",async (e)=>{
         e.preventDefault();
 
@@ -54,12 +54,15 @@ if(loginForm != null){
                 body: `userEmail=${encodeURIComponent(loginEmail.value)}&userPw=${encodeURIComponent(loginPw.value)}`
             });
 
-            if (res.ok) {
+            if (res.status === 200) {
                 alert("로그인 성공!");
-                window.location.href = "/";
-            } else {
+                window.location.href = "/"; // 홈 이동
+            } else if (res.status === 401) {
                 alert("로그인 정보가 일치하지 않습니다.");
+            } else {
+                alert("서버 오류로 로그인 실패");
             }
+
         } catch (error) {
             console.error("로그인 오류:", error);
             alert("서버 오류로 로그인에 실패했습니다.");
