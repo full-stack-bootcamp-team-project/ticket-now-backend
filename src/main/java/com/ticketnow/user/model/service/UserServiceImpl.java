@@ -18,24 +18,27 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-
-    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     // 회원가입
     @Override
     public void userSignup(User user) {
         user.setUserId("U" + System.currentTimeMillis()); // id 값 생성
-//        String originPwd = user.getUserPw();
-//        String newPwd = bCryptPasswordEncoder.encode(originPwd);
-//        user.setUserPw(newPwd);
-//        user.setUserPw(bCryptPasswordEncoder.encode(user.getUserPw()));
-//        userMapper.userSignup(user);
+        user.setUserPw(bCryptPasswordEncoder.encode(user.getUserPw()));
+        userMapper.userSignup(user);
     }
 
     // 유저 로그인
     @Override
     public User userLogin(String userEmail, String userPw) {
-        return userMapper.userLogin(userEmail, userPw);
+        User user = userMapper.userLogin(userEmail);
+
+        // 사용자가 없거나 비밀번호가 일치하지 않으면 null 반환
+        if (user == null || !bCryptPasswordEncoder.matches(userPw, user.getUserPw())) {
+            return null;
+        }
+
+        return user;
     }
 
     // 유저 아이디 찾기
