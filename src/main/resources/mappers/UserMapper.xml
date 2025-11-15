@@ -17,7 +17,6 @@
         SELECT *
         FROM user
         WHERE userEmail = #{userEmail}
-          AND userpw = #{userPw}
     </select>
 
     <!-- 아이디 찾기 -->

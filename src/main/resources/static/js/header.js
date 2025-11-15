@@ -50,7 +50,7 @@ async function checkLoginStatus() {
         console.error('로그인 상태 확인 오류:', error);
         headerLoginMenu.innerHTML = `
             <a href="/user/login">로그인</a>
-            <a href="/user/myPage">마이페이지</a>
+            <a href="/user/signup">회원가입</a>
         `;
     }
 }
@@ -62,13 +62,12 @@ async function handleLogout(e) {
     if (!confirm("로그아웃 하시겠습니까?")) {} else {
        try {
             const response = await fetch(`${API_BASE_URL}/api/user/logout`, {
-                method: 'POST',      // ⚠ POST로 로그아웃 API 호출
+                method: 'POST',
                 credentials: 'include'
             });
 
             if (response.ok) {
                 alert('로그아웃되었습니다.');
-                // 로그아웃 후 헤더 UI 갱신 또는 홈으로 이동
                 window.location.href = "/";
             } else {
                 alert('로그아웃에 실패했습니다.');

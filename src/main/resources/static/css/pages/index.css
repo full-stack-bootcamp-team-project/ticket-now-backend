@@ -24,7 +24,7 @@
     height: 405px;
     max-height: 405px;
     margin: 0 12px;
-    border: 1px solid var(--1-GRAY-100); /*TODO*/
+    border: 1px solid var(--1-GRAY-100);
     transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: pointer;
 }

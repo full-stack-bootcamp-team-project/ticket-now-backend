@@ -49,12 +49,9 @@ if(loginForm != null){
             const res = await fetch("/api/user/login", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: JSON.stringify({
-                    userEmail: loginEmail.value,
-                    userPw: loginPw.value
-                })
+                body: `userEmail=${encodeURIComponent(loginEmail.value)}&userPw=${encodeURIComponent(loginPw.value)}`
             });
 
             if (res.ok) {

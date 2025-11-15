@@ -293,8 +293,8 @@ input:-webkit-autofill:active {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    gap: 40px 30px;
-    gap: 30px; /*TODO*/
+    gap: 30px;
+    height: 100%;
 }
 /* performance item */
 .performance-list .performance-item {
@@ -330,8 +330,7 @@ input:-webkit-autofill:active {
 }
 /* performance item text */
 .performance-list .performance-item .performance-info .performance-title {
-    font-size: 16px;
-    font-size: 18px; /*TODO*/
+    font-size: 18px;
     line-height: 22px;
     font-weight: 400;
     color: var(--1-GRAY-900);
