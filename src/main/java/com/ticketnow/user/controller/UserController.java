@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,31 +49,31 @@ public class UserController {
     // http://localhost:8080/api/user/login?userEmail=minsu@example.com&userPw=pw1234
     // 로그인 기능
     @PostMapping("/login")
-    public void userLogin(@RequestParam String userEmail,
-                          @RequestParam String userPw,
-                          HttpServletRequest request,
-                          HttpSession session,
-                          HttpServletResponse response) throws IOException {
+    @ResponseBody
+    public Map<String, String> userLogin(@RequestParam String userEmail,
+                                         @RequestParam String userPw,
+                                         HttpServletRequest request,
+                                         HttpSession session) {
 
+        Map<String, String> result = new HashMap<>();
         User user = userService.userLogin(userEmail, userPw);
+
         if (user == null) {
-//            response.sendRedirect("/user/login?error=true");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
-            return;
+            result.put("status", "401");
+            return result;
         }
 
         request.changeSessionId();
         SessionUtil.setLoginUser(session, user);
-        response.setStatus(HttpServletResponse.SC_OK); // 200
 
-        // 세션에 저장된 이전 페이지 가져오기
         String prevPage = (String) session.getAttribute("prevPage");
-        if (prevPage != null) {
-            session.removeAttribute("prevPage"); // 한 번만 사용
-            response.sendRedirect(prevPage);
-        } else {
-            response.sendRedirect("/"); // 없으면 홈
-        }
+        if (prevPage == null) prevPage = "/";
+        else session.removeAttribute("prevPage");
+
+        result.put("status", "200");
+        result.put("prevPage", prevPage);
+
+        return result;
     }
 
     // 로그인 체크

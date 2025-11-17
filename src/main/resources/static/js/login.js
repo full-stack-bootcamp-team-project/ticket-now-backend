@@ -26,12 +26,10 @@ document.querySelectorAll(".password-view-button").forEach((btn) => {
         btn.classList.toggle("password-off", !isHidden);
     });
 });
-
 if(loginForm){
-    loginForm.addEventListener("submit",async (e)=>{
+    loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // 유효성 검증
         if (loginEmail.value.trim().length === 0){
             alert("이메일을 입력해주세요");
             loginEmail.focus();
@@ -44,22 +42,19 @@ if(loginForm){
             return;
         }
 
-        // API 호출
         try {
             const res = await fetch("/api/user/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `userEmail=${encodeURIComponent(loginEmail.value)}&userPw=${encodeURIComponent(loginPw.value)}`
             });
 
+            const data = await res.json();
 
-            if (res.status === 200) {
+            if (data.status === "200") {
                 alert("로그인 성공!");
-                const prevPage = res.headers.get("Prev-Page") || "/";
-                window.location.href = prevPage;
-            } else if (res.status === 401) {
+                window.location.href = data.prevPage; // 서버에서 전달한 이전 페이지로 이동
+            } else if (data.status === "401") {
                 alert("로그인 정보가 일치하지 않습니다.");
             } else {
                 alert("서버 오류로 로그인 실패");
@@ -69,7 +64,7 @@ if(loginForm){
             console.error("로그인 오류:", error);
             alert("서버 오류로 로그인에 실패했습니다.");
         }
-    })
+    });
 }
 
 signupButton.addEventListener("click", () => {
