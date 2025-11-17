@@ -1,5 +1,6 @@
 /* 메인 배너, 캐러셀 */
 .main-banner-wrap {
+    min-width: 1200px;
     width: 100vw;
     max-width: 100vw;
     position: relative;
