@@ -28,8 +28,8 @@
     </select>
 
     <!-- 비밀번호 찾기 - 사용자 존재 확인 -->
-    <select id="userFindPassword" resultType="boolean">
-        SELECT count(*) > 0
+    <select id="userFindPassword" resultType="String">
+        SELECT userId
         FROM user
         WHERE userEmail = #{userEmail}
           AND userPhone = #{userPhone}
