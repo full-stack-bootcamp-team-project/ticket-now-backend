@@ -99,7 +99,7 @@ public class UserController {
     // http://localhost:8080/api/user/login/findPassword?userEmail=minsu@example.com&userPhone=010-1234-5678
     // 로그인 비밀번호 찾기 기능
     @PostMapping("/login/findPassword")
-    public boolean userFindPassword(@RequestParam String userEmail, @RequestParam String userPhone) {
+    public String userFindPassword(@RequestParam String userEmail, @RequestParam String userPhone) {
         return userService.userFindPassword(userEmail, userPhone);
     }
 

@@ -43,15 +43,17 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 찾기 -> 로그인
     @Override
-    public boolean userFindPassword(String userEmail, String userPhone) {
+    public String userFindPassword(String userEmail, String userPhone) {
         return userMapper.userFindPassword(userEmail, userPhone);
     }
 
     // 비밀번호 찾기 -> 비밀번호 변경 로그인
     @Override
     public void userUpdatePassword(String userId, String newPassword) {
-        userMapper.userUpdatePassword(userId, newPassword);
+        String bCryptPassword = bCryptPasswordEncoder.encode(newPassword);
+        userMapper.userUpdatePassword(userId, bCryptPassword);
     }
+
 
     // 유저 정보 조회 -> 마이페이지
     @Override
@@ -60,7 +62,6 @@ public class UserServiceImpl implements UserService {
         String userId = loginUser.getUserId();
         return userMapper.userGetInfo(userId);
     }
-
 
     // 비밀번호 찾기 -> 마이페이지
     @Override

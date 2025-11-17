@@ -15,7 +15,7 @@ public interface UserMapper {
     String userFindId(String userName, String userSSN);
 
     // 비밀번호 찾기
-    boolean userFindPassword(String userEmail, String userPhone);
+    String userFindPassword(String userEmail, String userPhone);
 
     // 비밀번호 찾기 -> 비밀번호 변경
     void userUpdatePassword(String userId, String newPassword);

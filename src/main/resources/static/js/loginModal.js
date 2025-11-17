@@ -190,11 +190,13 @@ async function handlePasswordFindStep1() {
             body: `userEmail=${encodeURIComponent(checkEmail)}&userPhone=${encodeURIComponent(userPhone)}`
         });
 
-        const isUserExists = await res.json();
+
+        const isUserExists = await res.text();
+
 
         if (res.ok && isUserExists) {
             /** 사용자 확인 성공 -> Step 2로 이동 */
-            foundUserId = checkEmail;
+            foundUserId = isUserExists;
             moveToPasswordChangeStep();
         } else {
             alert("입력하신 정보와 일치하는 계정이 없습니다.\n다시 확인해주세요.");
@@ -259,9 +261,6 @@ async function handlePasswordChangeStep2() {
     try {
         /**
          * 비밀번호 변경 API 호출
-         * 주의: 현재는 foundUserId(이메일)를 userId로 사용
-         * 실제로는 백엔드에서 이메일로 userId를 조회하거나
-         * API가 이메일을 직접 받도록 수정 필요
          */
         const updateRes = await fetch("/api/user/login/updatePassword", {
             method: "PATCH",
