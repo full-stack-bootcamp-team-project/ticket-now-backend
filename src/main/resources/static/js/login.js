@@ -57,6 +57,8 @@ if(loginForm){
 
             if (res.status === 200) {
                 alert("로그인 성공!");
+                const prevPage = res.headers.get("Prev-Page") || "/";
+                window.location.href = prevPage;
             } else if (res.status === 401) {
                 alert("로그인 정보가 일치하지 않습니다.");
             } else {
