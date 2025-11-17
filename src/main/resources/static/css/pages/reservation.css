@@ -35,7 +35,7 @@ tab-content calendar
 .info {
     display: flex;
     justify-content: left;
-    color : #9E9E9E;
+    color : var(--1-GRAY-500);
     font-size: 18px;
     line-height: 25px;
     padding : 50px 0 20px 0;
@@ -198,7 +198,7 @@ tab-content calendar
     transform: translateX(-50%);
     width: 6px;
     height: 6px;
-    background-color: #ff6600;
+    background-color: var(--1-MAIN);
     border-radius: 50%;
 }
 
@@ -367,7 +367,7 @@ tab-content seat
 }
 
 .seat.reserved {
-    background-color: #ccc;
+    background-color: var(--1-GRAY-50);
     cursor: not-allowed;
 }
 
@@ -418,9 +418,12 @@ tab-content payment
     box-sizing: border-box;
 }
 
-#tabBank,
-#tabEasy {
+#tabBank {
     border-right: 1px solid var(--1-GRAY-400);
+}
+
+#tabEasy {
+    border-left: 1px solid var(--1-GRAY-400);
 }
 
 .tab-button.active {
@@ -573,7 +576,7 @@ Reservation info
 ***************************************/
 /* 예약 정보 영역 */
 .reservation-info {
-    border-left: 1px solid #BDBDBD;
+    border-left: 1px solid var(--1-GRAY-400);
     padding : 30px 30px 50px 0;
     width: 350px;
     margin-top: 10px;
@@ -581,7 +584,7 @@ Reservation info
 
 /* 공연 정보 영역 */
 .performance-info {
-    border-bottom : 1px solid #BDBDBD;
+    border-bottom : 1px solid var(--1-GRAY-400);
     display: flex;
     margin: 20px;
 }
@@ -617,13 +620,13 @@ Reservation info
     font-size: 14px;
     font-weight: bold;
     line-height: 19px;
-    color : #757575;
+    color : var(--1-GRAY-600);
     margin : 20px 0;
 }
 
 /* 선택사항 영역 */
 .reservation-detail {
-    border-bottom : 1px solid #BDBDBD;
+    border-bottom : 1px solid var(--1-GRAY-400);
     margin: 0 20px 20px 20px;
 }
 
