@@ -57,7 +57,7 @@ public class UserController {
         User user = userService.userLogin(userEmail, userPw);
         if (user == null) {
 //            response.sendRedirect("/user/login?error=true");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
             return;
         }
 
