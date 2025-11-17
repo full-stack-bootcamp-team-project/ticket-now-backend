@@ -57,7 +57,6 @@ if(loginForm){
 
             if (res.status === 200) {
                 alert("로그인 성공!");
-                window.location.href = "/"; // 홈 이동
             } else if (res.status === 401) {
                 alert("로그인 정보가 일치하지 않습니다.");
             } else {
