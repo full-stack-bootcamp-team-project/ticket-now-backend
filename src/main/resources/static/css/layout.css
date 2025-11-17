@@ -206,6 +206,7 @@ HEADER BASE
     line-height: 21px;
     font-weight: 400;
     color: var(--1-GRAY-900);
+    background: var(--1-GRAY-0);
     border:none;
 }
 
