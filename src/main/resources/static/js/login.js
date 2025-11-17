@@ -54,6 +54,7 @@ if(loginForm){
                 body: `userEmail=${encodeURIComponent(loginEmail.value)}&userPw=${encodeURIComponent(loginPw.value)}`
             });
 
+
             if (res.status === 200) {
                 alert("로그인 성공!");
                 window.location.href = "/"; // 홈 이동
