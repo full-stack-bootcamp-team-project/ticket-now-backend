@@ -49,21 +49,18 @@
         WHERE userId = #{userId}
     </select>
 
-    <!-- 비밀번호 찾기 -> 마이페이지 -->
-    <select id="userConfirmPassword" resultType="boolean">
-        SELECT count(*)
-        FROM user
-        WHERE userId = #{userId}
-          AND userPw = #{currentPassword}
+    <!-- 마이페이지 / 비밀번호 조회 -->
+    <select id="getUserPassword" resultType="String">
+        SELECT userPw FROM user WHERE userId = #{userId}
     </select>
 
-    <!-- 마이페이지 -> 비밀번호 변경 -->
-    <update id="userUpdatePasswordMyPage">
+    <!-- 마이페이지 / 비밀번호 변경 -->
+    <update id="updatePassword">
         UPDATE user
         SET userPw = #{newPassword}
         WHERE userId = #{userId}
-          AND userPw = #{currentPassword}
     </update>
+
 
     <!-- 마이페이지 -> 유저 정보 업데이트 -->
     <update id="userUpdateInfo">

@@ -2,16 +2,10 @@ package com.ticketnow.user.model.service;
 
 import com.ticketnow.user.model.dto.User;
 import com.ticketnow.user.model.mapper.UserMapper;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -67,24 +61,36 @@ public class UserServiceImpl implements UserService {
         return userMapper.userGetInfo(userId);
     }
 
+
     // 비밀번호 찾기 -> 마이페이지
     @Override
     public boolean userConfirmPassword(HttpSession session, String currentPassword) {
         User loginUser = (User) session.getAttribute("loginUser");
         String userId = loginUser.getUserId();
-        String bCryptCurrentPassword = bCryptPasswordEncoder.encode(currentPassword);
-        return userMapper.userConfirmPassword(userId, bCryptCurrentPassword);
+
+        String storedPassword = userMapper.getUserPassword(userId);
+
+        return bCryptPasswordEncoder.matches(currentPassword, storedPassword);
     }
 
     // 비밀번호 변경 -> 마이페이지
     @Override
     public void userUpdatePasswordMyPage(HttpSession session, String currentPassword, String newPassword) {
+
         User loginUser = (User) session.getAttribute("loginUser");
         String userId = loginUser.getUserId();
-        String bCryptCurrentPassword = bCryptPasswordEncoder.encode(currentPassword);
-        String bCryptNewPassword = bCryptPasswordEncoder.encode(newPassword);
-        userMapper.userUpdatePasswordMyPage(userId, bCryptCurrentPassword, bCryptNewPassword);
+
+        String storedPassword = userMapper.getUserPassword(userId);
+
+        if (!bCryptPasswordEncoder.matches(currentPassword, storedPassword)) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        String encodedNewPassword = bCryptPasswordEncoder.encode(newPassword);
+
+        userMapper.updatePassword(userId, encodedNewPassword);
     }
+
 
     // 유저 정보 업데이트
     @Override
