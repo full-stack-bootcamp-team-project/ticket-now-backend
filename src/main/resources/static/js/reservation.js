@@ -1,15 +1,17 @@
 // API Base URL
-const API_BASE_URL = "http://localhost:8080"
+const API_BASE_URL = "http://43.201.71.58:8080"
 
 // URL Parameters
 const urlParams = new URLSearchParams(window.location.search);
 const performanceId = urlParams.get("performanceId");
 
+// performanceScheduleId / seatId, seatNumber / performanceScheduledStartDate 담을 객체 생성
 let selectedScheduleId = null;
 let selectedSeats = [];
 let performanceDates = [];
 
 // Wait for DOM to be fully loaded
+// 윈도우 시작 시 자동으로 실행
 window.addEventListener("DOMContentLoaded", async () => {
 
     // 인터셉터가 이미 로그인 체크를 했으므로
@@ -17,6 +19,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.log('예약 페이지 로드 - 로그인 상태 확인됨');
 
     // Calendar setup
+    // html id 값을 담을 변수
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
     const calendarPrev = document.getElementById('calendarPrev');
@@ -29,8 +32,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     function renderCalendar(year, month) {
         const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
+        const lastDay = new Date(year, month + 1, 0); // date : 0 값이 마지막 달의 마지막 날을 확인함
 
+        // 기본 달은 0 ~ 11 까지임
         monthYear.textContent = `${year}.${month + 1}`;
 
         const startDay = firstDay.getDay();
