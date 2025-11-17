@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
     public boolean userConfirmPassword(HttpSession session, String currentPassword) {
         User loginUser = (User) session.getAttribute("loginUser");
         String userId = loginUser.getUserId();
-        return userMapper.userConfirmPassword(userId, currentPassword);
+        String bCryptCurrentPassword = bCryptPasswordEncoder.encode(currentPassword);
+        return userMapper.userConfirmPassword(userId, bCryptCurrentPassword);
     }
 
     // 비밀번호 변경 -> 마이페이지
@@ -80,7 +81,9 @@ public class UserServiceImpl implements UserService {
     public void userUpdatePasswordMyPage(HttpSession session, String currentPassword, String newPassword) {
         User loginUser = (User) session.getAttribute("loginUser");
         String userId = loginUser.getUserId();
-        userMapper.userUpdatePasswordMyPage(userId, currentPassword, newPassword);
+        String bCryptCurrentPassword = bCryptPasswordEncoder.encode(currentPassword);
+        String bCryptNewPassword = bCryptPasswordEncoder.encode(newPassword);
+        userMapper.userUpdatePasswordMyPage(userId, bCryptCurrentPassword, bCryptNewPassword);
     }
 
     // 유저 정보 업데이트
