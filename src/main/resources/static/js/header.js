@@ -1,6 +1,6 @@
 // API 기본 URL 설정
 if (typeof API_BASE_URL === 'undefined') {
-    var API_BASE_URL = "http://localhost:8080";
+    var API_BASE_URL = "http://43.201.71.58:8080";
 }
 
 // 검색 타입 관리
