@@ -12,7 +12,7 @@
 | 팀명 / 인원 | TicketNow Team (3명) — 유기태, 박형빈, 조연희 |
 | 사이트 주소 | [http://43.201.71.58:8080/](http://43.201.71.58:8080/) |
 | 기획/디자인 | Figma - 유스케이스 / Figma - 디자인 |
-| ERD | ![ERD](./images/erd.png) |
+| ERD | ![ERD](./docs/erd.png) |
 | 프로젝트 관리 | [GitHub](https://github.com/full-stack-bootcamp-team-project/ticket-now) |
 
 ---
