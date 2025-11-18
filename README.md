@@ -124,6 +124,7 @@ TicketNow는 티켓 예매 서비스 전체 흐름을 구현한 웹 플랫폼입
 ---
 
 ## 📦 프로젝트 구조
+```markdown
 ticket-now/
 ├─ src/
 │ ├─ main/
@@ -154,11 +155,13 @@ ticket-now/
 ├─ build.gradle
 ├─ settings.gradle
 └─ README.md
-
+```
 ---
 
 ## 🚀 실행 방법
 http://43.201.71.58:8080/
+
+---
 
 ## 🎯 결론
 TicketNow는 티켓 예매 서비스의 실제 구조를 그대로 구현한 프로젝트로,
